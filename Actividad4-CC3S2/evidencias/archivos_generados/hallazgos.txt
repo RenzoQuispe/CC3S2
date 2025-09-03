@@ -1,0 +1,9 @@
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2[01;32mjquispe@pc1-quispe[00m:[01;34m~/Escritorio/cursos/CC3S2/Actividad4-CC3S2[00m$ [7mls noexiste 2> errores.txt[27mls noexiste 2> errores.txt
+[?2004lerrores.txt  [0m[01;34mevidencias[0m  lista.txt  README.md
+[?2004l[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2/evidencias[01;32mjquispe@pc1-quispe[00m:[01;34m~/Escritorio/cursos/CC3S2/Actividad4-CC3S2/evidencias[00m$ [7mls noexiste 2>> errores.log[27mls noexiste 2>> errores.log
+[?2004larchivo3.doc  errores.log  etc_lista.txt  [0m[01;34mimg[0m  sesion.txt  test.txt
+[?2004larchivo3.doc  errores.log  etc_lista.txt  [0m[01;34mimg[0m  sesion.txt  test.txt
+Leyendo lista de paquetes... 0%Leyendo lista de paquetes... 100%                                  Creando árbol de dependencias... 0%Creando árbol de dependencias... 0%Creando árbol de dependencias... 50%Creando árbol de dependencias... 50%                                      Leyendo la información de estado... 0%Leyendo la información de estado... 0%                                        [1;31mError: [0m[1mNo se ha podido localizar el paquete wc[0m
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2/evidencias[01;32mjquispe@pc1-quispe[00m:[01;34m~/Escritorio/cursos/CC3S2/Actividad4-CC3S2/evidencias[00m$ cat errores.log 
+[?2004l[0;1;31mFailed to start mysql.service: Access denied[0m
+[?2004l[0;1;31mFailed to add match 'mysql': Argumento inválido[0m

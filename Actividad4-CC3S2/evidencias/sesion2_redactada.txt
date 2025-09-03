@@ -1,0 +1,145 @@
+Script iniciado en 2025-09-03 07:13:43-05:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="147" LINES="24"]
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ exitclearfind ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2/ -name "*.txt"printf "linea1: dato1\nlinea2: dato2\n" > datos.txt
+[?2004l[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ cat datos.txt 
+[?2004llinea1: dato1
+linea2: dato2
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ cat datos.txt printf "linea1: dato1\nlinea2: dato2\n" > datos.txtexitclearfind ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2/ -name "*.txt"
+[?2004l/home/jquispe/Escritorio/cursos/CC3S2/Actividad4-CC3S2/datos.txt
+/home/jquispe/Escritorio/cursos/CC3S2/Actividad4-CC3S2/evidencias/archivos_generados_1/errores.txt
+/home/jquispe/Escritorio/cursos/CC3S2/Actividad4-CC3S2/evidencias/archivos_generados_1/test.txt
+/home/jquispe/Escritorio/cursos/CC3S2/Actividad4-CC3S2/evidencias/archivos_generados_1/etc_lista.txt
+/home/jquispe/Escritorio/cursos/CC3S2/Actividad4-CC3S2/evidencias/archivos_generados_1/lista.txt
+/home/jquispe/Escritorio/cursos/CC3S2/Actividad4-CC3S2/evidencias/sesion2.txt
+/home/jquispe/Escritorio/cursos/CC3S2/Actividad4-CC3S2/evidencias/sesion.txt
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ tr 'a-z' 'A-Z' < archivotr 'a-z' 'A-Z' < archivolsfind ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2/ -name "*.txt"cat datos.txt printf "linea1: dato1\nlinea2: dato2\n" > datos.txtcat datos.txt tr 'a-z' 'A-Z' < archivotr 'a-z' 'A-Z' < archivdatos.txt 
+[?2004lLINEA1: DATO1
+LINEA2: DATO2
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ echo "Nueva línea" | tee -a salida.txtecho "Nueva línea" | tee -a salida.txt.txt.txt.txt.txt.txt.txtd.txta.txtt.txto.txts.txt
+[?2004lNueva línea
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ sort datos.txt 
+[?2004llinea1: dato1
+linea2: dato2
+Nueva línea
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ sort datos.txt [1@-[1@r[1@ 
+[?2004lNueva línea
+linea2: dato2
+linea1: dato1
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ clear
+[?2004l[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ grep cat pls
+[?2004ldatos.txt  evidencias  README.md
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ catclear
+[?2004l[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ cat datos.txt 
+[?2004llinea1: dato1
+linea2: dato2
+Nueva línea
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ grep lliennea datos.txt" datos.txt[1@"
+[?2004llinea1: dato1
+linea2: dato2
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ clear
+[?2004l[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ cleargrep "linea" datos.txtcat datos.txt 
+[?2004llinea1: dato1
+linea2: dato2
+Nueva línea
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ cat datos.txt leargrep "linea" datos.txt[1@d[1@a[1@t[1@o
+[?2004llinea1: dato1
+linea2: dato2
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ cart datos.txt 
+[?2004llinea1: dato1
+linea2: dato2
+Nueva línea
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ sed -i 's/mundo/Linux/' saludo.txtsed -i 's/mundo/Linux/' saludo.txt.txt.txt.txt.txt.txt.txtd.txta.txtt.txto.txts.txt[1@l[1@i[1@n[1@e[1@ased -i 's/dato1/información1/' datos.txtsed -i 's/dato1/información1/' datos.txt
+[?2004l[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ cat datos.txt 
+[?2004llinea1: información1
+linea2: dato2
+Nueva línea
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ cd /
+[?2004l[?2004h]0;jquispe@pc1-quispe: /jquispe@pc1-quispe:/$ awk -F: '{print $1}' /etc/passwdawk -F: '{print $1}' /etc/passwd | head -n 5
+[?2004lroot
+daemon
+bin
+sys
+sync
+[?2004h]0;jquispe@pc1-quispe: /jquispe@pc1-quispe:/$ cut -d: -f1 /etc/passwdcut -d: -f1 /etc/passwd | head -n 5
+[?2004lroot
+daemon
+bin
+sys
+sync
+[?2004h]0;jquispe@pc1-quispe: /jquispe@pc1-quispe:/$ clear
+[?2004l[?2004h]0;jquispe@pc1-quispe: /jquispe@pc1-quispe:/$ grep root /etc/passwdgrep root /etc/passwd
+[?2004lroot:x:0:0:root:/root:/bin/bash
+[?2004h]0;jquispe@pc1-quispe: /jquispe@pc1-quispe:/$ sed 's/dato1/[REDACTED]o/' datos.txt > sed 's/dato1/[REDACTED]o/' datos.txt > nuveoevo.txtcd ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2/
+[?2004l[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ sed 's/dato1/[REDACTED]o/' datos.txt > nuevo.txtsed 's/dato1/[REDACTED]o/' datos.txt > nuevo.txcat datos.txt 
+[?2004llinea1: información1
+linea2: dato2
+Nueva línea
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ sed 's/dato1/[REDACTED]o/' datos.txt > nuevo.txtsed 's/dato1/[REDACTED]o/' datos.txt > nuevo.txt[1@2
+[?2004l[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ cat nuevo.txt 
+[?2004llinea1: información1
+linea2: [REDACTED]o
+Nueva línea
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ awk -F: '{print $1}' /etc/passwd | sort | uniqawk -F: '{print $1}' /etc/passwd | sort | uniq | head -n 5
+[?2004l_apt
+avahi
+avahi-autoipd
+backup
+bin
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ printf "hola\n" | tr 'a-z' 'A-Z' | tee mayus.txtprintf "hola\n" | tr 'a-z' 'A-Z' | tee mayus.txt
+[?2004lHOLA
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ cat mayus.txt 
+[?2004lHOLA
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ find /tmp -mtime -5 -type ffind /tmp -mtime -5 -type f
+[?2004l/tmp/Captura de pantalla_2025-09-03_07-36-11.png
+/tmp/Captura de pantalla_2025-09-03_07-21-30.png
+find: ‘/tmp/systemd-private-9aaa17dcee6d45dbb8b2fbfead66d463-pcscd.service-peenXt’: Permiso denegado
+find: ‘/tmp/systemd-private-9aaa17dcee6d45dbb8b2fbfead66d463-colord.service-1y2mwu’: Permiso denegado
+find: ‘/tmp/systemd-private-9aaa17dcee6d45dbb8b2fbfead66d463-upower.service-2izaCo’: Permiso denegado
+/tmp/.xfsm-ICE-BQFBC3
+find: ‘/tmp/systemd-private-9aaa17dcee6d45dbb8b2fbfead66d463-bluetooth.service-QdcZZO’: Permiso denegado
+/tmp/.X0-lock
+find: ‘/tmp/systemd-private-9aaa17dcee6d45dbb8b2fbfead66d463-ModemManager.service-xc1thk’: Permiso denegado
+find: ‘/tmp/systemd-private-9aaa17dcee6d45dbb8b2fbfead66d463-systemd-logind.service-4Eww7P’: Permiso denegado
+find: ‘/tmp/systemd-private-9aaa17dcee6d45dbb8b2fbfead66d463-polkit.service-CGsoee’: Permiso denegado
+find: ‘/tmp/systemd-private-9aaa17dcee6d45dbb8b2fbfead66d463-lm-sensors.service-6p78Cj’: Permiso denegado
+find: ‘/tmp/snap-private-tmp’: Permiso denegado
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ls /etc | grep conf | sort | tee lista_conf.txt | wc -lls /etc | grep conf | sort | tee lista_conf.txt | wc -l
+[?2004l34
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ grep -Ei 'error|fail' evidencias/sesion.txt | tee evidencias/hallazgos.txtgrep -Ei 'error|fail' evidencias/sesion.txt | tee evidencias/hallazgos.txt[1@1
+[?2004l[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ls noexiste 2> errores.txtls noexiste 2> errores.txt
+[?2004lerrores.txt  evidencias  lista.txt  README.md
+[?2004l[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2/evidenciasjquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2/evidencias$ ls noexiste 2>> errores.logls noexiste 2>> errores.log
+[?2004larchivo3.doc  errores.log  etc_lista.txt  img  sesion.txt  test.txt
+[?2004larchivo3.doc  errores.log  etc_lista.txt  img  sesion.txt  test.txt
+Leyendo lista de paquetes... 0%Leyendo lista de paquetes... 100%                                  Creando árbol de dependencias... 0%Creando árbol de dependencias... 0%Creando árbol de dependencias... 50%Creando árbol de dependencias... 50%                                      Leyendo la información de estado... 0%Leyendo la información de estado... 0%                                        Error: No se ha podido localizar el paquete wc
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2/evidenciasjquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2/evidencias$ cat errores.log 
+[?2004lFailed to start mysql.service: Access denied
+[?2004lFailed to add match 'mysql': Argumento inválido
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ cd evidencias/cat evidencias/hallazgos.txt 
+[?2004l[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ls noexiste 2> errores.txtls noexiste 2> errores.txt
+[?2004lerrores.txt  evidencias  lista.txt  README.md
+[?2004l[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2/evidenciasjquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2/evidencias$ ls noexiste 2>> errores.logls noexiste 2>> errores.log
+[?2004larchivo3.doc  errores.log  etc_lista.txt  img  sesion.txt  test.txt
+[?2004larchivo3.doc  errores.log  etc_lista.txt  img  sesion.txt  test.txt
+Leyendo lista de paquetes... 0%Leyendo lista de paquetes... 100%                                  Creando árbol de dependencias... 0%Creando árbol de dependencias... 0%Creando árbol de dependencias... 50%Creando árbol de dependencias... 50%                                      Leyendo la información de estado... 0%Leyendo la información de estado... 0%                                        Error: No se ha podido localizar el paquete wc
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2/evidenciasjquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2/evidencias$ cat errores.log 
+[?2004lFailed to start mysql.service: Access denied
+[?2004lFailed to add match 'mysql': Argumento inválido
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ ]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ clear
+[?2004l[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ file lista_conf.txt && head lista_conf.txtfile lista_conf.txt && head lista_conf.txt
+[?2004llista_conf.txt: ASCII text
+adduser.conf
+ca-certificates.conf
+ca-certificates.conf.dpkg-old
+dconf
+debconf.conf
+deluser.conf
+e2scrub.conf
+fuse.conf
+gai.conf
+host.conf
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ cat mayus.txt 
+[?2004lHOLA
+[?2004h]0;jquispe@pc1-quispe: ~/Escritorio/cursos/CC3S2/Actividad4-CC3S2jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad4-CC3S2$ exit
+[?2004lexit
+
+Script terminado en 2025-09-03 07:54:12-05:00 [CÓDIGO_SALIDA_ORDEN="0"]

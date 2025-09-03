@@ -1,0 +1,3 @@
+linea1: información1
+linea2: dato2
+Nueva línea
