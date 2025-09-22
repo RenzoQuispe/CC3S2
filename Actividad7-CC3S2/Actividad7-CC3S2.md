@@ -605,3 +605,22 @@ git log --graph --oneline --decorate --all > evidencias/14-x-strategy.log
    ```
 
    ![](./capturas/G3.png)
+
+#### Configuración GPG key en Github
+
+1. Exportar la clave pública
+
+   ![](./capturas/GPG_github1.png)
+
+2. Ingresar la clave publica a la configuracion de Github.
+
+   ![](./capturas/GPG_github2.png)
+   ![](./capturas/GPG_github3.png)
+
+3. Solo los commits firmados localmente con la clave aparecen como verificados
+
+   ![](./capturas/GPG_github4.png)
+
+   Cuando la clave GPG caduque, pasa lo siguiente:
+   - Los commits anteriores seguirán mostrando Verified, porque en el momento en que se firmaron la clave era válida, GitHub no borra esa validez histórica.
+   - Los nuevos commits que intentemos firmar con esa clave expirada saldrán como Unverified, ya que la firma ya no se puede validar contra una clave activa.
