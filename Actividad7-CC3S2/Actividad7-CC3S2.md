@@ -1,4 +1,4 @@
-### **Actividad 7-Explorando estrategias de fusión en Git**
+### **Actividad 7: Explorando estrategias de fusión en Git**
 
 **Entrega:** sube **todas** las respuestas y evidencias en la carpeta **`Actividad7-CC3S2/`**.
 
@@ -60,7 +60,6 @@ El **apéndice** amplía con variantes y controles de seguridad propios de DevOp
 * Rama por defecto: `main`.
 * Editor de texto y terminal.
 
-
 #### Formato de entrega (obligatorio)
 
 Estructura exacta del directorio a entregar:
@@ -104,7 +103,6 @@ Las fusiones integran trabajo de múltiples ramas. Elegir bien impacta **trazabi
 >
 > * En pipelines estrictos, considerar `git merge --ff-only`.
 > * Alternativa: **"Rebase + FF"** (o "Rebase and merge") para linealidad con trazabilidad vía PR.
-
 
 #### Ejemplos prácticos
 
@@ -281,62 +279,89 @@ Genera y guarda estas vistas (**usa dos guiones `--`**):
   ```bash
   git log --graph --oneline --decorate --all --first-parent > evidencias/05-compare-fastforward.log
   ```
+
+   ![](./capturas/dag5.png)
+
 * **Solo merges (destaca no-ff):**
 
   ```bash
   git log --graph --oneline --merges --decorate > evidencias/06-compare-noff.log
   ```
+
+   ![](./capturas/dag6.png)
+
 * **Vista completa (útil tras squash):**
 
   ```bash
   git log --graph --oneline --decorate --all > evidencias/07-compare-squash.log
   ```
 
+   ![](./capturas/dag7.png)
+
 **Preguntas**
 
 * ¿Cómo se ve el DAG en cada caso?
+
+   Fast-forward (first-parent): la línea principal queda casi recta: commit inicial -> feature-1 -> index.html -> merge de feature-2 -> squash de feature-3. Solo se ve el camino principal, sin desplegar lo que hubo dentro de cada rama.
+
+   Solo merges (no-ff): aparecen solo los puntos de integración, como f902685 Merge branch 'feature-2'. No se muestran los commits internos (agregar texto2–5).
+
+   Vista completa: incluye todo, los commits individuales de feature-3 (textos 2–5), el squash, el merge de feature-2 y hasta la rama feature-1, es la representación más detallada, mostrando tanto la evolución real como las integraciones. En este caso la unica diferencia con el primer DAG es que en esta vista completa es visible la bifurcación en el merge de feature-2.
+
 * ¿Qué método prefieres para: trabajo individual, equipo grande, repos con auditoría estricta?
 
-**Sugerencia visual**
-Usa `gitk --all` o sube el repo a GitHub y captura el network graph en `evidencias/capturas/`.
+   Trabajo individual:
+   Prefiero fast-forward (first-parent) porque me da un historial limpio, lineal y fácil de leer. No necesito poco de merges, ya que todo lo controlo yo.
+
+   Equipo grande:
+   Aquí prefiero no-ff merges visibles porque necesito saber cuándo y cómo se integraron las ramas, esto ayuda a revisar, revertir o auditar qué cambios vinieron de cada feature branch.
+
+   Repos con auditoría estricta (empresas, proyectos críticos):
+   Es preferible la vista completa, y además usar merges explícitos y no tanto squash para que quede un historial transparente y trazable, así se puede reconstruir fácilmente qué hizo cada rama y cuándo.
 
 #### Revertir una fusión (solo si **HEAD es un merge commit**)
 
 1. Asegura un **merge commit** reciente (del ejercicio `--no-ff`).
+
+   ![](./capturas/revertir1.png)
+
 2. Verifica que `HEAD` tiene **dos padres**:
 
    ```bash
    git show -s --format=%P HEAD
    ```
+
+   ![](./capturas/revertir2.png)
+
 3. Revertir manteniendo la base como **mainline / parent primario (#1)**:
 
    ```bash
    git revert -m 1 HEAD
    ```
+
+   ![](./capturas/revertir3.1.png)
+
+   ![](./capturas/revertir3.2.png)
+
 4. Evidencia:
 
    ```bash
    git log --graph --oneline --decorate --all > evidencias/08-revert-merge.log
    ```
 
+   ![](./capturas/revertir4.png)
+   
 **Preguntas**
 
 * ¿Cuándo usar `git revert` en vez de `git reset`?
+
+Cuando queremos deshacer cambios sin borrar historial, especialmente en repositorios compartidos. Genera un commit inverso que mantiene la trazabilidad de lo ocurrido, en cambio git reset reescribe la historia.
+
 * ¿Impacto en un repo compartido con historial público?
 
-#### (Opcional) Fusión remota con Pull Request
-
-* Crea repo, rama `colaboracion`, push y abre PR.
-* Usa "Create a merge commit" (no-ff) o "Squash and merge".
-* **Incluye captura** en `evidencias/capturas/` y comenta:
-
-  * ¿Qué estrategia usó la plataforma?
-  * ¿Cómo aparece en el historial local tras `git pull`?
+En un repositorio compartido con historial público, revert es mucho más seguro porque mantiene la línea de tiempo sin cambios y todos ven claramente qué se deshizo, en cambio, un reset forzado obliga a los demás a rehacer sus ramas porque la base cambió.
 
 ### Variantes útiles para DevOps/DevSecOps
-
-> **Entrega:** agrega estos archivos a `Actividad7-CC3S2/evidencias/`:
-> `09-ff-only.log`, `10-rebase-ff.log`, `11-pre-commit-merge.log`, `12-octopus.log`, `13-subtree.log`, `14-x-strategy.log`, `15-signed-merge.log`
 
 #### A) Fast-Forward **Only** (merge seguro)
 
@@ -344,13 +369,24 @@ Usa `gitk --all` o sube el repo a GitHub y captura el network graph en `evidenci
 **Pasos**
 
 1. Crea `feature-ffonly` desde `main`, añade 1 commit.
+
+   ![](./capturas/A1.png)
+
 2. En `main`: `git merge --ff-only feature-ffonly` (debe pasar).
+
+   ![](./capturas/A2.png)
+
 3. Para forzar un fallo didáctico: crea un commit en `main` tras crear la rama e intenta de nuevo (fallará).
+
+   ![](./capturas/A3.png)
+
 4. Evidencia:
 
    ```bash
    git log --graph --oneline --decorate --all --first-parent > evidencias/09-ff-only.log
    ```
+
+   ![](./capturas/A4.png)
 
 #### B) **Rebase + FF** (historial lineal con PRs)
 
@@ -362,16 +398,25 @@ Usa `gitk --all` o sube el repo a GitHub y captura el network graph en `evidenci
    ```bash
    git fetch origin && git rebase origin/main
    ```
+
+   ![](./capturas/B0.png)
+   ![](./capturas/B1.png)
+
 2. Integra:
 
    ```bash
    git checkout main && git merge feature-rebase
    ```
+
+   ![](./capturas/B2.png)
+
 3. Evidencia:
 
    ```bash
    git log --graph --oneline --decorate --all --first-parent > evidencias/10-rebase-ff.log
    ```
+
+   ![](./capturas/B3.png)
 
 #### C) Merge con **validación previa** (sin commitear)
 
@@ -379,6 +424,9 @@ Usa `gitk --all` o sube el repo a GitHub y captura el network graph en `evidenci
 **Pasos**
 
 1. `git merge --no-commit --no-ff feature-validate`
+
+   ![](./capturas/C1.png)
+
 2. Validaciones reproducibles mínimas (elige según tu proyecto):
 
    ```bash
@@ -387,12 +435,20 @@ Usa `gitk --all` o sube el repo a GitHub y captura el network graph en `evidenci
    # o tu pipeline local:
    make test && make lint
    ```
+
+   Basta con bash -n script.sh, debería no mostrar nada si está ok. Si fallan, podemos abortar el merge: `git merge --abort`
+
 3. Si todo ok: `git commit`
+
+   ![](./capturas/C3.png)
+
 4. Evidencia:
 
    ```bash
    git log --graph --oneline --decorate --all > evidencias/11-pre-commit-merge.log
    ```
+
+   ![](./capturas/C4.png)
 
 #### D) **Octopus Merge** (varias ramas a la vez)
 
@@ -400,12 +456,21 @@ Usa `gitk --all` o sube el repo a GitHub y captura el network graph en `evidenci
 **Pasos**
 
 1. Prepara `feat-a`, `feat-b` (commits pequeños, sin tocar mismas líneas).
+
+   ![](./capturas/D1.png)
+
 2. `git checkout main && git merge feat-a feat-b`
+
+   ![](./capturas/D2.1.png)
+   ![](./capturas/D2.2.png)
+
 3. Evidencia:
 
    ```bash
    git log --graph --oneline --merges --decorate > evidencias/12-octopus.log
    ```
+
+   ![](./capturas/D3.png)
 
 #### E) **Subtree** (integrar subproyecto conservando historial)
 
@@ -417,16 +482,37 @@ Usa `gitk --all` o sube el repo a GitHub y captura el network graph en `evidenci
    ```bash
    git subtree add --prefix=vendor/demo https://github.com/tu-usuario/repo-minimo.git main
    ```
+
+   Preparamos un repositorio externo para el ejercicio:
+
+   ![](./capturas/E1.1.png)
+
+   Agregamos el contenido de demo-repo dentro de vendor/demo/, pero sin perder su historial:
+
+   ![](./capturas/E1.2.png)
+
 2. Sincroniza:
 
    ```bash
    git subtree pull --prefix=vendor/demo https://github.com/tu-usuario/repo-minimo.git main
    ```
+
+   Simulamos actualización en el repo externo:
+
+   ![](./capturas/E2.1.png)
+
+   Sincronizamos en el repo principal, es decir integramos los cambios del repo externo:
+
+   ![](./capturas/E2.2.png)
+   ![](./capturas/E2.3.png)
+
 3. Evidencia:
 
    ```bash
    git log --graph --oneline --decorate --all > evidencias/13-subtree.log
    ```
+
+   ![](./capturas/E3.png)
 
 #### F) Sesgos de resolución y normalización (algoritmo ORT)
 
@@ -439,16 +525,35 @@ Usa `gitk --all` o sube el repo a GitHub y captura el network graph en `evidenci
   git merge -X ours  feature-x
   git merge -X theirs feature-x
   ```
+
+   Creamos ramas con conflictos:
+
+   ![](./capturas/F1.1.png)
+
+   Probar estrategias:
+
+   - Con “ours” (quedar con lo de la rama actual): `git merge -X ours feature-x`
+   - Con “theirs” (aceptar lo de la rama que integramos): `git merge -X theirs feature-x`
+
+      ![](./capturas/F1.2.png)
+
+      En este caso elegi ours porque queria que el merge respete lo que ya está en mi rama actual. Esto me asegura que los cambios que ya han sido validados no se sobrescriban con los de la rama secundaria y asi reducir riesgos de perder trabajo estable.
+
 * Sensibilidad a renombrados:
 
   ```bash
   git merge -X find-renames=90% feature-rename
   ```
+   
+   -X find-renames=90%: le dice a Git que sea más estricto al detectar renombrados, así evita confundir un rename con un archivo borrado y otro nuevo.
+
 * EOL mixtos:
 
   ```bash
   git merge -X renormalize feature-eol
   ```
+
+   -X renormalize: normaliza automáticamente los finales de línea (LF/CRLF) cuando distintas ramas usan configuraciones diferentes, evitando conflictos innecesarios solo por formato.
 
 **Evidencia:**
 
@@ -456,7 +561,7 @@ Usa `gitk --all` o sube el repo a GitHub y captura el network graph en `evidenci
 git log --graph --oneline --decorate --all > evidencias/14-x-strategy.log
 ```
 
-*(En `README.md` explica qué opción usaste y por qué.)*
+   ![](./capturas/F3.png)
 
 #### G) **Firmar** merges/commits (auditoría y cumplimiento)
 
@@ -464,13 +569,39 @@ git log --graph --oneline --decorate --all > evidencias/14-x-strategy.log
 **Pasos**
 
 1. Configura firma (GPG o Sigstore). **Asegúrate de que el email de la firma coincide con `git config user.email`** para que la plataforma valide la firma.
+
+   - Generamos una clave GPG (si no tienes):
+
+      ![](./capturas/G1.1.png)
+
+   - Lista de claves:
+
+      ![](./capturas/G1.2.png)
+
+   - Configuracion Git para usarla:
+
+      ![](./capturas/G1.3.png)
+
 2. Merge firmado:
 
    ```bash
    git merge --no-ff --gpg-sign feature-signed
    ```
+
+   - Creamos una rama de prueba:
+
+      ![](./capturas/G2.1.png)
+
+   - Vuelta a main e integramos firmando el merge:
+
+      ![](./capturas/G2.2.png)
+
+      Ingresamos el passphrase de la clave GPG, y el commit de merge quedará firmado.
+
 3. Verifica y guarda:
 
    ```bash
    git log --show-signature -1 > evidencias/15-signed-merge.log
    ```
+
+   ![](./capturas/G3.png)

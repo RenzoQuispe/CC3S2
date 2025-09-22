@@ -1,0 +1,9 @@
+commit 3e3076de03edd958d68a54a3b08f0d8fe8ad2444
+gpg: Firmado el lun 22 sep 2025 17:23:39 -05
+gpg:                usando RSA clave 2496EE2C83C5DCFDCAE8A0234FD43F68A580B5B8
+gpg: Firma correcta de "Renzo Quispe (clave GPG para Actividad 7 - CC3S2) <renzo123cd@gmail.com>" [absoluta]
+Merge: 0f00e02 740c54e
+Author: RenzoQuispe <renzo123cd@gmail.com>
+Date:   Mon Sep 22 17:23:36 2025 -0500
+
+    Merge branch 'feature-signed'

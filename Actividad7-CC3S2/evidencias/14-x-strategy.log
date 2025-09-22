@@ -1,0 +1,45 @@
+*   0f00e02 (HEAD -> master) Merge branch 'feature-x'
+|\  
+| * 25b46e9 (feature-x) cambio en feature-x
+* | 6374b10 cambio en master
+|/  
+* b7c543d crear conflicto.txt
+*   8be08a3 Merge commit 'f1602b66c4c4b600a9d30890084317eb6c700fae'
+|\  
+| * f1602b6 (demo/master) actualizar demo.txt
+* | 1068282 Add 'vendor/demo/' from commit 'af931633f83ec989e1e13e7b7304ad5044931f94'
+|\| 
+| * af93163 init - repo demo
+*   cfde6f7 Merge branches 'rama-1' and 'rama-2'
+|\  
+| * 01241db (rama-2) agregar 2.txt
+* | 5448fe5 (rama-1) agregar 1.txt
+|/  
+*   feca91d merge: integrar feature-validate tras validación
+|\  
+| * dc3d8c9 (feature-validate) agregar script.sh
+* | aae2134 agregar README
+|/  
+* b39402b (feature-rebase) agregar linea 3 a demo.txt
+* 41a8cd8 agregar linea 2 a demo.txt
+* 2b89e5d agregar linea 1 a demo.txt
+* 3f7e97a cambio en main.txt
+* 66963c9 Revert "Merge branch 'feature-4'"
+*   94b920c Merge branch 'feature-4'
+|\  
+| * de1df6f (feature-4) agregar main.py
+* | 63e350b agregar main.py
+|/  
+* c715c33 Squash de feature-3: textos 2-5
+| * 8eb962e (feature-3) agregar texto5
+| * fcdfb3e agregar texto4
+| * b6b2bd2 agregar texto3
+| * e83e1f6 agregar texto2
+|/  
+*   f902685 Merge branch 'feature-2'
+|\  
+| * cd75206 (feature-2) agregar index.html
+* | 39956a4 agregar index.html
+|/  
+* 4a276f8 (feature-1) agregar texto1.txt
+* d01454c commit inicial

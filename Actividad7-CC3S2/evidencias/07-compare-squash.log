@@ -1,0 +1,13 @@
+* c715c33 (HEAD -> master) Squash de feature-3: textos 2-5
+| * 8eb962e (feature-3) agregar texto5
+| * fcdfb3e agregar texto4
+| * b6b2bd2 agregar texto3
+| * e83e1f6 agregar texto2
+|/  
+*   f902685 Merge branch 'feature-2'
+|\  
+| * cd75206 (feature-2) agregar index.html
+* | 39956a4 agregar index.html
+|/  
+* 4a276f8 (feature-1) agregar texto1.txt
+* d01454c commit inicial

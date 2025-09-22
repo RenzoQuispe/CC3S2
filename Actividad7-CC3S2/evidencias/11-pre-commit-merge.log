@@ -1,0 +1,28 @@
+*   feca91d (HEAD -> master) merge: integrar feature-validate tras validación
+|\  
+| * dc3d8c9 (feature-validate) agregar script.sh
+* | aae2134 agregar README
+|/  
+* b39402b (feature-rebase) agregar linea 3 a demo.txt
+* 41a8cd8 agregar linea 2 a demo.txt
+* 2b89e5d agregar linea 1 a demo.txt
+* 3f7e97a cambio en main.txt
+* 66963c9 Revert "Merge branch 'feature-4'"
+*   94b920c Merge branch 'feature-4'
+|\  
+| * de1df6f (feature-4) agregar main.py
+* | 63e350b agregar main.py
+|/  
+* c715c33 Squash de feature-3: textos 2-5
+| * 8eb962e (feature-3) agregar texto5
+| * fcdfb3e agregar texto4
+| * b6b2bd2 agregar texto3
+| * e83e1f6 agregar texto2
+|/  
+*   f902685 Merge branch 'feature-2'
+|\  
+| * cd75206 (feature-2) agregar index.html
+* | 39956a4 agregar index.html
+|/  
+* 4a276f8 (feature-1) agregar texto1.txt
+* d01454c commit inicial
