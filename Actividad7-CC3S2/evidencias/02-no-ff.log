@@ -1,0 +1,7 @@
+*   7dcc39b (HEAD -> main) Merge branch 'add-feature' - agregamos texto2 y texto3
+|\  
+| * c7ec9ff (add-feature) agregar texto3.txt
+| * c28058f agregar texto2.txt
+|/  
+* 35dafed (feature-1) agregar texto1.txt
+* ef5583f (origin/main, origin/HEAD) Initial commit
