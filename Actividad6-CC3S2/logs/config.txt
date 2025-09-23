@@ -1,0 +1,8 @@
+user.email=renzo123cd@gmail.com
+user.name=RenzoQuispe
+user.signingkey=
+commit.gpgsign=true
+core.repositoryformatversion=0
+core.filemode=true
+core.bare=false
+core.logallrefupdates=true

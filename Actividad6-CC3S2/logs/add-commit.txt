@@ -1,0 +1,13 @@
+[feature/advanced-feature 9de4e11] Agrega la funcion greet como función avanzada
+ 1 file changed, 4 insertions(+)
+ create mode 100644 main.py
+[master 219f2bf] Actualizar el mensaje main.py en la rama main
+ 1 file changed, 1 insertion(+)
+ create mode 100644 main.py
+[bugfix/rollback-feature 682da44] Corregir error en la funcionalidad de rollback
+ 1 file changed, 2 insertions(+)
+ create mode 100644 main.py
+[master d85befa] Introduce un cambio para restablecer
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+[master 0641def] Agrega ejemplo de cherry-pick
+ 1 file changed, 1 insertion(+)

@@ -1,0 +1,11 @@
+Inicializado repositorio Git vacío en /home/jquispe/Escritorio/cursos/Actividades/Actividades6-CC3S2/.git/
+
+En la rama master
+
+No hay commits todavía
+
+Archivos sin seguimiento:
+  (usa "git add <archivo>..." para incluirlo a lo que será confirmado)
+	init-status.txt
+
+no hay nada agregado al commit pero hay archivos sin seguimiento presentes (usa "git add" para hacerles seguimiento)

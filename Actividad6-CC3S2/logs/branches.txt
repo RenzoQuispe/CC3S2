@@ -1,0 +1,2 @@
+  feature/cherry-pick b7c65d1 Corregir error en la funcionalidad de rollback
+* master              ea8a239 ultimo commit

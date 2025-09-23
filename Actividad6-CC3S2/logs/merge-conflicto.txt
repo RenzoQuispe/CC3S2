@@ -1,0 +1,10 @@
+Auto-fusionando main.py
+CONFLICTO (agregar/agregar): Conflicto de fusión en main.py
+Fusión automática falló; arregle los conflictos y luego realice un commit con el resultado.
+[master 1e4b08c] Resuelve el conflicto de fusión entre la versión main y feature/advanced-feature
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+Auto-fusionando main.py
+CONFLICTO (agregar/agregar): Conflicto de fusión en main.py
+Fusión automática falló; arregle los conflictos y luego realice un commit con el resultado.
+[master 8578a38] Merge branch 'bugfix/rollback-feature'
+ 1 file changed, 1 insertions(+), 1 deletion(-)

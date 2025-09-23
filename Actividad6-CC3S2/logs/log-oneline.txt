@@ -1,0 +1,6 @@
+ea8a239 ultimo commit
+0641def Agrega ejemplo de cherry-pick
+8578a38 Merge branch 'bugfix/rollback-feature'
+682da44 Corregir error en la funcionalidad de rollback
+62d1e94 Actualizar el mensaje main.py en la rama main, Resuelve el conflicto de fusión entre la versión main y ultimo revert
+17c4630 Commit inicial con README.md
