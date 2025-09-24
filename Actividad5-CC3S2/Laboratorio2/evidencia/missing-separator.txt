@@ -1,0 +1,2 @@
+Makefile_bad:25: atención: la variable '@' no ha sido definida
+Makefile_bad:25: *** falta un separador.  Alto.

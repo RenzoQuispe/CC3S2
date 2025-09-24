@@ -1,0 +1,39 @@
+GNU Make 4.4.1
+Este programa fue construido para x86_64-pc-linux-gnu
+Copyright (C) 1988-2023 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Leyendo makefiles...
+Leyendo makefile 'Makefile'...
+Actualizando archivos makefiles....
+ Se considera el archivo objetivo 'Makefile'.
+  Buscando una regla implícita para 'Makefile'.
+  No se ha encontrado ninguna regla implícita para 'Makefile'.
+ Se terminaron las dependencias del archivo objetivo 'Makefile'.
+ No es necesario reconstruir el objetivo 'Makefile'..
+Actualizando los objetivos finales....
+Se considera el archivo objetivo 'build'.
+ El archivo 'build' no existe.
+ Se considera el archivo objetivo 'out/hello.txt'.
+  El archivo 'out/hello.txt' no existe.
+  Se considera el archivo objetivo 'src/hello.py'.
+   Buscando una regla implícita para 'src/hello.py'.
+   No se ha encontrado ninguna regla implícita para 'src/hello.py'.
+  Se terminaron las dependencias del archivo objetivo 'src/hello.py'.
+  No es necesario reconstruir el objetivo 'src/hello.py'..
+ Se terminaron las dependencias del archivo objetivo 'out/hello.txt'.
+ Se debe reconstruir el objetivo 'out/hello.txt'.
+Makefile:25: update target 'out/hello.txt' due to: target does not exist
+mkdir -p out
+Se pone al proceso hijo 0x55a31f1a8610 (out/hello.txt) PID 3324 en la cadena.
+Hijo activo 0x55a31f1a8610 (out/hello.txt) PID 3324 
+Se recupera al proceso hijo ganador 0x55a31f1a8610 PID 3324 
+python3 src/hello.py > out/hello.txt
+Hijo activo 0x55a31f1a8610 (out/hello.txt) PID 3325 
+Se recupera al proceso hijo ganador 0x55a31f1a8610 PID 3325 
+Se elimina al proceso hijo 0x55a31f1a8610 PID 3325 de la cadena.
+ Se reconstruyó con éxito el archivo objetivo 'out/hello.txt'.
+Se terminaron las dependencias del archivo objetivo 'build'.
+Se debe reconstruir el objetivo 'build'.
+Se reconstruyó con éxito el archivo objetivo 'build'.
