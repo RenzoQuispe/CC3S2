@@ -326,8 +326,6 @@ run_tests "${SRC_DIR}/hello.py"
 
 ### Parte 2: Leer - Analizar un repositorio completo
 
-> Para esta sección de la actividad utiliza de referencia el laboratorio 2 del curso entregado [aquí](https://github.com/kapumota/Curso-CC3S2/tree/main/labs/Laboratorio2).
-
 #### 2.1 Test de ejemplo
 
 `tests/test_hello.py`:
@@ -440,15 +438,81 @@ help: ## Mostrar ayuda
 
 **Ejercicios:**
 * Ejecuta `make -n all` para un dry-run que muestre comandos sin ejecutarlos; identifica expansiones `$@` y `$<`, el orden de objetivos y cómo `all` encadena `tools`, `lint`, `build`, `test`, `package`.
+
+  ![](./img/e2.1.png)
+
+  Aquí el make -n all muestra la cadena completa de objetivos sin ejecutarlos, el orden que sigue es: primero tools (verifica dependencias con command -v), luego lint (usa shellcheck, shfmt y opcionalmente ruff), después build (crea out/hello.txt), test (corre scripts/run_tests.sh y unittest en tests), y finalmente package (genera dist/app.tar.gz). 
+  En la receta de build, la expansión $@ se sustituye por el target final (out/hello.txt) y $< por la primera dependencia (src/hello.py), tenemos:
+
+  ```
+  mkdir -p out
+  python3 src/hello.py > out/hello.txt
+  ``` 
+
+  así, all actúa como un objetivo primario que encadena todas las fases: comprobar herramientas, lint, compilación, pruebas y empaquetado, en ese orden.
+
 * Ejecuta `make -d build` y localiza líneas "Considerando el archivo objetivo" y "Debe deshacerse",  explica por qué recompila o no `out/hello.txt` usando marcas de tiempo y cómo `mkdir -p $(@D)` garantiza el directorio.
+
+  ![](./img/e2.2.png)
+
+  En el log de make -d build se ve cómo Make analiza cada objetivo, primero “Se considera el archivo objetivo 'out/hello.txt'” y luego concluye “La dependencia 'src/hello.py' es más reciente que el objetivo 'out/hello.txt'”, esto significa que el script fuente cambió después de la última generación del archivo de salida, por eso aparece “Se debe reconstruir el objetivo 'out/hello.txt'” y Make ejecuta la receta. Dentro de esa receta, el comando mkdir -p $(@D) garantiza que el directorio out/ exista antes de redirigir la salida, asi evitando errores si aún no está creado.
+
 * Fuerza un entorno con BSD tar en PATH y corre `make tools`; comprueba el fallo con "Se requiere GNU tar" y razona por qué `--sort`, `--numeric-owner` y `--mtime` son imprescindibles para reproducibilidad determinista.
+
+  Creamos un 'fakebin' con un tar que simula ser BSD, simulara la salida típica de BSD tar (no contiene "GNU tar"):
+
+  ![](./img/e2.3.png)
+
+  make tools ejecuta internamente tar --version 2>/dev/null | grep -q 'GNU tar' || { echo "Se requiere GNU tar"; exit 1; }. Como nuestro fakebin/tar no contiene la cadena GNU tar, el grep falla.
+
+  --sort=name: fija un orden lexicográfico de los archivos dentro del tar. Sin esto, el orden puede depender del sistema de ficheros y cambiar entre ejecuciones, lo que altera el contenido binario del tar y por tanto su hash.
+
+  --numeric-owner (junto con --owner=0 --group=0 cuando se usan): evita almacenar nombres de usuario/grupo (que varían entre máquinas) y fuerza que los metadatos usen IDs numéricos o valores constantes; así el contenido meta del tar no depende del sistema donde se creó.
+
+  --mtime=... (fecha fija): normaliza la marca de tiempo de los archivos dentro del tar. Las fechas de modificación cambian todo el tiempo; fijándolas a una constante (p. ej. la época UNIX) se elimina esa fuente de variabilidad en el encabezado del archivo y en el flujo comprimido.  
+
 * Ejecuta `make verify-repro`; observa que genera dos artefactos y compara `SHA256_1` y `SHA256_2`. Si difieren, hipótesis: zona horaria, versión de tar, contenido no determinista o variables de entorno no fijadas.
+
+  ![](./img/e2.4.png)
+
+  Cuando corrí make verify-repro vi que el sistema armó el paquete dos veces y le sacó el hash SHA-256 a cada uno. Los dos salieron iguales, así que todo fue reproducible y no hubo cambios raros en fechas, orden de archivos ni nada por el estilo. Si algún día salieran distintos, ahí ya tendría que pensar que puede ser por la zona horaria, la versión de tar, algún archivo que se genera con datos distintos cada vez, o variables de entorno que no estén bien fijas.
+
 * Corre `make clean && make all`, cronometrando; repite `make all` sin cambios y compara tiempos y logs. Explica por qué la segunda es más rápida gracias a timestamps y relaciones de dependencia bien declaradas.
-* Ejecuta `PYTHON=python3.12 make test` (si existe). Verifica con `python3.12 --version` y mensajes que el override funciona gracias a `?=` y a `PY="${PYTHON:-python3}"` en el script; confirma que el artefacto final no cambia respecto al intérprete por defecto.
+
+  ![](./img/e2.5.png)
+
+  La primera vez con make clean && make all todo se recompila y tarda más. La segunda vez con make all ya no hay cambios, make ve que los archivos están al día y no recompila, por eso es más rápido.
+
+* Ejecuta `PYTHON=python3.12 make test` (si existe). Verifica con `python3.12 --version` y mensajes que el override funciona gracias a `?=` y a `PY="${PYTHON:-python3}"` en el script; confirma que el artefacto final no cambia respecto 
+al intérprete por defecto.
+
+  ![](./img/e2.6.png)
+
+  Al hacer PYTHON=python3.12 make test falló porque no está instalado, el override funciona gracias a PYTHON ?= python3 y PY="${PYTHON:-python3}". Si existiera, el artefacto final seguiría siendo igual al de la versión por defecto.
+
 * Ejecuta `make test`; describe cómo primero corre `scripts/run_tests.sh` y luego `python -m unittest`. Determina el comportamiento si el script de pruebas falla y cómo se propaga el error a la tarea global.
+
+  ![](./img/e2.7.png)
+
+  Cuando ejecuto make test, primero corre scripts/run_tests.sh y luego python -m unittest, si el script de pruebas falla, como pasó en mi caso con variables sin definir y procesos faltantes, el error se propaga inmediatamente y Make detiene la tarea, marcando make: *** [Makefile:29: test] Error 2, así cualquier fallo en el script evita que se sigan ejecutando pasos posteriores.
+
 * Ejecuta `touch src/hello.py` y luego `make all`; identifica qué objetivos se rehacen (`build`, `test`, `package`) y relaciona el comportamiento con el timestamp actualizado y la cadena de dependencias especificada.
+
+  ![](./img/e2.8.png)
+
+  Al tocar src/hello.py, Make ve que out/hello.txt está desactualizado, así que rehace build, luego test y finalmente package, siguiendo la cadena de dependencias.
+
 * Ejecuta `make -j4 all` y observa ejecución concurrente de objetivos independientes; confirma resultados idénticos a modo secuencial y explica cómo `mkdir -p $(@D)` y dependencias precisas evitan condiciones de carrera.
+
+  ![](./img/e2.9.png)
+
+  Al correr make -j4 all, los objetivos que no dependen unos de otros se ejecutan al mismo tiempo, aprovechando la concurrencia. Aun así, los resultados son idénticos a la ejecución secuencial porque las dependencias están bien declaradas. Además, mkdir -p $(@D) garantiza que los directorios existan antes de escribir archivos, evitando condiciones de carrera entre tareas que crean o usan la misma carpeta.
+
 * Ejecuta `make lint` y luego `make format`; interpreta diagnósticos de `shellcheck`, revisa diferencias aplicadas por `shfmt` y, si está disponible, considera la salida de `ruff` sobre `src/` antes de empaquetar.
+
+  ![](./img/e2.10.png)
+
+  Al correr make lint, shellcheck revisa scripts/run_tests.sh y puede dar advertencias de estilo o errores de sintaxis; shfmt -d muestra diferencias de formato pero no las aplica todavía, como ruff no está instalado se omite ese lint,luego make format aplica automáticamente las correcciones de shfmt (-w) sobre el script, dejándolo con indentación y estilo consistente antes de empaquetar o ejecutar otros pasos.
 
 ### Parte 3: Extender
 
@@ -585,71 +649,3 @@ make verify-repro
 * Incluye `out/`, `dist/`, `.ruff_cache/` y `**/__pycache__/` en `.gitignore` para evitar artefactos generados en commits y reducir ruido en diffs.
 * Define (si te interesa CI) un objetivo `ci` que encadene `tools`, `check`, `package` y `verify-repro`; así validas dependencias, pruebas, empaquetado y reproducibilidad antes de subir cambios o crear tags.
 * Para probar determinismo y detectar variables "fantasma", usa entornos mínimos: `env -i LC_ALL=C LANG=C TZ=UTC make ...`.
-
-
-#### Entrega de la Actividad 5
-
-Coloca **todas las respuestas y evidencias** de la *Actividad 5: Construyendo un pipeline DevOps con Make y Bash* en una carpeta en la **raíz del repositorio** llamada **`Actividad5-CC3S2`**. La entrega debe ser autocontenida y fácil de revisar.
-
-#### 1) Estructura requerida
-
-```
-Actividad5-CC3S2/
-├── README.md                 # Respuestas y explicación breve por ejercicio
-├── logs/                     # Salidas de consola organizadas
-│   ├── make-help.txt
-│   ├── build-run1.txt
-│   ├── build-run2.txt
-│   ├── dry-run-build.txt
-│   ├── make-d.txt
-│   ├── fallo-python4.txt
-│   ├── sha256-1.txt
-│   ├── sha256-2.txt
-│   └── sha256-diff.txt
-├── evidencia/                # Evidencias puntuales (archivos/fragmentos)
-│   ├── out-hello-run1.txt
-│   ├── missing-separator.txt
-│   └── notas.md              # (opcional) aclaraciones breves
-├── artefactos/               # Copias de artefactos generados
-│   ├── out/
-│   │   └── hello.txt
-│   └── dist/
-│       └── app.tar.gz
-└── meta/
-    ├── entorno.txt           # Versiones (OS, Python, GNU tar, etc.)
-    └── commit.txt            # SHA corto del repo (si usaste git)
-```
-
-> **Nota:** Los artefactos originales se generan en `out/` y `dist/` del proyecto,  copia los **finales** a `Actividad5-CC3S2/artefactos/` para la entrega.
-
-#### 2) Contenido mínimo del `README.md` (dentro de `Actividad5-CC3S2/`)
-
-Incluye secciones breves (3-8 líneas cada una) que respondan a lo pedido en el enunciado:
-
-* **Resumen del entorno**: SO, shell, versiones de `make`, `bash`, `python3`, `tar` (indica si es **GNU tar**), `sha256sum`.
-* **Parte 1-Construir**:
-
-  * Explica qué hace `build` y cómo `$(PYTHON) $< > $@` usa `$<` y `$@`.
-  * Menciona el **modo estricto** (`-e -u -o pipefail`) y `.DELETE_ON_ERROR`.
-  * Diferencia entre la 1.ª y 2.ª corrida de `build` (idempotencia).
-* **Parte 2-Leer**:
-
-  * Qué observaste con `make -n` y `make -d` (decisiones de rehacer o no).
-  * Rol de `.DEFAULT_GOAL`, `.PHONY` y ayuda autodocumentada.
-* **Parte 3-Extender**:
-
-  * Qué detectó `shellcheck`/`shfmt` (o evidencia de que no están instalados).
-  * Demostración de **rollback** con `trap` (códigos de salida y restauración).
-  * **Reproducibilidad**: factores que la garantizan (`--sort`, `--mtime`, `--numeric-owner`, `TZ=UTC`) y el resultado de `verify-repro`.
-* **Incidencias y mitigaciones**: cualquier problema y cómo lo resolviste.
-* **Conclusión operativa**: 2-3 líneas sobre por qué el pipeline es apto para CI/CD.
-
-> Si alguna herramienta opcional no está disponible (p. ej., `ruff`), deja **evidencia** en `logs/` de su ausencia (mensaje claro) y continúa con el resto.
-
-#### 3) Comprobación rápida antes de subir
-
-* La carpeta **existe en la raíz** y contiene `README.md`.
-* Están los directorios `logs/`, `evidencia/`, `artefactos/`, `meta/`.
-* `artefactos/dist/app.tar.gz` **coincide** con el último build.
-* `sha256-1.txt` y `sha256-2.txt` muestran **el mismo hash**.
-* El `README.md` explica **cada ejercicio** en pocas líneas con referencia a sus evidencias.
