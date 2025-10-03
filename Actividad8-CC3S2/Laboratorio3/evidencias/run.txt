@@ -230,3 +230,50 @@ tests/test_mre_precision.py::test_mre_precision SKIPPED (Contrato: Reemplazo en 
 ======================================== short test summary info =========================================
 SKIPPED [1] tests/test_mre_precision.py:4: Contrato: Reemplazo en vez de acumulación no se corrige en esta versión
 =========================================== 1 skipped in 0.06s ==========================================
+
+D1. Estabilidad con datos aleatorios controlados
+
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3$ pytest tests/test_estabilidad_semillas.py -v
+========================================== test session starts ===========================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3
+configfile: pytest.ini
+plugins: cov-5.0.0, Faker-37.8.0
+collected 1 item                                                                                         
+
+tests/test_estabilidad_semillas.py::test_estabilidad_semillas PASSED                               [100%]
+
+=========================================== 1 passed in 0.20s ============================================
+
+D2. Invariantes de inventario
+
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3$ pytest tests/test_invariantes_inventario.py -v
+========================================== test session starts ===========================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3
+configfile: pytest.ini
+plugins: cov-5.0.0, Faker-37.8.0
+collected 1 item                                                                                         
+
+tests/test_invariantes_inventario.py::test_invariante_agregar_remover_y_actualizar PASSED          [100%]
+
+=========================================== 1 passed in 0.16s ============================================
+
+D3. Contrato de mensajes de error
+
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3$ pytest tests/test_mensajes_error.py -v
+========================================== test session starts ===========================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3
+configfile: pytest.ini
+plugins: cov-5.0.0, Faker-37.8.0
+collected 1 item                                                                                         
+
+tests/test_mensajes_error.py::test_mensaje_error_contiene_contexto XFAIL (Producto no encontra...) [100%]
+
+======================================== short test summary info =========================================
+XFAIL tests/test_mensajes_error.py::test_mensaje_error_contiene_contexto - Producto no encontrado en el carrito
+=========================================== 1 xfailed in 0.16s ===========================================

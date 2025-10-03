@@ -54,3 +54,19 @@ Tenemos reemplazo en vez de acumulación en `tests/test_mre_precision.py`. Expli
 - Agregamos dos veces el mismo producto `un-producto` con precios distintos (0.1 y 0.2).
 - El total debería sumar ambos (`0.1 + 0.2 = 0.3`).
 - El carrito devuelve `0.2` ,solo considera el último precio.
+
+
+
+### Ejercicio D2: Invariantes de inventario
+
+Se valida el invariante con el flujo:
+
+- Agregar N productos -> el total debe reflejar N*precio.
+- Remover exactamente N productos -> el carrito debe quedar vacío (total=0, items=0).
+- Alternativamente, agregar N y luego actualizar la cantidad a 0 nos lleva al mismo estado equivalente.
+
+Este test previene regresiones al validar la consistencia interna del carrito, garantiza que un cambio en la lógica de Carrito no rompa la logica que dice que si se agregan productos y luego se eliminan (o se actualizan a cantidad cero), el estado final debe ser equivalente a no haber agregado nada.
+
+### Ejercicio D3: Contrato de mensajes de error
+
+Este test establece que los mensajes de error deben informar el contexto de error, en este caso "Producto no encontrado en el carrito", el test se marca como xfail.
