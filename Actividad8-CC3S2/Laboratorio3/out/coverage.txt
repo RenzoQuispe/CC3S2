@@ -1,0 +1,23 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3
+configfile: pytest.ini
+testpaths: tests
+plugins: cov-5.0.0, Faker-37.8.0
+collected 15 items
+
+tests/test_carrito.py .........                                          [ 60%]
+tests/test_shopping_cart.py ......                                       [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name                   Stmts   Miss  Cover   Missing
+----------------------------------------------------
+src/__init__.py            0      0   100%
+src/carrito.py            55      7    87%   9, 21, 50, 52, 60, 68, 91
+src/factories.py           7      0   100%
+src/shopping_cart.py      29      3    90%   9, 27, 31
+----------------------------------------------------
+TOTAL                     91     10    89%
+
+
+============================== 15 passed in 0.49s ==============================

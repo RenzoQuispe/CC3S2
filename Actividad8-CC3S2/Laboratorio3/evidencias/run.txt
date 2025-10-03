@@ -1,0 +1,74 @@
+A1. Descuentos parametrizados
+
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3$ pytest tests/test_descuentos_parametrizados.py -v
+================================================= test session starts ==================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3
+configfile: pytest.ini
+plugins: cov-5.0.0, Faker-37.8.0
+collected 6 items                                                                                                      
+
+tests/test_descuentos_parametrizados.py::test_descuento_total[10.0-1-0-10.0] PASSED                              [ 16%]
+tests/test_descuentos_parametrizados.py::test_descuento_total[10.0-1-1-9.9] PASSED                               [ 33%]
+tests/test_descuentos_parametrizados.py::test_descuento_total[10.01-1-33.33-6.67] PASSED                         [ 50%]
+tests/test_descuentos_parametrizados.py::test_descuento_total[100.0-1-50-50.0] PASSED                            [ 66%]
+tests/test_descuentos_parametrizados.py::test_descuento_total[1.0-1-99.99-0.0] PASSED                            [ 83%]
+tests/test_descuentos_parametrizados.py::test_descuento_total[50.0-1-100-0.0] PASSED                             [100%]
+
+================================================== 6 passed in 0.18s ===================================================
+
+A2. Idempotencia de actualización de cantidades
+
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3$ pytest tests/test_idempotencia_cantidades.py -v
+================================================= test session starts ==================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3
+configfile: pytest.ini
+plugins: cov-5.0.0, Faker-37.8.0
+collected 1 item                                                                                                       
+
+tests/test_idempotencia_cantidades.py::test_actualizacion_idempotente PASSED                                     [100%]
+
+================================================== 1 passed in 0.15s ===================================================
+
+A3. Fronteras de precio y valores inválidos
+
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3$ pytest tests/test_precios_frontera.py -v
+================================================= test session starts ==================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3
+configfile: pytest.ini
+plugins: cov-5.0.0, Faker-37.8.0
+collected 6 items                                                                                                      
+
+tests/test_precios_frontera.py::test_precios_frontera[0.01] PASSED                                               [ 16%]
+tests/test_precios_frontera.py::test_precios_frontera[0.005] PASSED                                              [ 33%]
+tests/test_precios_frontera.py::test_precios_frontera[0.0049] PASSED                                             [ 50%]
+tests/test_precios_frontera.py::test_precios_frontera[9999999.99] PASSED                                         [ 66%]
+tests/test_precios_frontera.py::test_precios_invalidos[0.0] XPASS (Contrato no definido para precio=0 o nega...) [ 83%]
+tests/test_precios_frontera.py::test_precios_invalidos[-1.0] XPASS (Contrato no definido para precio=0 o neg...) [100%]
+
+======================================================= XPASSES ========================================================
+=============================================== short test summary info ================================================
+XPASS tests/test_precios_frontera.py::test_precios_invalidos[0.0] - Contrato no definido para precio=0 o negativo
+XPASS tests/test_precios_frontera.py::test_precios_invalidos[-1.0] - Contrato no definido para precio=0 o negativo
+============================================= 4 passed, 2 xpassed in 0.17s =============================================
+
+A4. Redondeos acumulados vs. final
+
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3$ pytest tests/test_redondeo_acumulado.py -v
+================================================= test session starts ==================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3
+configfile: pytest.ini
+plugins: cov-5.0.0, Faker-37.8.0
+collected 2 items                                                                                                      
+
+tests/test_redondeo_acumulado.py::test_redondeo_acumulado_vs_final1 PASSED                                       [ 50%]
+tests/test_redondeo_acumulado.py::test_redondeo_acumulado_vs_final2 PASSED                                       [100%]
+
+================================================== 2 passed in 0.19s ===================================================
