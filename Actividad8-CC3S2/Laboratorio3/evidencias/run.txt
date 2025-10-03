@@ -122,3 +122,111 @@ tests/test_refactor_suites.py::TestPrecisionMonetaria::test_suma_pequenas_cantid
 tests/test_refactor_suites.py::TestPasarelaPagoContratos::test_pago_exitoso PASSED                 [100%]
 
 =========================================== 2 passed in 0.18s ============================================
+
+C1. Contratos de pasarela de pago con mock
+
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3$ pytest tests/test_pasarela_pago_contratos.py -v
+========================================== test session starts ===========================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3
+configfile: pytest.ini
+plugins: cov-5.0.0, Faker-37.8.0
+collected 3 items                                                                                        
+
+tests/test_pasarela_pago_contratos.py::test_pago_exitoso PASSED                                    [ 33%]
+tests/test_pasarela_pago_contratos.py::test_pago_timeout_sin_reintento_automatico PASSED           [ 66%]
+tests/test_pasarela_pago_contratos.py::test_pago_rechazo_definitivo PASSED                         [100%]
+
+=========================================== 3 passed in 0.21s ============================================
+
+C2. Marcadores de humo y regresión
+
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3$ pytest -m smoke -vv
+========================================== test session starts ===========================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3
+configfile: pytest.ini
+testpaths: tests
+plugins: cov-5.0.0, Faker-37.8.0
+collected 41 items / 38 deselected / 3 selected                                                          
+
+tests/test_markers.py::test_smoke_agregar_y_total PASSED                                           [ 33%]
+tests/test_markers.py::test_smoke_pago_exitoso PASSED                                              [ 66%]
+tests/test_markers.py::test_smoke_pago_rechazado PASSED                                            [100%]
+
+==================================== 3 passed, 38 deselected in 0.22s ====================================
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3$ pytest -m regression -vv
+========================================== test session starts ===========================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3
+configfile: pytest.ini
+testpaths: tests
+plugins: cov-5.0.0, Faker-37.8.0
+collected 41 items / 40 deselected / 1 selected                                                          
+
+tests/test_markers.py::test_regression_descuento_redondeo PASSED                                   [100%]
+
+==================================== 1 passed, 40 deselected in 0.21s ====================================
+
+C3. Umbral de cobertura como quality gate
+
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3$ pytest --cov=src --cov-report=term-missing --cov-fail-under=90 || true
+========================================== test session starts ===========================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3
+configfile: pytest.ini
+testpaths: tests
+plugins: cov-5.0.0, Faker-37.8.0
+collected 41 items                                                                                       
+
+tests/test_carrito.py .........                                                                    [ 21%]
+tests/test_descuentos_parametrizados.py ......                                                     [ 36%]
+tests/test_idempotencia_cantidades.py .                                                            [ 39%]
+tests/test_markers.py ....                                                                         [ 48%]
+tests/test_pasarela_pago_contratos.py ...                                                          [ 56%]
+tests/test_precios_frontera.py ....XX                                                              [ 70%]
+tests/test_redondeo_acumulado.py ..                                                                [ 75%]
+tests/test_refactor_suites.py ..                                                                   [ 80%]
+tests/test_rgr_precision_rojo.py x                                                                 [ 82%]
+tests/test_rgr_precision_verde.py s                                                                [ 85%]
+tests/test_shopping_cart.py ......                                                                 [100%]
+
+================================================ XPASSES =================================================
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name                   Stmts   Miss  Cover   Missing
+----------------------------------------------------
+src/__init__.py            0      0   100%
+src/carrito.py            55      7    87%   9, 21, 50, 52, 60, 68, 91
+src/factories.py           7      0   100%
+src/shopping_cart.py      29      2    93%   27, 31
+----------------------------------------------------
+TOTAL                     91      9    90%
+
+Required test coverage of 90% reached. Total coverage: 90.11%
+======================================== short test summary info =========================================
+SKIPPED [1] tests/test_rgr_precision_verde.py:4: Contrato: precisión binaria no se corrige en esta versión
+XFAIL tests/test_rgr_precision_rojo.py::test_total_precision_decimal - Float binario puede introducir error en dinero
+XPASS tests/test_precios_frontera.py::test_precios_invalidos[0.0] - Contrato no definido para precio=0 o negativo
+XPASS tests/test_precios_frontera.py::test_precios_invalidos[-1.0] - Contrato no definido para precio=0 o negativo
+========================== 37 passed, 1 skipped, 1 xfailed, 2 xpassed in 0.68s ===========================
+
+C4. MREs para defectos
+
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3$ pytest tests/test_mre_precision.py -v
+========================================== test session starts ===========================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3
+configfile: pytest.ini
+plugins: cov-5.0.0, Faker-37.8.0
+collected 1 item                                                                                         
+
+tests/test_mre_precision.py::test_mre_precision SKIPPED (Contrato: Reemplazo en vez de acumula...) [100%]
+
+======================================== short test summary info =========================================
+SKIPPED [1] tests/test_mre_precision.py:4: Contrato: Reemplazo en vez de acumulación no se corrige en esta versión
+=========================================== 1 skipped in 0.06s ==========================================
