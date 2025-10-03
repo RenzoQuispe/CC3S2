@@ -4,20 +4,41 @@ rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3
 configfile: pytest.ini
 testpaths: tests
 plugins: cov-5.0.0, Faker-37.8.0
-collected 15 items
+collected 45 items
 
-tests/test_carrito.py .........                                          [ 60%]
+tests/test_carrito.py .........                                          [ 20%]
+tests/test_descuentos_parametrizados.py ......                           [ 33%]
+tests/test_estabilidad_semillas.py .                                     [ 35%]
+tests/test_idempotencia_cantidades.py .                                  [ 37%]
+tests/test_invariantes_inventario.py .                                   [ 40%]
+tests/test_markers.py ....                                               [ 48%]
+tests/test_mensajes_error.py x                                           [ 51%]
+tests/test_mre_precision.py s                                            [ 53%]
+tests/test_pasarela_pago_contratos.py ...                                [ 60%]
+tests/test_precios_frontera.py ....XX                                    [ 73%]
+tests/test_redondeo_acumulado.py ..                                      [ 77%]
+tests/test_refactor_suites.py ..                                         [ 82%]
+tests/test_rgr_precision_rojo.py x                                       [ 84%]
+tests/test_rgr_precision_verde.py s                                      [ 86%]
 tests/test_shopping_cart.py ......                                       [100%]
+
+=================================== XPASSES ====================================
 
 ---------- coverage: platform linux, python 3.13.5-final-0 -----------
 Name                   Stmts   Miss  Cover   Missing
 ----------------------------------------------------
 src/__init__.py            0      0   100%
-src/carrito.py            55      7    87%   9, 21, 50, 52, 60, 68, 91
+src/carrito.py            55      6    89%   9, 21, 50, 52, 60, 91
 src/factories.py           7      0   100%
-src/shopping_cart.py      29      3    90%   9, 27, 31
+src/shopping_cart.py      29      2    93%   27, 31
 ----------------------------------------------------
-TOTAL                     91     10    89%
+TOTAL                     91      8    91%
 
-
-============================== 15 passed in 0.49s ==============================
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_mre_precision.py:4: Contrato: Reemplazo en vez de acumulación no se corrige en esta versión
+SKIPPED [1] tests/test_rgr_precision_verde.py:4: Contrato: precisión binaria no se corrige en esta versión
+XFAIL tests/test_mensajes_error.py::test_mensaje_error_contiene_contexto - Producto no encontrado en el carrito
+XFAIL tests/test_rgr_precision_rojo.py::test_total_precision_decimal - Float binario puede introducir error en dinero
+XPASS tests/test_precios_frontera.py::test_precios_invalidos[0.0] - Contrato no definido para precio=0 o negativo
+XPASS tests/test_precios_frontera.py::test_precios_invalidos[-1.0] - Contrato no definido para precio=0 o negativo
+============= 39 passed, 2 skipped, 2 xfailed, 2 xpassed in 0.54s ==============
