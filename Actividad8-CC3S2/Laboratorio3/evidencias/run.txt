@@ -72,3 +72,53 @@ tests/test_redondeo_acumulado.py::test_redondeo_acumulado_vs_final1 PASSED      
 tests/test_redondeo_acumulado.py::test_redondeo_acumulado_vs_final2 PASSED                                       [100%]
 
 ================================================== 2 passed in 0.19s ===================================================
+
+B1. Rojo (falla esperada)- precisión financiera
+
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3$ pytest tests/test_rgr_precision_rojo.py -v
+========================================== test session starts ===========================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3
+configfile: pytest.ini
+plugins: cov-5.0.0, Faker-37.8.0
+collected 1 item                                                                                         
+
+tests/test_rgr_precision_rojo.py::test_total_precision_decimal XFAIL (Float binario puede intr...) [100%]
+
+======================================== short test summary info =========================================
+XFAIL tests/test_rgr_precision_rojo.py::test_total_precision_decimal - Float binario puede introducir error en dinero
+=========================================== 1 xfailed in 0.19s ===========================================
+
+B2. Verde (exclusión documentada)
+
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3$ pytest tests/test_rgr_precision_verde.py -v
+========================================== test session starts ===========================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3
+configfile: pytest.ini
+plugins: cov-5.0.0, Faker-37.8.0
+collected 1 item                                                                                         
+
+tests/test_rgr_precision_verde.py::test_total_precision_decimal_skip SKIPPED (Contrato: precis...) [100%]
+
+======================================== short test summary info =========================================
+SKIPPED [1] tests/test_rgr_precision_verde.py:4: Contrato: precisión binaria no se corrige en esta versión
+=========================================== 1 skipped in 0.06s ===========================================
+
+B3. Refactor de suites
+
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3$ pytest tests/test_refactor_suites.py -v
+========================================== test session starts ===========================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3
+configfile: pytest.ini
+plugins: cov-5.0.0, Faker-37.8.0
+collected 2 items                                                                                        
+
+tests/test_refactor_suites.py::TestPrecisionMonetaria::test_suma_pequenas_cantidades PASSED        [ 50%]
+tests/test_refactor_suites.py::TestPasarelaPagoContratos::test_pago_exitoso PASSED                 [100%]
+
+=========================================== 2 passed in 0.18s ============================================
