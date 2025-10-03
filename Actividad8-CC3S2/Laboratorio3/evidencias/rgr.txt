@@ -1,0 +1,65 @@
+make red ------------------------------------------------------------------------------------------------------
+
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3$ make red
+......................xs.......XX....xs......                                                      [100%]
+================================================ XPASSES =================================================
+======================================== short test summary info =========================================
+SKIPPED [1] tests/test_mre_precision.py:4: Contrato: Reemplazo en vez de acumulación no se corrige en esta versión
+SKIPPED [1] tests/test_rgr_precision_verde.py:4: Contrato: precisión binaria no se corrige en esta versión
+XFAIL tests/test_mensajes_error.py::test_mensaje_error_contiene_contexto - Producto no encontrado en el carrito
+XFAIL tests/test_rgr_precision_rojo.py::test_total_precision_decimal - Float binario puede introducir error en dinero
+XPASS tests/test_precios_frontera.py::test_precios_invalidos[0.0] - Contrato no definido para precio=0 o negativo
+XPASS tests/test_precios_frontera.py::test_precios_invalidos[-1.0] - Contrato no definido para precio=0 o negativo
+39 passed, 2 skipped, 2 xfailed, 2 xpassed in 0.43s
+Todas las pruebas estan en verde, escribe primero una prueba que falle (RED)!
+make: *** [Makefile:30: red] Error 1
+
+
+
+make green ----------------------------------------------------------------------------------------------------
+
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3$ make green
+......................xs.......XX....xs......                                                      [100%]
+================================================ XPASSES =================================================
+======================================== short test summary info =========================================
+SKIPPED [1] tests/test_mre_precision.py:4: Contrato: Reemplazo en vez de acumulación no se corrige en esta versión
+SKIPPED [1] tests/test_rgr_precision_verde.py:4: Contrato: precisión binaria no se corrige en esta versión
+XFAIL tests/test_mensajes_error.py::test_mensaje_error_contiene_contexto - Producto no encontrado en el carrito
+XFAIL tests/test_rgr_precision_rojo.py::test_total_precision_decimal - Float binario puede introducir error en dinero
+XPASS tests/test_precios_frontera.py::test_precios_invalidos[0.0] - Contrato no definido para precio=0 o negativo
+XPASS tests/test_precios_frontera.py::test_precios_invalidos[-1.0] - Contrato no definido para precio=0 o negativo
+39 passed, 2 skipped, 2 xfailed, 2 xpassed in 0.34s
+VERDE, refactoriza de manera segura.
+
+
+
+make refactor -------------------------------------------------------------------------------------------------
+
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3$ make refactor
+......................xs.......XX....xs......                                                      [100%]
+================================================ XPASSES =================================================
+======================================== short test summary info =========================================
+SKIPPED [1] tests/test_mre_precision.py:4: Contrato: Reemplazo en vez de acumulación no se corrige en esta versión
+SKIPPED [1] tests/test_rgr_precision_verde.py:4: Contrato: precisión binaria no se corrige en esta versión
+XFAIL tests/test_mensajes_error.py::test_mensaje_error_contiene_contexto - Producto no encontrado en el carrito
+XFAIL tests/test_rgr_precision_rojo.py::test_total_precision_decimal - Float binario puede introducir error en dinero
+XPASS tests/test_precios_frontera.py::test_precios_invalidos[0.0] - Contrato no definido para precio=0 o negativo
+XPASS tests/test_precios_frontera.py::test_precios_invalidos[-1.0] - Contrato no definido para precio=0 o negativo
+39 passed, 2 skipped, 2 xfailed, 2 xpassed in 0.35s
+REFACTORIZACION, mantiene las pruebas siguen en verde.
+
+
+
+make rgr ------------------------------------------------------------------------------------------------------
+
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad8-CC3S2/Laboratorio3$ make rgr
+......................xs.......XX....xs......                                                      [100%]
+================================================ XPASSES =================================================
+======================================== short test summary info =========================================
+SKIPPED [1] tests/test_mre_precision.py:4: Contrato: Reemplazo en vez de acumulación no se corrige en esta versión
+SKIPPED [1] tests/test_rgr_precision_verde.py:4: Contrato: precisión binaria no se corrige en esta versión
+XFAIL tests/test_mensajes_error.py::test_mensaje_error_contiene_contexto - Producto no encontrado en el carrito
+XFAIL tests/test_rgr_precision_rojo.py::test_total_precision_decimal - Float binario puede introducir error en dinero
+XPASS tests/test_precios_frontera.py::test_precios_invalidos[0.0] - Contrato no definido para precio=0 o negativo
+XPASS tests/test_precios_frontera.py::test_precios_invalidos[-1.0] - Contrato no definido para precio=0 o negativo
+39 passed, 2 skipped, 2 xfailed, 2 xpassed in 0.36s
