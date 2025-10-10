@@ -1,6 +1,6 @@
 ### Actividad 9: pytest + coverage + fixtures + factories + mocking + TDD
 
-Debes resolver **todas** las actividades incluidas en [Laboratorio4/Actividades](https://github.com/kapumota/Curso-CC3S2/tree/main/labs/Laboratorio4/Actividades) dentro de una sola entrega reproducible, demostrando dominio de:
+Debes resolver todas las actividades incluidas en Laboratorio4 dentro de una sola entrega reproducible, demostrando dominio de:
 
 * ejecución de pruebas con **pytest**
 * **aserciones**
