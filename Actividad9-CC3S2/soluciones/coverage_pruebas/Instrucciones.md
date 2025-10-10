@@ -78,6 +78,31 @@ Conocer el estado actual de la cobertura y detectar áreas del código que podr�
 3. **Documentar las observaciones:**  
    Registra en un breve informe qué partes del código no están totalmente cubiertas y plantea posibles razones o casos de prueba faltantes.
 
+```
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/pruebas_fixtures$ pytest
+======================================================== test session starts =========================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/pruebas_fixtures
+configfile: setup.cfg
+plugins: cov-5.0.0, Faker-37.11.0
+collected 2 items                                                                                                                    
+
+tests/test_account.py::TestAccountModel::test_create_an_account PASSED                                                         [ 50%]
+tests/test_account.py::TestAccountModel::test_create_all_accounts PASSED                                                       [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name                 Stmts   Miss Branch BrPart  Cover   Missing
+----------------------------------------------------------------
+models/__init__.py       6      0      0      0   100%
+models/account.py       40     13      8      0    65%   25, 29, 33-34, 44-47, 51-53, 71-72
+----------------------------------------------------------------
+TOTAL                   46     13      8      0    69%
+
+
+========================================================= 2 passed in 1.15s ==========================================================
+```
+
 
 #### Ejercicio 2: Ampliar las pruebas para mejorar la cobertura
 
@@ -112,6 +137,40 @@ Aumentar la cobertura de pruebas escribiendo tests que exploren casos adicionale
 4. **Prueba del método especial `__repr__`:**
    - Verificar que el formato del string sea exactamente el esperado.
 
+```
+======================================================== test session starts =========================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/coverage_pruebas
+configfile: setup.cfg
+testpaths: tests
+plugins: cov-5.0.0, Faker-37.11.0
+collected 10 items                                                                                                                   
+
+tests/test_account.py::TestAccountModel::test_create_an_account PASSED                                                         [ 10%]
+tests/test_account.py::TestAccountModel::test_create_all_accounts PASSED                                                       [ 20%]
+tests/test_account.py::TestAccountModel::test_to_dict PASSED                                                                   [ 30%]
+tests/test_account.py::TestAccountModel::test_from_dict PASSED                                                                 [ 40%]
+tests/test_account.py::TestAccountModel::test_update_account_success PASSED                                                    [ 50%]
+tests/test_account.py::TestAccountModel::test_update_account_no_id_error PASSED                                                [ 60%]
+tests/test_account.py::TestAccountModel::test_delete_account PASSED                                                            [ 70%]
+tests/test_account.py::TestAccountModel::test_find_account_exists PASSED                                                       [ 80%]
+tests/test_account.py::TestAccountModel::test_find_account_not_exists PASSED                                                   [ 90%]
+tests/test_account.py::TestAccountModel::test_repr_account PASSED                                                              [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name                 Stmts   Miss Branch BrPart  Cover   Missing
+----------------------------------------------------------------
+models/__init__.py       6      0      0      0   100%
+models/account.py       47      0     10      0   100%
+----------------------------------------------------------------
+TOTAL                   53      0     10      0   100%
+Coverage HTML written to dir htmlcov
+
+
+========================================================= 10 passed in 1.99s =========================================================
+```
+
 #### Ejercicio 3: Integración y pruebas con una base de datos temporal
 
 **Objetivo:**  
@@ -144,6 +203,39 @@ Implementar pruebas de integración utilizando una base de datos temporal para e
 3. **Verificar en las pruebas:**
    - Ejecuta de nuevo todas las pruebas y asegúrate de que no se están escribiendo datos en `test.db`, sino en una base en memoria que se destruye al finalizar.
 
+```
+======================================================== test session starts =========================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/coverage_pruebas
+configfile: setup.cfg
+testpaths: tests
+plugins: cov-5.0.0, Faker-37.11.0
+collected 10 items                                                                                                                   
+
+tests/test_account.py::TestAccountModel::test_create_an_account PASSED                                                         [ 10%]
+tests/test_account.py::TestAccountModel::test_create_all_accounts PASSED                                                       [ 20%]
+tests/test_account.py::TestAccountModel::test_to_dict PASSED                                                                   [ 30%]
+tests/test_account.py::TestAccountModel::test_from_dict PASSED                                                                 [ 40%]
+tests/test_account.py::TestAccountModel::test_update_account_success PASSED                                                    [ 50%]
+tests/test_account.py::TestAccountModel::test_update_account_no_id_error PASSED                                                [ 60%]
+tests/test_account.py::TestAccountModel::test_delete_account PASSED                                                            [ 70%]
+tests/test_account.py::TestAccountModel::test_find_account_exists PASSED                                                       [ 80%]
+tests/test_account.py::TestAccountModel::test_find_account_not_exists PASSED                                                   [ 90%]
+tests/test_account.py::TestAccountModel::test_repr_account PASSED                                                              [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name                 Stmts   Miss Branch BrPart  Cover   Missing
+----------------------------------------------------------------
+models/__init__.py       9      1      2      1    82%   12
+models/account.py       47      0     10      0   100%
+----------------------------------------------------------------
+TOTAL                   56      1     12      1    97%
+Coverage HTML written to dir htmlcov
+
+
+========================================================= 10 passed in 1.72s ========================================================= 
+```
 
 ### Ejercicio 4: Refactorización y adición de funcionalidades
 
@@ -166,6 +258,43 @@ Extender la funcionalidad del modelo y a su vez, la cobertura de pruebas.
              if not re.match(r"[^@]+@[^@]+\.[^@]+", self.email):
                  raise DataValidationError("El email no es válido")
      ```
+
+Nueva cobertura tras agregar la nueva función:
+
+```
+======================================================== test session starts =========================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/coverage_pruebas
+configfile: setup.cfg
+testpaths: tests
+plugins: cov-5.0.0, Faker-37.11.0
+collected 10 items                                                                                                                   
+
+tests/test_account.py::TestAccountModel::test_create_an_account PASSED                                                         [ 10%]
+tests/test_account.py::TestAccountModel::test_create_all_accounts PASSED                                                       [ 20%]
+tests/test_account.py::TestAccountModel::test_to_dict PASSED                                                                   [ 30%]
+tests/test_account.py::TestAccountModel::test_from_dict PASSED                                                                 [ 40%]
+tests/test_account.py::TestAccountModel::test_update_account_success PASSED                                                    [ 50%]
+tests/test_account.py::TestAccountModel::test_update_account_no_id_error PASSED                                                [ 60%]
+tests/test_account.py::TestAccountModel::test_delete_account PASSED                                                            [ 70%]
+tests/test_account.py::TestAccountModel::test_find_account_exists PASSED                                                       [ 80%]
+tests/test_account.py::TestAccountModel::test_find_account_not_exists PASSED                                                   [ 90%]
+tests/test_account.py::TestAccountModel::test_repr_account PASSED                                                              [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name                 Stmts   Miss Branch BrPart  Cover   Missing
+----------------------------------------------------------------
+models/__init__.py       9      1      2      1    82%   12
+models/account.py       52      4     14      0    88%   67-70
+----------------------------------------------------------------
+TOTAL                   61      5     16      1    87%
+Coverage HTML written to dir htmlcov
+
+
+========================================================= 10 passed in 1.68s =========================================================
+```
+
 2. **Escribir tests para el nuevo método:**  
    - Crea pruebas en `test_account.py` que:
      - Verifiquen que se lance una excepción si el nombre está vacío.
@@ -174,3 +303,40 @@ Extender la funcionalidad del modelo y a su vez, la cobertura de pruebas.
 
 3. **Actualizar la cobertura:**  
    - Ejecuta nuevamente `make test` y `make coverage_individual` para verificar que el nuevo método está completamente cubierto por pruebas.
+
+```
+======================================================== test session starts =========================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/coverage_pruebas
+configfile: setup.cfg
+testpaths: tests
+plugins: cov-5.0.0, Faker-37.11.0
+collected 13 items                                                                                                                   
+
+tests/test_account.py::TestAccountModel::test_create_an_account PASSED                                                         [  7%]
+tests/test_account.py::TestAccountModel::test_create_all_accounts PASSED                                                       [ 15%]
+tests/test_account.py::TestAccountModel::test_to_dict PASSED                                                                   [ 23%]
+tests/test_account.py::TestAccountModel::test_from_dict PASSED                                                                 [ 30%]
+tests/test_account.py::TestAccountModel::test_update_account_success PASSED                                                    [ 38%]
+tests/test_account.py::TestAccountModel::test_update_account_no_id_error PASSED                                                [ 46%]
+tests/test_account.py::TestAccountModel::test_delete_account PASSED                                                            [ 53%]
+tests/test_account.py::TestAccountModel::test_find_account_exists PASSED                                                       [ 61%]
+tests/test_account.py::TestAccountModel::test_find_account_not_exists PASSED                                                   [ 69%]
+tests/test_account.py::TestAccountModel::test_repr_account PASSED                                                              [ 76%]
+tests/test_account.py::TestAccountModel::test_validate_info_valida PASSED                                                      [ 84%]
+tests/test_account.py::TestAccountModel::test_validate_nombre_vacio PASSED                                                     [ 92%]
+tests/test_account.py::TestAccountModel::test_validate_invalid_email PASSED                                                    [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name                 Stmts   Miss Branch BrPart  Cover   Missing
+----------------------------------------------------------------
+models/__init__.py       9      1      2      1    82%   12
+models/account.py       53      0     14      0   100%
+----------------------------------------------------------------
+TOTAL                   62      1     16      1    97%
+Coverage HTML written to dir htmlcov
+
+
+========================================================= 13 passed in 1.37s =========================================================
+```

@@ -1,0 +1,22 @@
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/pruebas_fixtures$ pytest
+======================================================== test session starts =========================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/pruebas_fixtures
+configfile: setup.cfg
+plugins: cov-5.0.0, Faker-37.11.0
+collected 2 items                                                                                                                    
+
+tests/test_account.py::TestAccountModel::test_create_an_account PASSED                                                         [ 50%]
+tests/test_account.py::TestAccountModel::test_create_all_accounts PASSED                                                       [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name                 Stmts   Miss Branch BrPart  Cover   Missing
+----------------------------------------------------------------
+models/__init__.py       6      0      0      0   100%
+models/account.py       40     13      8      0    65%   25, 29, 33-34, 44-47, 51-53, 71-72
+----------------------------------------------------------------
+TOTAL                   46     13      8      0    69%
+
+
+========================================================= 2 passed in 1.15s ==========================================================
