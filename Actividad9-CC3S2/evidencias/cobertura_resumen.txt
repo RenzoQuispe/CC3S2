@@ -1,0 +1,34 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/.venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/coverage_pruebas
+configfile: setup.cfg
+testpaths: tests
+plugins: cov-5.0.0, Faker-37.11.0
+collecting ... collected 13 items
+
+tests/test_account.py::TestAccountModel::test_create_an_account PASSED   [  7%]
+tests/test_account.py::TestAccountModel::test_create_all_accounts PASSED [ 15%]
+tests/test_account.py::TestAccountModel::test_to_dict PASSED             [ 23%]
+tests/test_account.py::TestAccountModel::test_from_dict PASSED           [ 30%]
+tests/test_account.py::TestAccountModel::test_update_account_success PASSED [ 38%]
+tests/test_account.py::TestAccountModel::test_update_account_no_id_error PASSED [ 46%]
+tests/test_account.py::TestAccountModel::test_delete_account PASSED      [ 53%]
+tests/test_account.py::TestAccountModel::test_find_account_exists PASSED [ 61%]
+tests/test_account.py::TestAccountModel::test_find_account_not_exists PASSED [ 69%]
+tests/test_account.py::TestAccountModel::test_repr_account PASSED        [ 76%]
+tests/test_account.py::TestAccountModel::test_validate_info_valida PASSED [ 84%]
+tests/test_account.py::TestAccountModel::test_validate_nombre_vacio PASSED [ 92%]
+tests/test_account.py::TestAccountModel::test_validate_invalid_email PASSED [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name                 Stmts   Miss Branch BrPart  Cover   Missing
+----------------------------------------------------------------
+models/__init__.py       9      1      2      1    82%   12
+models/account.py       53      0     14      0   100%
+----------------------------------------------------------------
+TOTAL                   62      1     16      1    97%
+Coverage HTML written to dir htmlcov
+
+
+============================== 13 passed in 1.31s ==============================

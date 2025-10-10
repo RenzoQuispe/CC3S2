@@ -1,12 +1,12 @@
 VENV=.venv
 PY=$(VENV)/bin/python
 PIP=$(VENV)/bin/pip
-PYTEST=$(VENV)/bin/pytest
+PYTEST=$(abspath $(VENV)/bin/pytest)
 
 .PHONY: venv deps test_all test_unit cov clean
 
 venv:
-	python -m venv $(VENV)
+	python3 -m venv $(VENV)
 
 deps: venv
 	$(PIP) install -r requirements.txt

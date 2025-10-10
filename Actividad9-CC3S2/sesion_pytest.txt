@@ -1,0 +1,180 @@
+jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad9-CC3S2$ make test_all 
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+Requirement already satisfied: Werkzeug==2.1.2 in ./.venv/lib/python3.13/site-packages (from -r requirements.txt (line 2)) (2.1.2)
+Requirement already satisfied: SQLAlchemy==1.4.46 in ./.venv/lib/python3.13/site-packages (from -r requirements.txt (line 3)) (1.4.46)
+Requirement already satisfied: Flask==2.1.2 in ./.venv/lib/python3.13/site-packages (from -r requirements.txt (line 6)) (2.1.2)
+Requirement already satisfied: Flask-SQLAlchemy==2.5.1 in ./.venv/lib/python3.13/site-packages (from -r requirements.txt (line 7)) (2.5.1)
+Requirement already satisfied: requests==2.31.0 in ./.venv/lib/python3.13/site-packages (from -r requirements.txt (line 8)) (2.31.0)
+Requirement already satisfied: pytest==8.3.3 in ./.venv/lib/python3.13/site-packages (from -r requirements.txt (line 11)) (8.3.3)
+Requirement already satisfied: pytest-cov==5.0.0 in ./.venv/lib/python3.13/site-packages (from -r requirements.txt (line 12)) (5.0.0)
+Requirement already satisfied: coverage==7.6.1 in ./.venv/lib/python3.13/site-packages (from -r requirements.txt (line 13)) (7.6.1)
+Requirement already satisfied: factory-boy==3.3.0 in ./.venv/lib/python3.13/site-packages (from -r requirements.txt (line 14)) (3.3.0)
+Requirement already satisfied: pylint==3.2.7 in ./.venv/lib/python3.13/site-packages (from -r requirements.txt (line 15)) (3.2.7)
+Requirement already satisfied: ruff in ./.venv/lib/python3.13/site-packages (from -r requirements.txt (line 18)) (0.14.0)
+Requirement already satisfied: black in ./.venv/lib/python3.13/site-packages (from -r requirements.txt (line 19)) (25.9.0)
+Requirement already satisfied: autoflake in ./.venv/lib/python3.13/site-packages (from -r requirements.txt (line 20)) (2.3.1)
+Requirement already satisfied: greenlet!=0.4.17 in ./.venv/lib/python3.13/site-packages (from SQLAlchemy==1.4.46->-r requirements.txt (line 3)) (3.2.4)
+Requirement already satisfied: Jinja2>=3.0 in ./.venv/lib/python3.13/site-packages (from Flask==2.1.2->-r requirements.txt (line 6)) (3.1.6)
+Requirement already satisfied: itsdangerous>=2.0 in ./.venv/lib/python3.13/site-packages (from Flask==2.1.2->-r requirements.txt (line 6)) (2.2.0)
+Requirement already satisfied: click>=8.0 in ./.venv/lib/python3.13/site-packages (from Flask==2.1.2->-r requirements.txt (line 6)) (8.3.0)
+Requirement already satisfied: charset-normalizer<4,>=2 in ./.venv/lib/python3.13/site-packages (from requests==2.31.0->-r requirements.txt (line 8)) (3.4.3)
+Requirement already satisfied: idna<4,>=2.5 in ./.venv/lib/python3.13/site-packages (from requests==2.31.0->-r requirements.txt (line 8)) (3.10)
+Requirement already satisfied: urllib3<3,>=1.21.1 in ./.venv/lib/python3.13/site-packages (from requests==2.31.0->-r requirements.txt (line 8)) (2.5.0)
+Requirement already satisfied: certifi>=2017.4.17 in ./.venv/lib/python3.13/site-packages (from requests==2.31.0->-r requirements.txt (line 8)) (2025.10.5)
+Requirement already satisfied: iniconfig in ./.venv/lib/python3.13/site-packages (from pytest==8.3.3->-r requirements.txt (line 11)) (2.1.0)
+Requirement already satisfied: packaging in ./.venv/lib/python3.13/site-packages (from pytest==8.3.3->-r requirements.txt (line 11)) (25.0)
+Requirement already satisfied: pluggy<2,>=1.5 in ./.venv/lib/python3.13/site-packages (from pytest==8.3.3->-r requirements.txt (line 11)) (1.6.0)
+Requirement already satisfied: Faker>=0.7.0 in ./.venv/lib/python3.13/site-packages (from factory-boy==3.3.0->-r requirements.txt (line 14)) (37.11.0)
+Requirement already satisfied: platformdirs>=2.2.0 in ./.venv/lib/python3.13/site-packages (from pylint==3.2.7->-r requirements.txt (line 15)) (4.5.0)
+Requirement already satisfied: astroid<=3.3.0-dev0,>=3.2.4 in ./.venv/lib/python3.13/site-packages (from pylint==3.2.7->-r requirements.txt (line 15)) (3.2.4)
+Requirement already satisfied: isort!=5.13.0,<6,>=4.2.5 in ./.venv/lib/python3.13/site-packages (from pylint==3.2.7->-r requirements.txt (line 15)) (5.13.2)
+Requirement already satisfied: mccabe<0.8,>=0.6 in ./.venv/lib/python3.13/site-packages (from pylint==3.2.7->-r requirements.txt (line 15)) (0.7.0)
+Requirement already satisfied: tomlkit>=0.10.1 in ./.venv/lib/python3.13/site-packages (from pylint==3.2.7->-r requirements.txt (line 15)) (0.13.3)
+Requirement already satisfied: dill>=0.3.6 in ./.venv/lib/python3.13/site-packages (from pylint==3.2.7->-r requirements.txt (line 15)) (0.4.0)
+Requirement already satisfied: mypy-extensions>=0.4.3 in ./.venv/lib/python3.13/site-packages (from black->-r requirements.txt (line 19)) (1.1.0)
+Requirement already satisfied: pathspec>=0.9.0 in ./.venv/lib/python3.13/site-packages (from black->-r requirements.txt (line 19)) (0.12.1)
+Requirement already satisfied: pytokens>=0.1.10 in ./.venv/lib/python3.13/site-packages (from black->-r requirements.txt (line 19)) (0.1.10)
+Requirement already satisfied: pyflakes>=3.0.0 in ./.venv/lib/python3.13/site-packages (from autoflake->-r requirements.txt (line 20)) (3.4.0)
+Requirement already satisfied: tzdata in ./.venv/lib/python3.13/site-packages (from Faker>=0.7.0->factory-boy==3.3.0->-r requirements.txt (line 14)) (2025.2)
+Requirement already satisfied: MarkupSafe>=2.0 in ./.venv/lib/python3.13/site-packages (from Jinja2>=3.0->Flask==2.1.2->-r requirements.txt (line 6)) (3.0.3)
+cd soluciones/aserciones_pruebas   && /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/.venv/bin/pytest -q || exit 1
+====================================================== test session starts ======================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/aserciones_pruebas
+configfile: setup.cfg
+plugins: cov-5.0.0, Faker-37.11.0
+collected 8 items                                                                                                               
+
+test_stack.py ........                                                                                                    [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name       Stmts   Miss Branch BrPart  Cover   Missing
+------------------------------------------------------
+stack.py      12      0      0      0   100%
+------------------------------------------------------
+TOTAL         12      0      0      0   100%
+
+
+======================================================= 8 passed in 0.31s =======================================================
+cd soluciones/pruebas_pytest       && /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/.venv/bin/pytest -q || exit 1
+====================================================== test session starts ======================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/pruebas_pytest
+configfile: setup.cfg
+plugins: cov-5.0.0, Faker-37.11.0
+collected 11 items                                                                                                              
+
+test_triangle.py ...........                                                                                              [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name               Stmts   Miss Branch BrPart  Cover   Missing
+--------------------------------------------------------------
+test_triangle.py      30      0      0      0   100%
+triangle.py           10      0      8      0   100%
+--------------------------------------------------------------
+TOTAL                 40      0      8      0   100%
+
+
+====================================================== 11 passed in 0.28s =======================================================
+cd soluciones/pruebas_fixtures     && /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/.venv/bin/pytest -q || exit 1
+====================================================== test session starts ======================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/pruebas_fixtures
+configfile: setup.cfg
+plugins: cov-5.0.0, Faker-37.11.0
+collected 2 items                                                                                                               
+
+tests/test_account.py ..                                                                                                  [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name                 Stmts   Miss Branch BrPart  Cover   Missing
+----------------------------------------------------------------
+models/__init__.py       6      0      0      0   100%
+models/account.py       40     13      8      0    65%   25, 29, 33-34, 44-47, 51-53, 71-72
+----------------------------------------------------------------
+TOTAL                   46     13      8      0    69%
+
+
+======================================================= 2 passed in 1.17s =======================================================
+cd soluciones/coverage_pruebas     && /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/.venv/bin/pytest --cov=models --cov-report term-missing -q || exit 1
+====================================================== test session starts ======================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/coverage_pruebas
+configfile: setup.cfg
+testpaths: tests
+plugins: cov-5.0.0, Faker-37.11.0
+collected 13 items                                                                                                              
+
+tests/test_account.py .............                                                                                       [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name                 Stmts   Miss Branch BrPart  Cover   Missing
+----------------------------------------------------------------
+models/__init__.py       9      1      2      1    82%   12
+models/account.py       53      0     14      0   100%
+----------------------------------------------------------------
+TOTAL                   62      1     16      1    97%
+Coverage HTML written to dir htmlcov
+
+
+====================================================== 13 passed in 1.33s =======================================================
+cd soluciones/factories_fakes      && /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/.venv/bin/pytest -q || exit 1
+====================================================== test session starts ======================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/factories_fakes
+configfile: setup.cfg
+plugins: cov-5.0.0, Faker-37.11.0
+collected 8 items                                                                                                               
+
+tests/test_account.py ........                                                                                            [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name                 Stmts   Miss Branch BrPart  Cover   Missing
+----------------------------------------------------------------
+models/__init__.py       6      0      0      0   100%
+models/account.py       43      0      8      0   100%
+----------------------------------------------------------------
+TOTAL                   49      0      8      0   100%
+
+
+======================================================= 8 passed in 1.50s =======================================================
+cd soluciones/mocking_objetos      && /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/.venv/bin/pytest -q || exit 1
+====================================================== test session starts ======================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/mocking_objetos
+configfile: setup.cfg
+plugins: cov-5.0.0, Faker-37.11.0
+collected 6 items                                                                                                               
+
+tests/test_imdb.py ......                                                                                                 [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name                 Stmts   Miss Branch BrPart  Cover   Missing
+----------------------------------------------------------------
+models/__init__.py       2      0      0      0   100%
+models/imdb.py          25      2      6      2    87%   36, 46
+----------------------------------------------------------------
+TOTAL                   27      2      6      2    88%
+
+
+======================================================= 6 passed in 0.59s =======================================================
+cd soluciones/practica_tdd         && /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/.venv/bin/pytest -q || exit 1
+====================================================== test session starts ======================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/practica_tdd
+configfile: setup.cfg
+plugins: cov-5.0.0, Faker-37.11.0
+collected 9 items                                                                                                               
+
+test_counter.py .........                                                                                                 [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name         Stmts   Miss Branch BrPart  Cover   Missing
+--------------------------------------------------------
+counter.py      49      2     24      2    95%   42, 74
+--------------------------------------------------------
+TOTAL           49      2     24      2    95%
+
+
+======================================================= 9 passed in 0.73s =======================================================
