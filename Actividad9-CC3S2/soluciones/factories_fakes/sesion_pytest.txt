@@ -1,0 +1,28 @@
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/factories_fakes$ pytest
+====================================================== test session starts ======================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/factories_fakes
+configfile: setup.cfg
+plugins: cov-5.0.0, Faker-37.11.0
+collected 8 items                                                                                                               
+
+tests/test_account.py::TestAccountModel::test_crear_todas_las_cuentas PASSED                                              [ 12%]
+tests/test_account.py::TestAccountModel::test_crear_una_cuenta PASSED                                                     [ 25%]
+tests/test_account.py::TestAccountModel::test_repr PASSED                                                                 [ 37%]
+tests/test_account.py::TestAccountModel::test_to_dict PASSED                                                              [ 50%]
+tests/test_account.py::TestAccountModel::test_from_dict PASSED                                                            [ 62%]
+tests/test_account.py::TestAccountModel::test_actualizar_una_cuenta PASSED                                                [ 75%]
+tests/test_account.py::TestAccountModel::test_id_invalido_al_actualizar PASSED                                            [ 87%]
+tests/test_account.py::TestAccountModel::test_eliminar_una_cuenta PASSED                                                  [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name                 Stmts   Miss Branch BrPart  Cover   Missing
+----------------------------------------------------------------
+models/__init__.py       6      0      0      0   100%
+models/account.py       43      0      8      0   100%
+----------------------------------------------------------------
+TOTAL                   49      0      8      0   100%
+
+
+======================================================= 8 passed in 1.43s =======================================================

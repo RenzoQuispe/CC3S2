@@ -5,7 +5,7 @@ Provee rutas para crear, leer, actualizar e eliminar contadores.
 """
 
 import status
-from flask import Flask
+from flask import Flask, request
 
 app = Flask(__name__)
 
@@ -76,3 +76,28 @@ def delete_counter(name):
     del COUNTERS[name]
     # 204 NO CONTENT suele devolver un cuerpo vacío
     return "", status.HTTP_204_NO_CONTENT
+
+# Implementaciones adicionales para pruebas
+
+def change_counter(name, delta):
+    COUNTERS[name] += delta
+    return {name: COUNTERS[name]}
+
+@app.route("/counters/<name>/increment", methods=["PUT"])
+def increment_counter(name):
+    return change_counter(name, +1), status.HTTP_200_OK
+
+@app.route("/counters/<name>/set", methods=["PUT"])
+def set_counter(name):
+    body = request.get_json()
+    COUNTERS[name] = body.get("value", COUNTERS[name])
+    return {name: COUNTERS[name]}, status.HTTP_200_OK
+
+@app.route("/counters", methods=["GET"])
+def list_counters():
+    return COUNTERS, status.HTTP_200_OK
+
+@app.route("/counters/<name>/reset", methods=["PUT"])
+def reset_counter(name):
+    COUNTERS[name] = 0
+    return {name: COUNTERS[name]}, status.HTTP_200_OK

@@ -147,6 +147,34 @@ def delete_counter(name):
     return "", status.HTTP_204_NO_CONTENT
 ```
 
+Coverage actual:
+
+```
+====================================================== test session starts ======================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/practica_tdd
+configfile: setup.cfg
+plugins: cov-5.0.0, Faker-37.11.0
+collected 5 items                                                                                                               
+
+test_counter.py::test_create_a_counter PASSED                                                                             [ 20%]
+test_counter.py::test_duplicate_counter PASSED                                                                            [ 40%]
+test_counter.py::test_update_counter PASSED                                                                               [ 60%]
+test_counter.py::test_read_counter PASSED                                                                                 [ 80%]
+test_counter.py::test_delete_counter PASSED                                                                               [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name         Stmts   Miss Branch BrPart  Cover   Missing
+--------------------------------------------------------
+counter.py      31      2     16      2    91%   42, 74
+--------------------------------------------------------
+TOTAL           31      2     16      2    91%
+
+
+======================================================= 5 passed in 0.73s =======================================================
+```
+
 #### 3. Ejercicios adicionales
 
 ##### 3.1. Incrementar un contador (ruta dedicada)
@@ -241,3 +269,36 @@ def delete_counter(name):
 
 
 > **Nota:** No es necesario modificar los archivos de prueba (`tests_counters.py`). Todas las refactorizaciones deben dejar intactas las pruebas existentes.
+
+
+Coverage final:
+
+```
+====================================================== test session starts ======================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/practica_tdd
+configfile: setup.cfg
+plugins: cov-5.0.0, Faker-37.11.0
+collected 9 items                                                                                                               
+
+test_counter.py::test_create_a_counter PASSED                                                                             [ 11%]
+test_counter.py::test_duplicate_counter PASSED                                                                            [ 22%]
+test_counter.py::test_update_counter PASSED                                                                               [ 33%]
+test_counter.py::test_read_counter PASSED                                                                                 [ 44%]
+test_counter.py::test_delete_counter PASSED                                                                               [ 55%]
+test_counter.py::test_increment_counter PASSED                                                                            [ 66%]
+test_counter.py::test_set_counter PASSED                                                                                  [ 77%]
+test_counter.py::test_list_counters PASSED                                                                                [ 88%]
+test_counter.py::test_reset_counter PASSED                                                                                [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name         Stmts   Miss Branch BrPart  Cover   Missing
+--------------------------------------------------------
+counter.py      49      2     24      2    95%   42, 74
+--------------------------------------------------------
+TOTAL           49      2     24      2    95%
+
+
+======================================================= 9 passed in 0.82s =======================================================
+```

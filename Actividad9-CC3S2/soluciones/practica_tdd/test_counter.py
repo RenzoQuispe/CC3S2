@@ -86,3 +86,32 @@ def test_delete_counter(client):
     # 3. Verificar que ya no existe
     response = client.get("/counters/delete_me")
     assert response.status_code == HTTPStatus.NOT_FOUND
+
+# Test adicionales
+
+def test_increment_counter(client):
+    client.post("/counters/my_counter")
+    response = client.put("/counters/my_counter/increment")
+    assert response.status_code == HTTPStatus.OK
+    assert response.get_json()["my_counter"] == 1
+
+def test_set_counter(client):
+    client.post("/counters/custom")
+    response = client.put("/counters/custom/set", json={"value": 10})
+    assert response.status_code == HTTPStatus.OK
+    assert response.get_json()["custom"] == 10
+
+def test_list_counters(client):
+    client.post("/counters/a")
+    client.post("/counters/b")
+    response = client.get("/counters")
+    assert response.status_code == HTTPStatus.OK
+    data = response.get_json()
+    assert set(data.keys()) == {"a", "b"}
+
+def test_reset_counter(client):
+    client.post("/counters/tmp")
+    client.put("/counters/tmp")
+    response = client.put("/counters/tmp/reset")
+    assert response.status_code == HTTPStatus.OK
+    assert response.get_json()["tmp"] == 0

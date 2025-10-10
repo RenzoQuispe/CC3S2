@@ -1,0 +1,26 @@
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/mocking_objetos$ pytest
+====================================================== test session starts ======================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/mocking_objetos
+configfile: setup.cfg
+plugins: cov-5.0.0, Faker-37.11.0
+collected 6 items                                                                                                               
+
+tests/test_imdb.py::TestIMDbDatabase::test_search_titles_success PASSED                                                   [ 16%]
+tests/test_imdb.py::TestIMDbDatabase::test_search_titles_failure PASSED                                                   [ 33%]
+tests/test_imdb.py::TestIMDbDatabase::test_movie_reviews_success PASSED                                                   [ 50%]
+tests/test_imdb.py::TestIMDbDatabase::test_movie_ratings_success PASSED                                                   [ 66%]
+tests/test_imdb.py::TestIMDbDatabase::test_search_by_title_failed PASSED                                                  [ 83%]
+tests/test_imdb.py::TestIMDbDatabase::test_movie_ratings_good PASSED                                                      [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name                 Stmts   Miss Branch BrPart  Cover   Missing
+----------------------------------------------------------------
+models/__init__.py       2      0      0      0   100%
+models/imdb.py          25      2      6      2    87%   36, 46
+----------------------------------------------------------------
+TOTAL                   27      2      6      2    88%
+
+
+======================================================= 6 passed in 0.61s =======================================================
