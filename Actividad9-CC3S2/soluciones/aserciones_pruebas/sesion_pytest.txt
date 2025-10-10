@@ -1,0 +1,49 @@
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/aserciones_pruebas$ pytest
+========================================================= test session starts =========================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/aserciones_pruebas
+configfile: setup.cfg
+plugins: cov-5.0.0, Faker-37.11.0
+collected 8 items                                                                                                                     
+
+test_stack.py::TestStack::test_is_empty PASSED                                                                                  [ 12%]
+test_stack.py::TestStack::test_peek PASSED                                                                                      [ 25%]
+test_stack.py::TestStack::test_pop PASSED                                                                                       [ 37%]
+test_stack.py::TestStack::test_push PASSED                                                                                      [ 50%]
+test_stack.py::test_is_empty PASSED                                                                                             [ 62%]
+test_stack.py::test_peek PASSED                                                                                                 [ 75%]
+test_stack.py::test_pop PASSED                                                                                                  [ 87%]
+test_stack.py::test_push PASSED                                                                                                 [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name       Stmts   Miss Branch BrPart  Cover   Missing
+------------------------------------------------------
+stack.py      12      0      0      0   100%
+------------------------------------------------------
+TOTAL         12      0      0      0   100%
+
+
+========================================================== 8 passed in 0.29s ==========================================================
+
+
+
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/aserciones_pruebas$ pytest --cov=stack --cov-report term-missing
+====================================================== test session starts =======================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/aserciones_pruebas
+plugins: cov-5.0.0, Faker-37.11.0
+collected 8 items                                                                                                                
+
+test_stack.py ........                                                                                                     [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name       Stmts   Miss  Cover   Missing
+----------------------------------------
+stack.py      12      0   100%
+----------------------------------------
+TOTAL         12      0   100%
+
+
+======================================================= 8 passed in 0.28s ========================================================
+

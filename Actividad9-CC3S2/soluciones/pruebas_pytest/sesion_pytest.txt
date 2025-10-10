@@ -1,0 +1,31 @@
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/pruebas_pytest$ pytest
+========================================================= test session starts =========================================================
+platform linux -- Python 3.13.5, pytest-8.3.3, pluggy-1.6.0 -- /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/jquispe/Escritorio/cursos/CC3S2/Actividad9-CC3S2/soluciones/pruebas_pytest
+configfile: setup.cfg
+plugins: cov-5.0.0, Faker-37.11.0
+collected 11 items                                                                                                                    
+
+test_triangle.py::TestAreaOfTriangle::test_float_values PASSED                                                                  [  9%]
+test_triangle.py::TestAreaOfTriangle::test_integer_values PASSED                                                                [ 18%]
+test_triangle.py::TestAreaOfTriangle::test_negative_base PASSED                                                                 [ 27%]
+test_triangle.py::TestAreaOfTriangle::test_negative_height PASSED                                                               [ 36%]
+test_triangle.py::TestAreaOfTriangle::test_negative_values PASSED                                                               [ 45%]
+test_triangle.py::TestAreaOfTriangle::test_with_boolean PASSED                                                                  [ 54%]
+test_triangle.py::TestAreaOfTriangle::test_with_nulls PASSED                                                                    [ 63%]
+test_triangle.py::TestAreaOfTriangle::test_with_string PASSED                                                                   [ 72%]
+test_triangle.py::TestAreaOfTriangle::test_zero_base PASSED                                                                     [ 81%]
+test_triangle.py::TestAreaOfTriangle::test_zero_height PASSED                                                                   [ 90%]
+test_triangle.py::TestAreaOfTriangle::test_zero_values PASSED                                                                   [100%]
+
+---------- coverage: platform linux, python 3.13.5-final-0 -----------
+Name               Stmts   Miss Branch BrPart  Cover   Missing
+--------------------------------------------------------------
+test_triangle.py      30      0      0      0   100%
+triangle.py           10      0      8      0   100%
+--------------------------------------------------------------
+TOTAL                 40      0      8      0   100%
+
+
+========================================================= 11 passed in 0.38s ==========================================================
