@@ -62,9 +62,7 @@ En este ejercicio, crearás una issue template en GitHub. Esto solo necesita hac
 
 5. Selecciona el icono del lápiz para editar la template.
 
-6. Copia el siguiente markdown para el contenido de la plantilla de historia:
-
-[Ejemplo de plantilla de historia](https://github.com/kapumota/Curso-CC3S2/blob/main/ejemplos/ISSUE_TEMPLATE/user-story.md)
+6. Copia el siguiente markdown para el contenido de la plantilla de historia: [user-story.md](user-story.md)
 
 7. Cambia el **Template name** a **User Story**, dale una descripción apropiada, y pega el contenido del markdown anterior en el **Template content**.
 
@@ -76,6 +74,7 @@ Ahora deberías tener una nueva carpeta en tu repositorio llamada `.github/ISSUE
 
 Ahora tienes una **issue template** que puedes usar para todos tus repositorios de GitHub en los que necesites escribir historias para usar en el Kanban board. Cuando creemos issues en los laboratorios futuros, esta template te guiará sobre qué información es necesaria para crear tu historia de usuario.
 
+![](./img/p2.png)
 
 ####  Parte 3
 
