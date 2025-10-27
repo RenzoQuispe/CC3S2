@@ -20,6 +20,8 @@ En este ejercicio, aprenderás cómo configurar un Kanban board usando GitHub Pr
 
 6. En el Kanban board del proyecto, tendrás columnas para representar diferentes etapas de tu flujo de trabajo, como **Backlog**, **Ready**, **In Progress**, **In review**, y **Done**. Puedes agregar columnas personalizadas según los requisitos de tu flujo de trabajo.  
 
+![](./img/p1.6.png)
+
 7. Para personalizar o modificar el nombre de una columna, haz clic en los tres puntos y luego selecciona **Edit details**.
 
 8. Cuando hagas clic en **Edit details**, aparecerá una ventana emergente, como se muestra en la captura de pantalla a continuación. Introduce el nombre de la columna requerido en el cuadro de texto resaltado. Puedes agregar una descripción apropiada o elegir eliminarla, luego haz clic en **Save** para confirmar los cambios.
@@ -32,13 +34,15 @@ En este ejercicio, aprenderás cómo configurar un Kanban board usando GitHub Pr
 
 10. Después de realizar los cambios mencionados, presenta tu Kanban board.
 
+![](./img/p1.10.png)
+
 11. Para agregar una nueva columna, navega al final de las columnas existentes y haz clic en el botón **+**. Luego, selecciona **New column** de las opciones. Introduce el nombre de la columna como **Product Backlog** en el campo de texto Label, y finalmente, haz clic en **Save** para aplicar los cambios.
 
 12. Para establecer la secuencia correcta en el Kanban board, arrastra la columna **Product Backlog** y colócala antes de la columna **In Progress**. La flecha en la captura de pantalla a continuación indica desde dónde necesitas arrastrar y soltar la columna.
 
-13. De manera similar, crea la columna **Sprint Backlogs**, y luego reorganízala para que se asemeje al Kanban board mostrado a continuación.
-    [Ejemplo de tablero kanban](https://github.com/users/kapumota/projects/5)
+13. De manera similar, crea la columna **Sprint Backlogs**, y luego organizalá adecuadamente.
 
+![](./img/p1.13.png)
 
 #### Parte 2
 
