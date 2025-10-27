@@ -293,10 +293,16 @@ Kanban board:
 
 1. Crea un nuevo Epic en tu Kanban board llamado "Gestión de Contadores".
 2. Vincula las historias de usuario existentes, como "Need a service that has a counter", "Must allow multiple counters", y "Counters can be reset" a este Epic.
+
+![](./img/e1.2.png)
+
 3. Añade una nueva historia de usuario bajo este Epic que abarque una funcionalidad adicional (por ejemplo, "Generar reportes de uso de contadores").
+
+![](./img/e1.3.png)
 
 **Resultado esperado:** El Epic "Gestión de Contadores" debe contener las historias de usuario relacionadas, proporcionando una visión global de esta funcionalidad.
 
+![](./img/e1.x.png)
 
 #### Ejercicio 2: Uso avanzado de etiquetas (labels) para priorización y estado
 
@@ -311,6 +317,7 @@ Kanban board:
 
 **Resultado esperado:** Las historias de usuario tendrán etiquetas que indiquen tanto su prioridad como su estado actual, facilitando la gestión del flujo de trabajo.
 
+![](./img/e2.png)
 
 #### Ejercicio 3: Automatización de Kanban board con GitHub Actions
 
@@ -323,6 +330,11 @@ Kanban board:
 
 **Resultado esperado:** Las historias de usuario se mueven automáticamente en el Kanban board según las reglas definidas, como cambiar de columna al asociar un pull request o al cerrar un issue.
 
+Observación:
+- Kanban clásico (v1): no soporta mover columnas automáticamente, el ejercicio solo puede hacerse de forma semi-automática (comentarios, labels).
+- Kanban v2: podemos hacer la automatización completa como se pide.
+
+Usamos Kanban clásico (v1) en el ejercicio por lo cual no se puede completar tal como está descrito, porque GitHub no permite mover tarjetas automáticamente entre columnas en tableros clásicos.
 
 #### Ejercicio 4: Seguimiento de tiempo y esfuerzo usando GitHub Projects
 
