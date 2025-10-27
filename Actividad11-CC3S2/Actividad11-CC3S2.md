@@ -1,5 +1,9 @@
 # **Actividad: Gestión ágil de proyectos con GitHub Projects, configuración de Kanban Board y creación de historias de usuario**
 
+- Repositorio: [Gestion-Agil-Proyecto](https://github.com/Grupo-8-CC3S2/Gestion-Agil-Proyecto)
+
+- Github Project: [Devops-agile](https://github.com/orgs/Grupo-8-CC3S2/projects/1)
+
 En esta actividad se configura un Kanban board en GitHub Projects para optimizar el flujo de trabajo. Se crean plantillas de **issues** para estandarizar historias de usuario para organizar y priorizar el product backlog, editando y reordenando historias. Refinar el backlog, preparando historias para el sprint con etiquetas y categorías adecuadas. 
 
 Utilizar GitHub Projects para planificar, seguir y entregar proyectos ágiles de manera efectiva, asegurando una gestión clara y eficiente del proceso de desarrollo.
@@ -285,7 +289,7 @@ Kanban board:
 
 ## Ejercicios
 
-#### Ejercicio 1: Crear un epic y vincular historias de usuario
+### Ejercicio 1: Crear un epic y vincular historias de usuario
 
 **Objetivo:** Aprender a organizar historias de usuario más grandes en Epics y vincular múltiples historias de usuario a un Epic.
 
@@ -304,7 +308,7 @@ Kanban board:
 
 ![](./img/e1.x.png)
 
-#### Ejercicio 2: Uso avanzado de etiquetas (labels) para priorización y estado
+### Ejercicio 2: Uso avanzado de etiquetas (labels) para priorización y estado
 
 **Objetivo:** Aprender a usar etiquetas de manera más detallada para indicar la prioridad y el estado de las historias.
 
@@ -319,7 +323,7 @@ Kanban board:
 
 ![](./img/e2.png)
 
-#### Ejercicio 3: Automatización de Kanban board con GitHub Actions
+### Ejercicio 3: Automatización de Kanban board con GitHub Actions
 
 **Objetivo:** Aprender a automatizar tareas en el Kanban board usando GitHub Actions.
 
@@ -336,7 +340,7 @@ Observación:
 
 Usamos Kanban clásico (v1) en el ejercicio por lo cual no se puede completar tal como está descrito, porque GitHub no permite mover tarjetas automáticamente entre columnas en tableros clásicos.
 
-#### Ejercicio 4: Seguimiento de tiempo y esfuerzo usando GitHub Projects
+### Ejercicio 4: Seguimiento de tiempo y esfuerzo usando GitHub Projects
 
 **Objetivo:** Aprender a usar el seguimiento de tiempo y esfuerzo para las historias de usuario en GitHub Projects.
 
@@ -348,8 +352,15 @@ Usamos Kanban clásico (v1) en el ejercicio por lo cual no se puede completar ta
 
 **Resultado esperado:** Cada historia de usuario tendrá una estimación de tiempo y un registro del tiempo real invertido, permitiendo un análisis del esfuerzo requerido.
 
+En Kanban clásico (v1) no hay campos personalizados como tal, pero podemos usar los issues, asi que creamos una sección en el cuerpo del issue para registrar el esfuerzo:
+```Markdown
+## Estimación de esfuerzo
+**Estimado:** 4 horas
+**Real invertido:** 0 horas
+```
+Esto permitirá actualizarlo a medida que avanza el sprint.
 
-#### Ejercicio 5: Refinamiento de backlog basado en comentarios de los stakeholders
+### Ejercicio 5: Refinamiento de backlog basado en comentarios de los stakeholders
 
 **Objetivo:** Aprender a refinar las historias de usuario del Product Backlog basado en comentarios de los stakeholders.
 
@@ -362,8 +373,15 @@ Usamos Kanban clásico (v1) en el ejercicio por lo cual no se puede completar ta
 
 **Resultado esperado:** La nueva historia de usuario basada en los comentarios de los stakeholders está correctamente integrada y priorizada en el Product Backlog.
 
+Creamos el issue:
 
-#### Ejercicio 6: Análisis del flujo de trabajo usando el Kanban board
+   ![](./img/e5.0.png)
+
+Agregamos el issue al Kanban:
+
+   ![](./img/e5.png)
+
+### Ejercicio 6: Análisis del flujo de trabajo usando el Kanban board
 
 **Objetivo:** Analizar el flujo de trabajo usando las métricas proporcionadas por el Kanban board.
 
@@ -374,3 +392,13 @@ Usamos Kanban clásico (v1) en el ejercicio por lo cual no se puede completar ta
 3. Identifica cuellos de botella en tu flujo de trabajo e identifica posibles mejoras.
 
 **Resultado esperado:** Obtención de un análisis detallado del flujo de trabajo y una lista de posibles acciones para mejorar la eficiencia del equipo, de acuerdo a lo que se presenta en github.
+
+Las métricas son un poco más limitadas que en Projects v2, en Projects v1 podemos ver métricas en Insights:
+
+   ![](./img/e6.1.png)
+
+   ![](./img/e6.2.png)
+
+   ![](./img/e6.3.png)
+
+   Se visualiza el estado inicial del proyecto, enfocado en priorizar el Product Backlog y organizar las historias de usuario según su relevancia y dependencia. En esta etapa, las métricas reflejan un flujo de trabajo limitado, con la mayoría de las historias aún en las primeras columnas del Kanban, indica que estamos en la fase de planificación y preparación antes de iniciar el desarrollo.
