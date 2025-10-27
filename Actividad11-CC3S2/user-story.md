@@ -40,13 +40,13 @@ assignees: ''
 <br>
 <br>
 
- ## Details and Assumptions:
- - [document what you know]
+## Details and Assumptions:
+- [document what you know]
 
 <br>
 <br>
 
- ## Acceptance Criteria:
+## Acceptance Criteria:
 1) Acceptance Criteria / Scenario:  
 ```gherkin
 Given code is ready to be merged

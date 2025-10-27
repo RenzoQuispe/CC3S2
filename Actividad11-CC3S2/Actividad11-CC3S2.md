@@ -1,10 +1,10 @@
-### **Actividad: Gestión ágil de proyectos con GitHub Projects, configuración de Kanban Board y creación de historias de usuario**
+# **Actividad: Gestión ágil de proyectos con GitHub Projects, configuración de Kanban Board y creación de historias de usuario**
 
 En esta actividad se configura un Kanban board en GitHub Projects para optimizar el flujo de trabajo. Se crean plantillas de **issues** para estandarizar historias de usuario para organizar y priorizar el product backlog, editando y reordenando historias. Refinar el backlog, preparando historias para el sprint con etiquetas y categorías adecuadas. 
 
 Utilizar GitHub Projects para planificar, seguir y entregar proyectos ágiles de manera efectiva, asegurando una gestión clara y eficiente del proceso de desarrollo.
 
-#### Parte 1
+## Parte 1
 
 En este ejercicio, aprenderás cómo configurar un Kanban board usando GitHub Projects para el repositorio del curso. Puedes crear otro repositorio si deseas.
 
@@ -44,7 +44,7 @@ En este ejercicio, aprenderás cómo configurar un Kanban board usando GitHub Pr
 
 ![](./img/p1.13.png)
 
-#### Parte 2
+## Parte 2
 
 En este ejercicio, crearás una issue template en GitHub que te ayudará a escribir historias de usuario bien formateadas en el Kanban board.
 
@@ -76,7 +76,7 @@ Ahora tienes una **issue template** que puedes usar para todos tus repositorios 
 
 ![](./img/p2.png)
 
-####  Parte 3
+##  Parte 3
 
 En este ejercicio crearás siete historias de usuario basadas en los requisitos dados. Las primeras cuatro se te proporcionarán. Solo tendrás que copiarlas y pegarlas para familiarizarte con la creación de historias de usuario en GitHub. Deberás crear las últimas tres historias de usuario por ti mismo. Luego priorizarás estas historias y las moverás a las columnas apropiadas en tu Kanban board.
 
@@ -163,11 +163,10 @@ En este ejercicio, moverás issues entre columnas para recrear el Kanban board d
 
 ![](./img/p3.x.png)
 
-#### Parte 4
+## Parte 4
 
 En este ejercicio, seguirás los pasos para llevar a cabo una reunión de refinamiento del backlog. Serás el product owner preparando el product backlog para tu próxima reunión de planificación del sprint. Esto implica preparar las historias que creamos en el último ejercicio para hacerlas listas para el sprint.
  
-
 ##### Estado inicial
 
 **New Issues:**
@@ -183,7 +182,6 @@ En este ejercicio, seguirás los pasos para llevar a cabo una reunión de refina
 - Must persist counter across restarts
 - Counters can be reset
 
-
 #### 1: Triage de nuevos issues
 
 En este ejercicio, tomarás todas las historias en la columna **New Issues** y las moverás a una columna apropiada o las rechazarás.
@@ -198,6 +196,7 @@ En este ejercicio, tomarás todas las historias en la columna **New Issues** y l
 
 Ahora has completado el triage de nuevos issues y puedes comenzar a hacer que las historias en la columna **Product Backlog** estén listas para el sprint.
 
+![](./img/p4.1.png)
 
 #### 2: Hacer que las historias estén listas para el sprint
 
@@ -220,6 +219,11 @@ En esta parte, agregarás más detalles a las historias en el **Product Backlog*
 
 Al completar este ejercicio, tu Kanban board debería tener suficientes detalles en todas las historias del **Product Backlog** para hacerlas listas para el sprint.
 
+![](./img/p4.2.1.png)
+![](./img/p4.2.2.png)
+![](./img/p4.2.3.png)
+![](./img/p4.2.4.png)
+![](./img/p4.2.5.png)
 
 #### 3: Crear nuevas labels en GitHub
 
@@ -236,8 +240,9 @@ En este ejercicio, crearás una nueva label en GitHub llamada **technical debt**
    (2) establece el Color como amarillo (#FBCA04)  
    (3) presiona el botón **Create label**.
 
-
 Ahora deberías ver una label amarilla **technical debt** que podemos usar para anotar nuestras historias.
+
+![](./img/p4.3.png)
 
 #### 4: Añadir labels a las historias
 
@@ -248,6 +253,8 @@ En este ejercicio, añadirás labels a las historias en el **Product Backlog** p
 2. Nuestra primera historia es una mejora a nuestro producto. Desde el menú de labels, selecciona **enhancement** para reflejar eso.
 
 3. Haz clic en cualquier parte fuera del menú de labels para cerrarlo. Ahora deberías ver que la label **enhancement** ha sido asignada a esta historia.
+
+![](./img/p4.4.0.png)
 
 4. Selecciona cada una de las siguientes historias en la columna **Product Backlog** y asígnales las labels correspondientes:
 
@@ -270,8 +277,13 @@ En este ejercicio, añadirás labels a las historias en el **Product Backlog** p
 3. Arrastra y suelta **Labels** de la lista de campos ocultos a la lista de campos visibles (resaltado como 3).
 4. Haz clic en el botón **Save** (resaltado como 4) para guardar los cambios.
 
+   ![](./img/p4.4.1.png)
 
-### Ejercicios
+Kanban board:
+
+![](./img/p4.4.2.png)
+
+## Ejercicios
 
 #### Ejercicio 1: Crear un epic y vincular historias de usuario
 
