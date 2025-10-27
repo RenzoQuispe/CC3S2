@@ -119,24 +119,33 @@ Asegúrate de haber creado la Issue template. Si la template aún no se ha cread
 
 4. Introduce el título para la primera historia como **Need a service that has a counter** y actualiza la sección de historia de usuario (es decir, As a, I need, So that) por ahora. Una vez hecho, haz clic en el botón **Submit new issue**.
 
-Tu primera historia de usuario ahora está creada 
+![](./img/p3.4.png)
 
 5. Agregar la historia de usuario creada al Kanban board, haz clic en el botón de configuración al lado de la opción **Projects**, y luego elige el proyecto **Devops-agile** del menú desplegable que creaste en el ejercicio anterior.
 
 6. A continuación, selecciona el menú desplegable **Status** y elige **New Issues**. Esta acción moverá la historia de usuario creada a la columna 'New Issues' en el Kanban board.
 
+![](./img/p3.6.png)
+
 7. Para ver la historia de usuario recién creada en el Kanban board, navega a la pestaña **Projects** y selecciona el proyecto titulado **Devops-agile**.
 
 8. Notarás que la historia de usuario recién creada ahora está listada bajo la columna **New Issues**.
+
+![](./img/p3.8.png)
 
 9. Dado que debemos crear un total de siete historias de usuario, ajustemos el límite predeterminado a 7. Para lograr esto, haz clic en los tres puntos de la columna **New Issues**, luego selecciona la opción **Set limit**.
 
 10. Introduce el límite como 7 en el campo de texto **Column limit** y haz clic en **Save**. Ten en cuenta que, similar a esto, puedes optar por modificar los límites de otras columnas o mantener los límites predeterminados.
 
+![](./img/p3.10.png)
+
 11. Para regresar a la pestaña **Issues** para crear nuevas historias de usuario, simplemente haz clic en el botón de retroceso del navegador.
 
 12. Continúa agregando historias hasta que las siete estén creadas y completa tu Kanban. Las primeras cuatro historias se proporcionan en la lección Deberás crear tu propio rol, función y beneficio para las últimas tres historias.
 
+- Se creo otras 3 historias para completar 7 historias en total.
+
+![](./img/p3.12.png)
 
 ##### Ejercicio: Priorizar el product backlog
 
@@ -152,6 +161,7 @@ En este ejercicio, moverás issues entre columnas para recrear el Kanban board d
 
 5. Deja las historias restantes en la columna **New Issues** por ahora. Las moveremos en un laboratorio posterior.
 
+![](./img/p3.x.png)
 
 #### Parte 4
 
