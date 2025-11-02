@@ -1,6 +1,6 @@
-### Actividad: Escribiendo infraestructura como código en un entorno local con Terraform
+# Actividad: Escribiendo infraestructura como código en un entorno local con Terraform
 
-####  Contexto
+##  Contexto
 
 Imagina que gestionas docenas de entornos de desarrollo locales para distintos proyectos (app1, app2, ...). En lugar de crear y parchear manualmente cada carpeta, construirás un generador en Python que produce automáticamente:
 
@@ -10,7 +10,7 @@ Imagina que gestionas docenas de entornos de desarrollo locales para distintos p
 Después verás cómo Terraform identifica cambios, remedia desvíos manuales y permite migrar configuraciones legacy a código. Todo sin depender de proveedores en la nube, Docker o APIs externas.
 
 
-#### Fase 0: Preparación 
+## Fase 0: Preparación 
 
 1. **Revisa** el laboratorio correspondiente:
 
@@ -23,291 +23,162 @@ Después verás cómo Terraform identifica cambios, remedia desvíos manuales y 
 2. **Verifica** que puedes ejecutar:
 
    ```bash
-   python generate_envs.py
+   python3 generate_envs.py
    cd environments/app1
    terraform init
+   terraform apply
    ```
 3. **Objetivo**: conocer la plantilla base y el generador en Python.
 
-####  Fase 1: Expresando el cambio de infraestructura
+##  Fase 1: Expresando el cambio de infraestructura
 
 * **Concepto**
 Cuando cambian variables de configuración, Terraform los mapea a **triggers** que, a su vez, reconcilian el estado (variables ->triggers ->recursos).
 
 * **Actividad**
 
-  - Modifica en `modules/simulated_app/network.tf.json` el `default` de `"network"` a `"lab-net"`.
-  - Regenera `environments/app1` con `python generate_envs.py`.
-  - `terraform plan` observa que **solo** cambia el trigger en `null_resource`.
+   - Modifica en `enviroments/app1/network.tf.json` el `default` de `"network"` a `"lab-net"`.
+   - `terraform plan` observa que **solo** cambia el trigger en `null_resource`.
 
-* **Pregunta**
+* **Preguntas**
 
-  * ¿Cómo interpreta Terraform el cambio de variable?
-  * ¿Qué diferencia hay entre modificar el JSON vs. parchear directamente el recurso?
-  * ¿Por qué Terraform no recrea todo el recurso, sino que aplica el cambio "in-place"?
-  * ¿Qué pasa si editas directamente `main.tf.json` en lugar de la plantilla de variables?
+   - `terraform plan` antes del cambio y antes de `terraform apply`
 
-#### Procedimiento
+      ```
+      jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad13-CC3S2/Laboratorio/environments/app1$ terraform plan
 
-1. En `modules/simulated_app/network.tf.json`, cambia:
+      Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following
+      symbols:
+      + create
 
-   ```diff
-     "network": [
-       {
-   -     "default": "net1",
-   +     "default": "lab-net",
-         "description": "Nombre de la red local"
-       }
-     ]
-   ```
-2. Regenera **solo** el app1:
+      Terraform will perform the following actions:
 
-   ```bash
-   python generate_envs.py
-   cd environments/app1
-   terraform plan
-   ```
+      # null_resource.app1 will be created
+      + resource "null_resource" "app1" {
+            + id       = (known after apply)
+            + triggers = {
+               + "name"    = "app1"
+               + "network" = "net1"
+            }
+         }
 
-   Observa que el **plan** indica:
+      # null_resource.network_sim will be created
+      + resource "null_resource" "network_sim" {
+            + id       = (known after apply)
+            + triggers = {
+               + "name"    = "hello-world"
+               + "network" = "local-network"
+            }
+         }
 
-   > \~ null\_resource.app1: triggers.network: "net1" -> "lab-net"
+      Plan: 2 to add, 0 to change, 0 to destroy.
 
-#### Fase 2: Entendiendo la inmutabilidad
+      ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
-#### A. Remediación de 'drift' (out-of-band changes)
+      Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run
+      "terraform apply" now.
+      ```
+   - `terraform apply`
 
-1. **Simulación**
+      ```
+      jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad13-CC3S2/Laboratorio/environments/app1$ terraform apply
 
-   ```bash
-   cd environments/app2
-   # edita manualmente main.tf.json: cambiar "name":"app2" ->"hacked-app"
-   ```
-2. Ejecuta:
+      Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following
+      symbols:
+      + create
 
-   ```bash
-   terraform plan
-   ```
+      Terraform will perform the following actions:
 
-    Verás un plan que propone **revertir** ese cambio.
-3. **Aplica**
+      # null_resource.app1 will be created
+      + resource "null_resource" "app1" {
+            + id       = (known after apply)
+            + triggers = {
+               + "name"    = "app1"
+               + "network" = "net1"
+            }
+         }
 
-   ```bash
-   terraform apply
-   ```
-    Y comprueba que vuelve a "app2".
-   
+      # null_resource.network_sim will be created
+      + resource "null_resource" "network_sim" {
+            + id       = (known after apply)
+            + triggers = {
+               + "name"    = "hello-world"
+               + "network" = "local-network"
+            }
+         }
 
-#### B. Migrando a IaC
+      Plan: 2 to add, 0 to change, 0 to destroy.
 
-* **Mini-reto**
- 1. Crea en un nuevo directorio `legacy/` un simple `run.sh` + `config.cfg` con parámetros (por ejemplo, puertos, rutas).
+      Do you want to perform these actions?
+      Terraform will perform the actions described above.
+      Only 'yes' will be accepted to approve.
 
-    ```
-     echo 'PORT=8080' > legacy/config.cfg
-     echo '#!/bin/bash' > legacy/run.sh
-     echo 'echo "Arrancando $PORT"' >> legacy/run.sh
-     chmod +x legacy/run.sh
-     ```
-  2. Escribe un script Python que:
+      Enter a value: yes
 
-     * Lea `config.cfg` y `run.sh`.
-     * Genere **automáticamente** un par `network.tf.json` + `main.tf.json` equivalente.
-     * Verifique con `terraform plan` que el resultado es igual al script legacy.
+      null_resource.app1: Creating...
+      null_resource.network_sim: Creating...
+      null_resource.app1: Provisioning with 'local-exec'...
+      null_resource.app1 (local-exec): Executing: ["/bin/sh" "-c" "echo 'Arrancando servidor app1 en red net1'"]
+      null_resource.app1 (local-exec): Arrancando servidor app1 en red net1
+      null_resource.app1: Creation complete after 0s [id=4259121708513663781]
+      null_resource.network_sim: Creation complete after 0s [id=4010562518234862503]
 
-#### Fase 3: Escribiendo código limpio en IaC 
+      Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+      ```
+   - `terraform plan` antes del cambio
 
-| Conceptos                       | Ejercicio rápido                                                                                               |
-| ------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
-| **Control de versiones comunica contexto** | - Haz 2 commits: uno que cambie `default` de `name`; otro que cambie `description`. Revisar mensajes claros. |
-| **Linting y formateo**                     | - Instala `jq`. Ejecutar `jq . network.tf.json > tmp && mv tmp network.tf.json`. ¿Qué cambió?                 |
-| **Nomenclatura de recursos**               | - Renombra en `main.tf.json` el recurso `null_resource` a `local_server`. Ajustar generador Python.           |
-| **Variables y constantes**                 | - Añade variable `port` en `network.tf.json` y usarla en el `command`. Regenerar entorno.                     |
-| **Parametrizar dependencias**              | - Genera `env3` de modo que su `network` dependa de `env2` (por ejemplo, `net2-peered`). Implementarlo en Python.    |
-| **Mantener en secreto**                    | - Marca `api_key` como **sensitive** en el JSON y leerla desde `os.environ`, sin volcarla en disco.           |
+      ```
+      jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad13-CC3S2/Laboratorio/environments/app1$ terraform plan
+      null_resource.app1: Refreshing state... [id=4259121708513663781]
+      null_resource.network_sim: Refreshing state... [id=4010562518234862503]
 
-#### Fase 4: Integración final y discusión
+      No changes. Your infrastructure matches the configuration.
 
-1. **Recorrido** por:
+      Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.
+      ```
 
-   * Detección de drift (*remediation*).
-   * Migración de legacy.
-   * Estructura limpia, módulos, variables sensibles.
-2. **Preguntas abiertas**:
+   - `terraform plan` despues del cambio
 
-   * ¿Cómo extenderías este patrón para 50 módulos y 100 entornos?
-   * ¿Qué prácticas de revisión de código aplicarías a los `.tf.json`?
-   * ¿Cómo gestionarías secretos en producción (sin Vault)?
-   * ¿Qué workflows de revisión aplicarías a los JSON generados?
+      ```
+      jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad13-CC3S2/Laboratorio/environments/app1$ terraform plan
+      null_resource.app1: Refreshing state... [id=4259121708513663781]
+      null_resource.network_sim: Refreshing state... [id=4010562518234862503]
 
+      Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following
+      symbols:
+      -/+ destroy and then create replacement
 
-#### Ejercicios
+      Terraform will perform the following actions:
 
-1. **Drift avanzado**
+      # null_resource.network_sim must be replaced
+      -/+ resource "null_resource" "network_sim" {
+            ~ id       = "4010562518234862503" -> (known after apply)
+            ~ triggers = { # forces replacement
+               ~ "network" = "local-network" -> "lab-net"
+                  # (1 unchanged element hidden)
+            }
+         }
 
-   * Crea un recurso "load_balancer" que dependa de dos `local_server`. Simula drift en uno de ellos y observa el plan.
+      Plan: 1 to add, 0 to change, 1 to destroy.
 
-2. **CLI Interactiva**
+      ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
-   * Refactoriza `generate_envs.py` con `click` para aceptar:
+      Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run
+      "terraform apply" now.
+      ```
 
-     ```bash
-     python generate_envs.py --count 3 --prefix staging --port 3000
-     ```
+* ¿Cómo interpreta Terraform el cambio de variable?
 
-3. **Validación de Esquema JSON**
+   Cuando cambié el valor de la variable network de "local-network" a "lab-net", Terraform lo detectó como una modificación en los triggers del recurso null_resource.network_sim, se dio cuenta de que algo en la configuración cambió y, como ese trigger forma parte del estado del recurso, decidió reemplazarlo. No recreó todo, solo ese recurso específico, porque solo ahí vio una diferencia entre lo que está en el código y lo que guarda en el terraform.tfstate.
 
-   * Diseña un JSON Schema que valide la estructura de ambos TF files.
-   * Lanza la validación antes de escribir cada archivo en Python.
+* ¿Qué diferencia hay entre modificar el JSON vs. parchear directamente el recurso?
 
-4. **GitOps Local**
+   Si modifico la plantilla, puedo regenerar todos los entornos de forma reproducible. Pero si edito directamente el recurso, ese cambio se pierde la próxima vez que ejecute terraform apply, porque los recursos se generan en diversos entornos según la configuración terraform.
 
-   * Implementa un script que, al detectar cambios en `modules/simulated_app/`, regenere **todas** las carpetas bajo `environments/`.
-   * Añade un hook de pre-commit que ejecute `jq --check` sobre los JSON.
+* ¿Por qué Terraform no recrea todo el recurso, sino que aplica el cambio "in-place"?
 
-5. **Compartición segura de secretos**
+   Terraform solo recrea lo que realmente cambió, el único cambio fue en el valor del trigger de network_sim, así que solo destruyó y volvió a crear ese recurso. Todo lo demás (como el recurso app1) siguió igual, por lo que Terraform no lo tocó, Terraform analiza cada parte y actúa solo donde hay diferencias, sin rehacer todo desde cero.
 
-   * Diseña un mini-workflow donde `api_key` se lee de `~/.config/secure.json` (no versionado) y documenta cómo el equipo la distribuye sin comprometer seguridad.
+* ¿Qué pasa si editas directamente `main.tf.json` en lugar de la plantilla de variables?
 
-### Estructura del entregable
-
-La carpeta `Actividad13-CC3S2` de respuestas debe contener:
-
-1. **Carpeta `modules/simulated_app/`**:
-   - `network.tf.json`: Archivo JSON modificado con el cambio en el `default` de `"network"` a `"lab-net"`, además de cualquier adición como la variable `port` y la marca de `sensitive` para `api_key`.
-   - `main.tf.json`: Archivo JSON actualizado con el renombre del recurso `null_resource` a `local_server` y cualquier ajuste para usar la variable `port` en el `command`.
-
-2. **Carpeta `environments/`**:
-   - Subcarpetas `app1`, `app2`, `env3`, cada una con:
-     - `network.tf.json`: Generado por el script Python, reflejando las variables correspondientes (incluyendo dependencias como `net2-peered` para `env3`).
-     - `main.tf.json`: Generado con los recursos configurados, usando las variables definidas.
-   - Cada subcarpeta debe ser funcional para ejecutar `terraform init` y `terraform plan`.
-
-3. **Carpeta `legacy/`**:
-   - `config.cfg`: Archivo con parámetros de ejemplo (ejemplo, `PORT=8080`).
-   - `run.sh`: Script bash de ejemplo que usa los parámetros de `config.cfg`.
-
-4. **Scripts Python**:
-   - `generate_envs.py`: Script modificado para:
-     - Generar entornos (`app1`, `app2`, `env3`) con las configuraciones especificadas.
-     - Implementar la dependencia de `env3` en `env2` (ejemplo, `net2-peered`).
-     - Leer `api_key` desde `os.environ` para mantenerlo seguro.
-     - (Opcional, si se completa el ejercicio 2) Refactorizado con `click` para aceptar argumentos como `--count`, `--prefix`, `--port`.
-   - (Opcional, si se completa el ejercicio 3) Script adicional o función en `generate_envs.py` para validar los archivos JSON generados contra un JSON Schema.
-
-5. **Carpeta `scripts/` (opcional, para organización)**:
-   - Script para el **GitOps Local** (ejercicio 4): Un script que detecte cambios en `modules/simulated_app/` y regenere todas las carpetas bajo `environments/`.
-   - Hook de pre-commit que ejecute `jq --check` sobre los JSON generados.
-
-6. **Archivo `secure.json` (no versionado)**:
-   - Ubicado en `~/.config/secure.json` (fuera del repositorio, según ejercicio 5).
-   - Contiene el `api_key` para que el script Python lo lea sin versionarlo.
-   - Incluir una nota en la documentación sobre su ubicación y manejo.
-
-7. **Documentación (`README.md`)**:
-   - Un archivo `README.md` que explique:
-     - El propósito de la actividad.
-     - La estructura de los archivos y carpetas.
-     - Instrucciones para ejecutar el proyecto (ejemplo, `python generate_envs.py`, `terraform init`, `terraform plan`).
-     - Respuestas a las preguntas de la **Fase 1**:
-       - ¿Cómo interpreta Terraform el cambio de variable?
-       - ¿Qué diferencia hay entre modificar el JSON vs. parchear directamente el recurso?
-       - ¿Por qué Terraform no recrea todo el recurso, sino que aplica el cambio "in-place"?
-       - ¿Qué pasa si editas directamente `main.tf.json` en lugar de la plantilla de variables?
-     - Respuestas a las preguntas abiertas de la **Fase 4**:
-       - ¿Cómo extenderías este patrón para 50 módulos y 100 entornos?
-       - ¿Qué prácticas de revisión de código aplicarías a los `.tf.json`?
-       - ¿Cómo gestionarías secretos en producción (sin Vault)?
-       - ¿Qué workflows de revisión aplicarías a los JSON generados?
-     - Detalles sobre los ejercicios completados (ejemplo, drift avanzado, CLI interactiva, validación de esquema, GitOps, manejo de secretos).
-     - Instrucciones para configurar el entorno (ejemplo, instalar `jq`, dependencias de Python como `click` si se usa, y Terraform).
-
-8. **Historial de Git**:
-   - Al menos dos commits claros (según la **Fase 3**):
-     - Uno para el cambio del `default` de `name`.
-     - Otro para el cambio de `description`.
-     - Mensajes de commit descriptivos, como:
-       - `Change default network name to lab-net`
-       - `Update description for network variable`
-
-9. **Opcional (si se completa el ejercicio 1)**:
-   - Archivos adicionales en `modules/simulated_app/` para el recurso `load_balancer` que dependa de dos `local_server`, con evidencia de simulación de drift y el plan de Terraform.
-
-10. **Opcional (si se completa el ejercicio 5)**:
-    - Documentación en el `README.md` sobre el mini-workflow para compartir `api_key` de forma segura (ejemplo, cómo el equipo distribuye `secure.json` sin versionarlo).
-
-#### Ejemplo de estructura de directorios
-
-```
-Actividad13-CC3S2/
-├── modules/
-│   └── simulated_app/
-│       ├── network.tf.json
-│       └── main.tf.json
-├── environments/
-│   ├── app1/
-│   │   ├── network.tf.json
-│   │   └── main.tf.json
-│   ├── app2/
-│   │   ├── network.tf.json
-│   │   └── main.tf.json
-│   └── env3/
-│       ├── network.tf.json
-│       └── main.tf.json
-├── legacy/
-│   ├── config.cfg
-│   └── run.sh
-├── scripts/
-│   └── gitops_regenerate.sh  # Para GitOps Local (ejercicio 4)
-├── generate_envs.py
-├── .git/
-├── .pre-commit-config.yaml  # Hook de pre-commit (ejercicio 4)
-└── README.md
-```
-
-#### Notas sobre la implementación
-
-1. **Fase 1: Expresando el cambio de infraestructura**:
-   - El cambio en `network.tf.json` (`default: "net1" -> "lab-net"`) debe reflejarse en los entornos generados.
-   - Usa `terraform plan` para verificar que solo el `trigger` de `null_resource` cambia, mostrando la capacidad de Terraform para detectar cambios incrementales.
-
-2. **Fase 2: Inmutabilidad y migración**:
-   - En el caso de `app2`, simula el drift editando `main.tf.json` y usa `terraform apply` para revertirlo.
-   - Para el mini-reto, el script Python debe leer `config.cfg` y `run.sh` de `legacy/` y generar archivos `.tf.json` equivalentes, asegurando que `terraform plan` refleje la misma configuración.
-
-3. **Fase 3: Código limpio**:
-   - Usa `jq` para formatear los JSON y asegurar consistencia.
-   - Ajusta `generate_envs.py` para renombrar recursos, añadir la variable `port`, y manejar dependencias entre entornos (ejemplo, `env3` depende de `env2`).
-   - Implementa `api_key` como variable sensible, leída desde `os.environ`.
-
-4. **Fase 4: Integración y discusión**:
-   - Responde las preguntas abiertas en el `README.md` con propuestas prácticas, como:
-     - Escalar a 50 módulos y 100 entornos: Usar plantillas modulares, scripts de automatización, y un sistema de nomenclatura estandarizado.
-     - Revisión de código: Usar linters (ejemplo, `jq`), validación de esquemas JSON, y revisiones en pull requests.
-     - Secretos en producción: Usar archivos locales no versionados (como `secure.json`) o variables de entorno cifradas.
-     - Workflows: Integrar pre-commit hooks y CI/CD para validar JSON y ejecutar `terraform plan`.
-
-5. **Ejercicios adicionales**:
-   - Si implementas el ejercicio 1 (drift avanzado), incluye el recurso `load_balancer` en `main.tf.json` y documenta el resultado de `terraform plan`.
-   - Para el ejercicio 2, usa la librería `click` en `generate_envs.py` para una CLI interactiva.
-   - Para el ejercicio 3, define un JSON Schema (puedes usar `jsonschema` en Python) para validar los `.tf.json`.
-   - Para el ejercicio 4, implementa un script bash o Python para GitOps y un hook de pre-commit con `jq`.
-   - Para el ejercicio 5, describe un flujo seguro para compartir `secure.json` (ejemplo, mediante canales cifrados como email seguro o herramientas como 1Password).
-
-#### Ejercicios completados
-- **Drift avanzado**: Implementado recurso `load_balancer` con dependencias.
-- **CLI interactiva**: `generate_envs.py` refactorizado con `click`.
-- **Validación de esquema**: JSON Schema para validar `.tf.json`.
-- **GitOps Local**: Script para regenerar entornos y hook de pre-commit con `jq`.
-- **Secretos**: Workflow para `secure.json` descrito.
-
-#### Notas
-- No versionar `~/.config/secure.json`.
-- Verificar formato JSON con `jq . file.json > tmp && mv tmp file.json`.
-
-#### Consejos para subir al repositorio
-
-- Asegúrate de que `.git/` esté inicializado en `Actividad13-CC3S2/` y que los commits reflejen los cambios solicitados.
-- Excluye `secure.json` y otros archivos sensibles usando `.gitignore`.
-- Verifica que todos los archivos `.tf.json` sean válidos ejecutando `terraform init` y `terraform plan` en cada entorno.
-- Prueba el script `generate_envs.py` para asegurar que genera correctamente los entornos.
-- Si implementas los ejercicios opcionales, documéntalos claramente en el `README.md`.
+   main.tf.json describe la infraestructura final (los recursos) asi que si edito el main.tf.json directamente significa que estamos cambiando la lógica o estructura del módulo, no solo sus entradas. Terraform vería ese cambio como una modificación estructural y podría recrear recursos.
