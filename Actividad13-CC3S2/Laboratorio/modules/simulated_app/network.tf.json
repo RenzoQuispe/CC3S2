@@ -3,7 +3,7 @@
         "name": {
             "type": "string",
             "default": "Actividad13-Server",
-            "description": "Nombre del servidor local"
+            "description": "Nombre del servidor simulado (Actividad 13)"
         },
         "network": {
             "type": "string",
