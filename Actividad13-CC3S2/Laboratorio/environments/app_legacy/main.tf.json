@@ -1,0 +1,18 @@
+{
+    "resource": {
+        "null_resource": {
+            "legacy_app": {
+                "provisioner": [
+                    {
+                        "local-exec": {
+                            "command": "echo 'Arrancando ${var.port}'"
+                        }
+                    }
+                ],
+                "triggers": {
+                    "port": "${var.port}"
+                }
+            }
+        }
+    }
+}

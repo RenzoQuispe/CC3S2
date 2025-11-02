@@ -1,0 +1,9 @@
+{
+    "variable": {
+        "port": {
+            "default": "8080",
+            "description": "Puerto de la aplicaci\u00f3n",
+            "type": "string"
+        }
+    }
+}

@@ -182,3 +182,122 @@ Cuando cambian variables de configuración, Terraform los mapea a **triggers** q
 * ¿Qué pasa si editas directamente `main.tf.json` en lugar de la plantilla de variables?
 
    main.tf.json describe la infraestructura final (los recursos) asi que si edito el main.tf.json directamente significa que estamos cambiando la lógica o estructura del módulo, no solo sus entradas. Terraform vería ese cambio como una modificación estructural y podría recrear recursos.
+
+## Fase 2: Entendiendo la inmutabilidad
+
+### A. Remediación de 'drift' (out-of-band changes)
+
+1. **Simulación**
+
+   ```bash
+   cd environments/app2
+   terraform init
+   terraform apply
+   # edita manualmente terraform.tfstate: cambiar "name":"app2" ->"hacked-app"
+   ```
+2. Ejecuta:
+
+   ```bash
+   terraform plan
+   ```
+
+   Ahora Terraform verá que el estado real (modificado) no coincide con el código (main.tf.json) y propondrá corregirlo.
+
+   ```
+   jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad13-CC3S2/Laboratorio/environments/app2$ terraform plan
+   null_resource.network_sim: Refreshing state... [id=7187014476437573362]
+   null_resource.hacked-app: Refreshing state... [id=4059072469876814575]
+
+   Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following
+   symbols:
+   + create
+   - destroy
+
+   Terraform will perform the following actions:
+
+   # null_resource.app2 will be created
+   + resource "null_resource" "app2" {
+         + id       = (known after apply)
+         + triggers = {
+            + "name"    = "app2"
+            + "network" = "net2"
+         }
+      }
+
+   # null_resource.hacked-app will be destroyed
+   # (because null_resource.hacked-app is not in configuration)
+   - resource "null_resource" "hacked-app" {
+         - id       = "4059072469876814575" -> null
+         - triggers = {
+            - "name"    = "app2"
+            - "network" = "net2"
+         } -> null
+      }
+
+   Plan: 1 to add, 0 to change, 1 to destroy.
+
+   ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+   Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run
+   "terraform apply" now.
+   ```
+
+3. **Aplica**
+
+   ```bash
+   terraform apply
+   ```
+   Terraform restaurará el estado a "app2".
+   
+### B. Migrando a IaC
+
+* **Mini-reto**
+1. Crea en un nuevo directorio `legacy/` un simple `run.sh` + `config.cfg` con parámetros (por ejemplo, puertos, rutas).
+
+   ```sh
+   echo 'PORT=8080' > legacy/config.cfg
+   echo '#!/bin/bash' > legacy/run.sh
+   echo 'echo "Arrancando $PORT"' >> legacy/run.sh
+   chmod +x legacy/run.sh
+   ```
+2. Escribe un script Python que:
+
+   * Lea `config.cfg` y `run.sh`.
+   * Genere **automáticamente** un par `network.tf.json` + `main.tf.json` equivalente.
+   * Verifique con `terraform plan` que el resultado es igual al script legacy.
+
+   El script creado es `migracion_IaC.py`
+
+   ```
+   jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad13-CC3S2/Laboratorio/environments/app_legacy$ terraform apply
+
+   Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following
+   symbols:
+   + create
+
+   Terraform will perform the following actions:
+
+   # null_resource.legacy_app will be created
+   + resource "null_resource" "legacy_app" {
+         + id       = (known after apply)
+         + triggers = {
+            + "port" = "8080"
+         }
+      }
+
+   Plan: 1 to add, 0 to change, 0 to destroy.
+
+   Do you want to perform these actions?
+   Terraform will perform the actions described above.
+   Only 'yes' will be accepted to approve.
+
+   Enter a value: yes
+
+   null_resource.legacy_app: Creating...
+   null_resource.legacy_app: Provisioning with 'local-exec'...
+   null_resource.legacy_app (local-exec): Executing: ["/bin/sh" "-c" "echo 'Arrancando 8080'"]
+   null_resource.legacy_app (local-exec): Arrancando 8080
+   null_resource.legacy_app: Creation complete after 0s [id=1306315554674875942]
+
+   Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+   ```
