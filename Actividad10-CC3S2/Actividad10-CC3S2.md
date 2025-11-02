@@ -1,7 +1,5 @@
 ## Actividad: : DI, fixtures y cobertura con gates
 
->Para esta actividad en clase, toma de referencia el [laboratorio 4](https://github.com/kapumota/Curso-CC3S2/tree/main/labs/Laboratorio4) del curso.
-
 ## Parte 1
 
 ### De `requests`  a DI + pruebas sin red, con políticas DevSecOps
@@ -239,7 +237,6 @@ Genera datos mínimos (stubs) y fixtures reutilizables, con validación de entra
 2. **Archivo**: `Actividades/pruebas_fixtures/conftest.py`
 
 ```python
-# English comments per course preference
 import json
 import os
 import re
@@ -247,7 +244,7 @@ import logging
 import pytest
 
 class SecretRedactor(logging.Filter):
-    """Redact tokens, apikeys, and Authorization headers in logs."""
+    """Redacta tokens, claves de API y encabezados de autorización en los registros."""
     SECRET_PAT = re.compile(r"(Authorization:\s*Bearer\s+)[A-Za-z0-9\-\._~\+\/]+=*", re.I)
     KEY_PAT = re.compile(r"(api[_-]?key|token|secret)\s*=\s*[^&\s]+", re.I)
 
@@ -268,17 +265,17 @@ def _redacted_logging(caplog):
 
 @pytest.fixture
 def stub_valid_account():
-    # minimal happy-path stub
+    # Stub mínimo de camino feliz
     return {"id": "u_001", "email": "user@example.com", "role": "reader", "active": True}
 
 @pytest.fixture
 def stub_corrupt_account():
-    # negative: wrong types / missing fields
+    # negativo: tipos incorrectos/campos faltantes
     return {"id": None, "email": "bad@@", "role": 123, "active": "yes"}
 
 @pytest.fixture
 def imdb_fixtures():
-    # loads plausible IMDb responses from fixtures file
+    # Carga respuestas plausibles de IMDb desde el archivo de partidos.
     base = os.path.dirname(__file__)
     with open(os.path.join(base, "fixtures", "imdb_responses.json"), "r", encoding="utf-8") as f:
         return json.load(f)
@@ -302,7 +299,7 @@ def imdb_fixtures():
     "theMovieDb": "8.7"
   },
   "malformed_payload": {
-    "oops": "not the expected schema"
+    "oops": "no es el esquema esperado"
   }
 }
 ```
@@ -312,19 +309,20 @@ def imdb_fixtures():
 
 ```python
 def validate_account(d):
-    # strict minimal checks
-    if not isinstance(d, dict): raise TypeError("account must be dict")
+    # controles mínimos estrictos
+    if not isinstance(d, dict): raise TypeError("la cuenta debe ser un dict")
     for k in ("id", "email", "role", "active"):
-        if k not in d: raise ValueError(f"missing {k}")
+        if k not in d: raise ValueError(f"falta {k}")
     if not isinstance(d["id"], str) or not d["id"]:
-        raise ValueError("id must be non-empty str")
+        raise ValueError("id debe ser una cadena no vacía")
     if "@" not in d["email"]:
-        raise ValueError("invalid email")
+        raise ValueError("correo inválido")
     if not isinstance(d["role"], str):
-        raise ValueError("role must be str")
+        raise ValueError("role debe ser una cadena")
     if not isinstance(d["active"], bool):
-        raise ValueError("active must be bool")
+        raise ValueError("active debe ser booleano")
     return True
+
 ```
 
 5. **Test rápido**
@@ -362,7 +360,7 @@ import time
 from typing import Dict, Any
 
 class FakeHttpClient:
-    """No network. Serves preloaded fixtures; can simulate errors/timeouts."""
+    """Sin red. Sirve datos pre-cargados, puede simular errores/tiempos de espera."""
     def __init__(self, fixtures: Dict[str, Any], delay_ms: int = 0, fail_mode: str | None = None):
         self._fx = fixtures
         self._delay = delay_ms / 1000.0
@@ -372,16 +370,17 @@ class FakeHttpClient:
         if self._delay:
             time.sleep(min(self._delay, timeout + 0.05))
         if self._fail_mode == "timeout":
-            # Simulate exceeding timeout
+            # Simula tiempo de espera excedido
             time.sleep(timeout + 0.1)
-            raise TimeoutError("request timed out")
+            raise TimeoutError("la solicitud excedió el tiempo de espera")
         if self._fail_mode == "500":
-            raise RuntimeError("HTTP 500 simulated")
+            raise RuntimeError("HTTP 500 simulado")
         if "malformed" in url:
             return self._fx["malformed_payload"]
         if "Ratings" in url:
             return self._fx["ratings_ok"]
         return self._fx["search_titles_ok"]
+
 ```
 
 2. **Backoff con jitter (opcional)**
@@ -393,7 +392,7 @@ import time
 from functools import wraps
 
 def bounded_jitter_backoff(tries=3, base=0.05, cap=0.5):
-    """Caped exponential backoff with jitter"""
+    """Retardo exponencial limitado con variación aleatoria"""
     def deco(fn):
         @wraps(fn)
         def _wrap(*a, **kw):
@@ -409,6 +408,7 @@ def bounded_jitter_backoff(tries=3, base=0.05, cap=0.5):
                     time.sleep(sleep)
         return _wrap
     return deco
+
 ```
 
 3. **Tests de resiliencia**
@@ -418,7 +418,7 @@ def bounded_jitter_backoff(tries=3, base=0.05, cap=0.5):
 import logging
 import pytest
 from .fake_http import FakeHttpClient
-from ..pruebas_fixtures.conftest import SecretRedactor  # reuse redactor
+from ..pruebas_fixtures.conftest import SecretRedactor  # reutiliza redactor
 
 LOGGER = logging.getLogger("imdb")
 
@@ -427,8 +427,8 @@ def test_timeout_logged_redacted(imdb_fixtures, caplog):
     LOGGER.addFilter(SecretRedactor())
     client = FakeHttpClient(imdb_fixtures, delay_ms=0, fail_mode="timeout")
     with pytest.raises(TimeoutError):
-        client.get_json("https://imdb-api.com/API/Ratings/KEY/tt0111161", headers={"Authorization": "Bearer AAA.BBB"})
-    # assert redaction
+        client.get_json("https://imdb-api.com/API/Ratings/KEY/tt0111161", headers={"Authorization":"Bearer AAA.BBB"})
+    # valida redacción
     msgs = " ".join(m for _,_,m in caplog.record_tuples)
     assert "Bearer <REDACTED>" in msgs
 
@@ -440,7 +440,8 @@ def test_http_500_branch(imdb_fixtures):
 def test_malformed_payload_branch(imdb_fixtures):
     client = FakeHttpClient(imdb_fixtures)
     data = client.get_json("https://imdb-api.com/API/Ratings/KEY/malformed")
-    assert "oops" in data  # downstream should reject later
+    assert "oops" in data 
+
 ```
 
 > **Gate de cobertura**: estos tests abren ramas de error (timeout/500/malformed).
@@ -513,7 +514,7 @@ class RealHttpClient(HttpClient):
         t = timeout or self.timeout
         resp = requests.get(url, headers=headers or {}, timeout=t)
         if resp.status_code >= 500:
-            raise RuntimeError(f"server error {resp.status_code}")
+            raise RuntimeError(f"Error server {resp.status_code}")
         resp.raise_for_status()
         return resp.json()
 ```
@@ -670,20 +671,20 @@ Usa `git rev-parse --short HEAD`.
 
 **Ejercicio:** Simula tres PRs locales (ramas `feature/di`, `feature/policies`, `feature/resilience`), ejecuta `make gates` en cada merge a `develop` y  conserva bitácoras por PR en `evidencias/bitacoras/PRx.md` (incluye logs redaccionados y salida de cobertura).
 
-### 13) Latencia y presupuesto de tiempo
+#### 13) Latencia y presupuesto de tiempo
 
 **Contexto:** `FakeHttpClient` puede introducir `delay_ms`.
 
 **Ejercicio:** Crea un test que establezca `HTTP_TIMEOUT=0.05` y `delay_ms=80`. Verifica que se lanza `TimeoutError` y que el tracer registra una duración ≥ timeout. Restablece ENV al final del test.
 
-### 14) Idempotencia de `make run`
+#### 14) Idempotencia de `make run`
 
 **Contexto:** `run` no idempotente puede contaminar diagnósticos.
 
 **Ejercicio:** Implementa un lockfile `.run.lock` con `trap` de limpieza. Prueba que dos `make run` concurrentes no sobrescriben `out/` y que el segundo termina con código de salida distinto de 0 con mensaje claro.
 
 
-### 15) Variación de `TIMEOUT` por entorno
+#### 15) Variación de `TIMEOUT` por entorno
 
 **Contexto:** Política operable por ENV (12-Factor III).
 
@@ -724,7 +725,7 @@ Usa `git rev-parse --short HEAD`.
 **Ejercicio:** Asegura que las excepciones levantadas por políticas incluyan la **URL** y la **causa** (por ejemplo, "HTTPS requerido"). Agrega tests que validen substrings clave del mensaje.
 
 
-### 20) Política de subprocesos (opcional)
+#### 20) Política de subprocesos (opcional)
 
 **Contexto:** Algunos alumnos usarán llamadas concurrentes.
 
@@ -747,7 +748,6 @@ Usa `git rev-parse --short HEAD`.
 **Ejercicio:** Define que **cualquier** `errorMessage` no vacío resulte en `{}` (o excepción). Agrega tests con fixture que contiene `errorMessage: "Invalid API Key"` y verifica la rama.
 
 
-
 #### 23) Métrica por endpoint
 
 **Contexto:** Observabilidad mínima.
@@ -761,4 +761,81 @@ Usa `git rev-parse --short HEAD`.
 
 **Ejercicio:** En `docs/contratos.md` (texto corto), enumera: formatos de URL, política de allowlist/HTTPS/timeout, comportamiento ante `errorMessage`, dry-run y trazador. Añade un test que verifique que el archivo existe y no está vacío (sanity check de entrega).
 
+### Entregable
 
+En tu repositorio personal, sube la carpeta **`Actividad10-CC3S2/`** con **los 24 ejercicios implementados y probados**. Incluye código, pruebas y evidencias reproducibles.
+
+```
+Actividad10-CC3S2/
+  src/
+    models/imdb.py                                # E01, E02, E03, E07, E10, E19, E21, E22
+    servicios/
+      http_abstraction.py                         # E09, E11
+      real_http.py                                # E05, E08, E09, E19, E21
+      fake_http.py                                # E03, E06, E07, E09, E13, E17, E20
+      backoff.py                                  # E04
+  tests/
+    test_e01_unificacion_clase_imdbservice.py     # E01
+    test_e02_asserts_timeout_kwarg.py             # E02
+    test_e03_di_con_fakeclient_sin_red.py         # E03
+    test_e04_backoff_jitter_seeded.py             # E04
+    test_e05_http_error_mapping.py                # E05
+    test_e06_log_redaction_precision.py           # E06
+    test_e07_payload_edges_branches.py            # E07
+    test_e08_https_only_y_subdominios.py          # E08
+    test_e09_tracer_hook_metrica_basica.py        # E09
+    test_e10_schema_validation_ratings.py         # E10
+    test_e11_legacy_patch_compat.py               # E11
+    test_e12_coverage_gate_en_gates.py            # E12
+    test_e13_time_budget_timeout_latencia.py      # E13
+    test_e14_idempotencia_make_run_lock.py        # E14
+    test_e15_timeout_variaciones_parametrizado.py # E15
+    test_e16_allowlist_dinamica_env.py            # E16
+    test_e17_no_network_contract_global.py        # E17
+    test_e18_evidencias_reportes_existencia.py    # E18
+    test_e19_mensajes_error_con_contexto.py       # E19
+    test_e20_threadpool_timeout_por_llamada.py    # E20
+    test_e21_dry_run_valida_politicas_sin_red.py  # E21
+    test_e22_error_message_contrato_estable.py    # E22
+    test_e23_metrics_csv_generacion.py            # E23
+    test_e24_docs_contratos_sanity.py             # E24
+  Actividades/
+    pruebas_fixtures/
+      conftest.py                                 # E06 (redacción), fixtures, logging
+      fixtures/imdb_responses.json                # E03, E07, E10, E22, E23
+    mocking_objetos/
+      models/imdb.py                              # E01 (si reexportas/mantienes ruta única)
+  docs/
+    contratos.md                                  # E24 (contrato: URLs, políticas, errorMessage, tracer, dry-run)
+    bitacoras/
+      PR1.md                                      # E12 (gates por "PR" simulado)
+      PR2.md
+      PR3.md
+  evidencias/
+    coverage/
+      htmlcov_coverage_pruebas_<gitshort>/        # E12, E18
+    logs/
+      app_redacted.log                            # E06, E18
+      app_raw_sample.log                          # E06, E18
+  out/
+    metrics.csv                                    # E23
+  pytest.ini                                       # E12 (cov-fail-under=85)
+  Makefile                                         # E12, E14 (gates y run con lockfile)
+  README.md                                        # Instrucciones mínimas de ejecución
+```
+
+**Requisitos operativos del envío**
+
+* Suite **sin red** con DI/Fakes; compatibilidad con `@patch` donde aplique.
+* **Políticas** por entorno: `HTTP_TIMEOUT`, `HTTP_ALLOWLIST`, `HTTP_DRY_RUN=1`; **HTTPS-only** y allowlist activas; errores con **URL + causa**.
+* **Cobertura ≥ 85%** como **gate** en `pytest.ini` y encadenada en `make gates`.
+* **Observabilidad**: tracer y **`out/metrics.csv`**; logs con **redacción de secretos**.
+* **Trazabilidad**: carpeta de cobertura con **`<gitshort>`**, bitácoras `PR*.md`, y `docs/contratos.md` no vacío.
+
+**Ejecución esperada**
+
+* `make test` (suite completa)
+* `make gates` (lint + cobertura con umbral)
+* `HTTP_TIMEOUT=0.5 make test` (variaciones)
+
+Entrega únicamente la carpeta **`Actividad10-CC3S2/`** con lo anterior y **los 24 tests `test_eXX_*.py` pasando**.
