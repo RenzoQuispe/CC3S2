@@ -12,7 +12,7 @@
               "provisioner": [
                 {
                   "local-exec": {
-                    "command": "echo 'Arrancando servidor ${var.name} en red ${var.network}'"
+                    "command": "echo 'Arrancando servidor ${var.name} en red ${var.network}' && echo 'Usando API key secreta... ${var.api_key}'"
                   }
                 }
               ]

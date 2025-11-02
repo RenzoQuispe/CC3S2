@@ -1,0 +1,25 @@
+{
+    "resource": [
+        {
+            "null_resource": [
+                {
+                    "env3": [
+                        {
+                            "provisioner": [
+                                {
+                                    "local-exec": {
+                                        "command": "echo 'Arrancando servidor env3 en red net2-peered'"
+                                    }
+                                }
+                            ],
+                            "triggers": {
+                                "name": "env3",
+                                "network": "net2-peered"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
