@@ -578,3 +578,266 @@
 * ¿Qué workflows de revisión aplicarías a los JSON generados?
 
    Para los JSON generados, revisaría siempre el generador Python y las plantillas, no los JSON directamente, porque en este caso son artefactos dependientes. Se puede usar hooks de pre-commit que corran jq para formatearlos automáticamente y que verifiquen que no se cambien valores sensibles accidentalmente.
+
+## Ejercicios
+
+### 1. Drift avanzado
+
+Crea un recurso "load_balancer" que dependa de dos `local_server`. Simula drift en uno de ellos y observa el plan.
+
+#### Desarrollo
+
+- Ampliamos main.tf.json con varios recursos dependientes
+
+```json
+{
+  "resource": [
+    {
+      "null_resource": [
+        {
+          "server1": [
+            {
+              "triggers": {
+                "name": "srv1",
+                "network": "netA"
+              },
+              "provisioner": [
+                {
+                  "local-exec": {
+                    "command": "echo 'Iniciando servidor srv1 en red netA'"
+                  }
+                }
+              ]
+            }
+          ],
+          "server2": [
+            {
+              "triggers": {
+                "name": "srv2",
+                "network": "netA"
+              },
+              "provisioner": [
+                {
+                  "local-exec": {
+                    "command": "echo 'Iniciando servidor srv2 en red netA'"
+                  }
+                }
+              ]
+            }
+          ],
+          "load_balancer": [
+            {
+              "triggers": {
+                "depends_on": "srv1,srv2",
+                "mode": "active"
+              },
+              "provisioner": [
+                {
+                  "local-exec": {
+                    "command": "echo 'Balanceador activo gestionando srv1 y srv2'"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+Hacemos `terraform apply`
+
+- Para simular el drift modificamos terraform.tfstate. Luego para detectar el drift ejecutamos terraform plan.
+
+```
+jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad13-CC3S2/Laboratorio/modules/simulated_app$ terraform plan
+var.api_key
+  Clave secreta de la API
+
+  Enter a value: 
+
+null_resource.load_balancer: Refreshing state... [id=4335614650467243007]
+null_resource.server2: Refreshing state... [id=7602506153947056517]
+null_resource.network_sim: Refreshing state... [id=8060113344873722084]
+null_resource.server1: Refreshing state... [id=7533359670905045215]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated
+with the following symbols:
+-/+ destroy and then create replacement
+
+Terraform will perform the following actions:
+
+  # null_resource.server1 must be replaced
+-/+ resource "null_resource" "server1" {
+      ~ id       = "7533359670905045215" -> (known after apply)
+      ~ triggers = { # forces replacement
+          ~ "network" = "netB" -> "netA"
+            # (1 unchanged element hidden)
+        }
+    }
+
+Plan: 1 to add, 0 to change, 1 to destroy.
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these
+actions if you run "terraform apply" now.
+```
+
+- Corregimos el estado
+
+Al hacer terraform apply, terraform corrigió el estado eliminando el recurso alterado y recreándolo correctamente. Así comprobé que Terraform puede detectar y remediar cambios hechos fuera de su control (“drift”) sin que yo tenga que editar manualmente los archivos otra vez.
+
+```
+jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad13-CC3S2/Laboratorio/modules/simulated_app$ terraform apply
+var.api_key
+  Clave secreta de la API
+
+  Enter a value: 
+
+null_resource.load_balancer: Refreshing state... [id=4335614650467243007]
+null_resource.server2: Refreshing state... [id=7602506153947056517]
+null_resource.network_sim: Refreshing state... [id=8060113344873722084]
+null_resource.server1: Refreshing state... [id=7533359670905045215]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated
+with the following symbols:
+-/+ destroy and then create replacement
+
+Terraform will perform the following actions:
+
+  # null_resource.server1 must be replaced
+-/+ resource "null_resource" "server1" {
+      ~ id       = "7533359670905045215" -> (known after apply)
+      ~ triggers = { # forces replacement
+          ~ "network" = "netB" -> "netA"
+            # (1 unchanged element hidden)
+        }
+    }
+
+Plan: 1 to add, 0 to change, 1 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+null_resource.server1: Destroying... [id=7533359670905045215]
+null_resource.server1: Destruction complete after 0s
+null_resource.server1: Creating...
+null_resource.server1: Provisioning with 'local-exec'...
+null_resource.server1 (local-exec): Executing: ["/bin/sh" "-c" "echo 'Iniciando servidor srv1 en red netA'"]
+null_resource.server1 (local-exec): Iniciando servidor srv1 en red netA
+null_resource.server1: Creation complete after 0s [id=3811140612461234218]
+
+Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
+```
+
+###  2. CLI Interactiva
+
+Refactoriza `generate_envs.py` con `click` para aceptar:
+
+   ```bash
+   python3 generate_envs.py --count 3 --prefix staging --port 3000
+   ```
+
+#### Desarrollo
+
+Archivo `generate_envs.py`:
+
+```python
+import os, json
+from shutil import copyfile
+import shutil
+import click
+
+MODULE_DIR = "modules/simulated_app"
+OUT_DIR = "environments"
+
+def render_and_write(env):
+    env_dir = os.path.join(OUT_DIR, env["name"])
+    os.makedirs(env_dir, exist_ok=True)
+
+    # 1) Copia la definición de variables (network.tf.json)
+    copyfile(
+        os.path.join(MODULE_DIR, "network.tf.json"),
+        os.path.join(env_dir, "network.tf.json")
+    )
+
+    # 2) Genera main.tf.json con el puerto incluido
+    config = {
+        "resource": [
+            {
+                "null_resource": [
+                    {
+                        env["name"]: [
+                            {
+                                "triggers": {
+                                    "name":    env["name"],
+                                    "network": env["network"],
+                                    "port":    str(env["port"])
+                                },
+                                "provisioner": [
+                                    {
+                                        "local-exec": {
+                                            "command": (
+                                                f"echo 'Arrancando servidor "
+                                                f"{env['name']} en red {env['network']} en puerto {env['port']}'"
+                                            )
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+
+    with open(os.path.join(env_dir, "main.tf.json"), "w") as fp:
+        json.dump(config, fp, sort_keys=True, indent=4)
+
+@click.command()
+@click.option('--count', default=3, help='Cantidad de entornos a crear')
+@click.option('--prefix', default='app', help='Prefijo de los entornos')
+@click.option('--port', default=8080, help='Puerto base simulado')
+def main(count, prefix, port):
+    """Genera entornos Terraform simulados."""
+
+    ENVS = [
+        {"name": f"{prefix}{i}", "network": f"net{i}", "port": port}
+        for i in range(1, count + 1)
+    ]
+
+    for env in ENVS:
+        render_and_write(env)
+
+    print(f"Generados {len(ENVS)} entornos en '{OUT_DIR}/' con prefijo '{prefix}' y puerto {port}")
+
+if __name__ == "__main__":
+    main()
+```
+
+Ejecución:
+
+```
+jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad13-CC3S2/Laboratorio$ python3 generate_envs.py --count 3 --prefix staging --port 3000
+Generados 3 entornos en 'environments/' con prefijo 'staging' y puerto 3000
+jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad13-CC3S2/Laboratorio$ tree -L 3 environments/
+environments/
+├── staging1
+│   ├── main.tf.json
+│   └── network.tf.json
+├── staging2
+│   ├── main.tf.json
+│   └── network.tf.json
+└── staging3
+    ├── main.tf.json
+    └── network.tf.json
+
+4 directories, 6 files
+```

@@ -3,16 +3,46 @@
     {
       "null_resource": [
         {
-          "hello-server": [
+          "server1": [
             {
               "triggers": {
-                "name": "${var.name}",
-                "network": "${var.network}"
+                "name": "srv1",
+                "network": "netA"
               },
               "provisioner": [
                 {
                   "local-exec": {
-                    "command": "echo 'Arrancando servidor ${var.name} en red ${var.network}' && echo 'Usando API key secreta... ${var.api_key}'"
+                    "command": "echo 'Iniciando servidor srv1 en red netA'"
+                  }
+                }
+              ]
+            }
+          ],
+          "server2": [
+            {
+              "triggers": {
+                "name": "srv2",
+                "network": "netA"
+              },
+              "provisioner": [
+                {
+                  "local-exec": {
+                    "command": "echo 'Iniciando servidor srv2 en red netA'"
+                  }
+                }
+              ]
+            }
+          ],
+          "load_balancer": [
+            {
+              "triggers": {
+                "depends_on": "srv1,srv2",
+                "mode": "active"
+              },
+              "provisioner": [
+                {
+                  "local-exec": {
+                    "command": "echo 'Balanceador activo gestionando srv1 y srv2'"
                   }
                 }
               ]
