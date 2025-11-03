@@ -1175,3 +1175,120 @@ Verificar sintaxis JSON con jq...........................................Passed
  create mode 100644 modules/simulated_app/main.tf.json
  create mode 100644 modules/simulated_app/network.tf.json
 ```
+
+###  5. Compartición segura de secretos
+
+- Diseña un mini-workflow donde `api_key` se lee de `~/.config/secure.json` (no versionado) y documenta cómo el equipo la distribuye sin comprometer seguridad.
+
+#### Desarrollo
+
+Ejemplo de contenido en `.config/secure.json`:
+
+```json
+{
+  "api_key": "clave-secreta-123"
+}
+```
+
+El archivo `~/.config/secure.json` no debe versionarse. Modificamos generate_envs.py para leer la api_key. Modificaciones de generate_envs.py con respecto a la version del ejercicio 3:
+
+```
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad13-CC3S2/Laboratorio$ git diff generate_envs.py
+diff --git a/Actividad13-CC3S2/Laboratorio/generate_envs.py b/Actividad13-CC3S2/Laboratorio/generate_envs.py
+index c640ac2..4b52fa6 100644
+--- a/Actividad13-CC3S2/Laboratorio/generate_envs.py
++++ b/Actividad13-CC3S2/Laboratorio/generate_envs.py
+@@ -34,8 +34,21 @@ def validate_json(data, schema, filename):
+     else:
+         print(f"{filename} validado correctamente.")
+ 
++# Cargar clave API desde configuración segura
++def load_secure_api_key():
++    config_path = os.path.expanduser("~/.config/secure.json")
++    if not os.path.exists(config_path):
++        raise SystemExit("No se encontró ~/.config/secure.json. Crea uno con {'api_key': 'tu_clave_secreta'}")
++    with open(config_path) as f:
++        data = json.load(f)
++    api_key = data.get("api_key")
++    if not api_key:
++        raise SystemExit("secure.json no contiene 'api_key'")
++    print("Clave API cargada desde configuración segura.")
++    return api_key
++
+ # Render y escritura
+-def render_and_write(env):
++def render_and_write(env, api_key):
+     env_dir = os.path.join(OUT_DIR, env["name"])
+     os.makedirs(env_dir, exist_ok=True)
+ 
+@@ -49,7 +62,7 @@ def render_and_write(env):
+ 
+     copyfile(src_file, dst_file)
+ 
+-    # 2) Generar main.tf.json
++    # 2) Generar main.tf.json con comando que usa variable sensible
+     config = {
+         "resource": [
+             {
+@@ -66,8 +79,9 @@ def render_and_write(env):
+                                     {
+                                         "local-exec": {
+                                             "command": (
+-                                                f"echo 'Arrancando servidor "
+-                                                f"{env['name']} en red {env['network']} en puerto {env['port']}'"
++                                                f"TF_VAR_api_key={api_key} "
++                                                f"echo 'Arrancando servidor {env['name']} "
++                                                f"en red {env['network']} en puerto {env['port']}'"
+                                             )
+                                         }
+                                     }
+@@ -90,7 +104,9 @@ def render_and_write(env):
+ @click.option('--prefix', default='app', help='Prefijo de los entornos')
+ @click.option('--port', default=8080, help='Puerto base simulado')
+ def main(count, prefix, port):
+-    """Genera entornos Terraform simulados con validación de esquema."""
++    """Genera entornos Terraform simulados con validación de esquema y API key segura."""
++
++    api_key = load_secure_api_key()
+ 
+     ENVS = [
+         {"name": f"{prefix}{i}", "network": f"net{i}", "port": port}
+@@ -98,9 +114,10 @@ def main(count, prefix, port):
+     ]
+ 
+     for env in ENVS:
+-        render_and_write(env)
++        render_and_write(env, api_key)
+ 
+     print(f"Generados {len(ENVS)} entornos en '{OUT_DIR}/' con prefijo '{prefix}' y puerto {port}")
++    print("La clave API fue usada solo en memoria (no se guardó en disco)")
+ 
+ if __name__ == "__main__":
+     main()
+```
+
+Ejemplo de funcionamiento:
+
+```
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad13-CC3S2/Laboratorio$ cat .config/secure.json 
+{
+  "api_key": "clave-secreta-123"
+}
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad13-CC3S2/Laboratorio$ python3 generate_envs.py --count 2 --prefix staging --port 4000
+Clave API cargada desde configuración segura.
+network.tf.json validado correctamente.
+main.tf.json validado correctamente.
+network.tf.json validado correctamente.
+main.tf.json validado correctamente.
+Generados 2 entornos en 'environments/' con prefijo 'staging' y puerto 4000
+La clave API fue usada solo en memoria (no se guardó en disco)
+```
+
+##### Mini-workflow de equipo
+   - Cada miembro del equipo debe generar su propio archivo .config/secure.json localmente.
+   - El responsable de seguridad o líder de proyecto distribuye el valor de api_key por canal seguro (por ejemplo, 1Password, Vault, o Signal, no por correo o chat abierto).
+   - El archivo no se sube al repositorio ni se comparte en commits.
+   - Cada script o despliegue que necesite api_key la leerá desde esa ruta.
+   - Terraform recibirá la clave vía variable de entorno (TF_VAR_api_key), de modo que nunca se escriba en archivos de configuración.
+
+Este enfoque permite manejar secretos como la api_key de forma segura y desacoplada del código fuente, evitando que información sensible se filtre en el control de versiones o en archivos compartidos. Al almacenar la clave en .config/secure.json, cada desarrollador mantiene su propio entorno protegido, con permisos restringidos y sin exponer datos en los commits. Además, la clave solo se carga en memoria durante la ejecución del script, garantizando que no se escriba en disco ni se registre en logs, lo que reduce significativamente el riesgo de fugas de credenciales o accesos no autorizados.
