@@ -935,14 +935,243 @@ environments/
 
 ###  3. Validación de Esquema JSON
 
-   * Diseña un JSON Schema que valide la estructura de ambos TF files.
-   * Lanza la validación antes de escribir cada archivo en Python.
+- Diseña un JSON Schema que valide la estructura de ambos TF files. 
+- Lanza la validación antes de escribir cada archivo en Python.
+
+#### Desarrollo
+
+JSON Schema que valida la estructura de ambos TF files. 
+
+```json
+NETWORK_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "variable": {
+            "type": "object",
+            "properties": {
+                "name": {"type": "object"},
+                "network": {"type": "object"},
+                "port": {"type": "object"},
+                "api_key": {"type": "object"}
+            },
+            "required": ["name", "network"]
+        },
+        "resource": {"type": "object"}
+    },
+    "required": ["variable"]
+}
+
+MAIN_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "resource": {
+            "type": "array",
+            "items": {
+                "type": "object"
+            }
+        }
+    },
+    "required": ["resource"]
+}
+```
+
+Esto es una validación básica, lo suficiente para detectar errores de formato, se agregará en el mismo script. Modificaciónes de generate_envs.py con respecto a la version del anterior ejercicio:
+
+```
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad13-CC3S2/Laboratorio$ git diff generate_envs.py
+diff --git a/Actividad13-CC3S2/Laboratorio/generate_envs.py b/Actividad13-CC3S2/Laboratorio/generate_envs.py
+index 18ec33c..c640ac2 100644
+--- a/Actividad13-CC3S2/Laboratorio/generate_envs.py
++++ b/Actividad13-CC3S2/Laboratorio/generate_envs.py
+@@ -2,21 +2,54 @@ import os, json
+ from shutil import copyfile
+ import shutil
+ import click
++from jsonschema import validate, ValidationError
+ 
+ MODULE_DIR = "modules/simulated_app"
+ OUT_DIR = "environments"
+ 
++# Esquemas JSON Schema
++NETWORK_SCHEMA = {
++    "type": "object",
++    "properties": {
++        "variable": {"type": "object"},
++        "resource": {"type": "object"}
++    },
++    "required": ["variable"]
++}
++
++MAIN_SCHEMA = {
++    "type": "object",
++    "properties": {
++        "resource": {"type": "array"},
++    },
++    "required": ["resource"]
++}
++
++# Función para validar JSON
++def validate_json(data, schema, filename):
++    try:
++        validate(instance=data, schema=schema)
++    except ValidationError as e:
++        raise SystemExit(f"Error: {filename} no pasa la validación JSON Schema:\n{e.message}")
++    else:
++        print(f"{filename} validado correctamente.")
++
++# Render y escritura
+ def render_and_write(env):
+     env_dir = os.path.join(OUT_DIR, env["name"])
+     os.makedirs(env_dir, exist_ok=True)
+ 
+-    # 1) Copia la definición de variables (network.tf.json)
+-    copyfile(
+-        os.path.join(MODULE_DIR, "network.tf.json"),
+-        os.path.join(env_dir, "network.tf.json")
+-    )
++    # 1) Copiar network.tf.json
++    src_file = os.path.join(MODULE_DIR, "network.tf.json")
++    dst_file = os.path.join(env_dir, "network.tf.json")
+ 
+-    # 2) Genera main.tf.json con el puerto incluido
++    with open(src_file) as f:
++        net_data = json.load(f)
++        validate_json(net_data, NETWORK_SCHEMA, "network.tf.json")
++
++    copyfile(src_file, dst_file)
++
++    # 2) Generar main.tf.json
+     config = {
+         "resource": [
+             {
+@@ -47,6 +80,8 @@ def render_and_write(env):
+         ]
+     }
+ 
++    validate_json(config, MAIN_SCHEMA, "main.tf.json")
++
+     with open(os.path.join(env_dir, "main.tf.json"), "w") as fp:
+         json.dump(config, fp, sort_keys=True, indent=4)
+ 
+@@ -55,7 +90,7 @@ def render_and_write(env):
+ @click.option('--prefix', default='app', help='Prefijo de los entornos')
+ @click.option('--port', default=8080, help='Puerto base simulado')
+ def main(count, prefix, port):
+-    """Genera entornos Terraform simulados."""
++    """Genera entornos Terraform simulados con validación de esquema."""
+ 
+     ENVS = [
+         {"name": f"{prefix}{i}", "network": f"net{i}", "port": port}
+```
 
 ###  4. GitOps Local
 
-   * Implementa un script que, al detectar cambios en `modules/simulated_app/`, regenere **todas** las carpetas bajo `environments/`.
-   * Añade un hook de pre-commit que ejecute `jq --check` sobre los JSON.
+- Implementa un script que, al detectar cambios en `modules/simulated_app/`, regenere **todas** las carpetas bajo `environments/`.
+- Añade un hook de pre-commit que ejecute `jq --check` sobre los JSON.
 
-###  5. Compartición segura de secretos
+#### Desarrollo
 
-   * Diseña un mini-workflow donde `api_key` se lee de `~/.config/secure.json` (no versionado) y documenta cómo el equipo la distribuye sin comprometer seguridad.
+SSe agregó el script [`auto_regen_envs.py`](./Laboratorio/auto_regen_envs.py) que calcula un hash SHA256 de todos los archivos en modules/simulated_app/.  y compara con el hash guardado en .modules_hash_cache.json. Si detecta un cambio entonces ejecuta generate_envs.py con los parámetros predefinidos y actualiza el hash.
+
+```python
+#!/usr/bin/env python3
+import os
+import subprocess
+import time
+import hashlib
+import json
+
+MODULE_DIR = "modules/simulated_app"
+ENV_DIR = "environments"
+GENERATE_CMD = ["python3", "generate_envs.py", "--count", "3", "--prefix", "app", "--port", "3000"]
+CACHE_FILE = ".modules_hash_cache.json"
+
+def hash_directory(path):   # Devuelve un hash SHA256 de todos los archivos dentro del directorio.
+    h = hashlib.sha256()
+    for root, _, files in os.walk(path):
+        for f in sorted(files):
+            fp = os.path.join(root, f)
+            with open(fp, "rb") as file:
+                h.update(file.read())
+    return h.hexdigest()
+
+def load_cached_hash():
+    if os.path.exists(CACHE_FILE):
+        with open(CACHE_FILE, "r") as f:
+            return json.load(f).get("hash", "")
+    return ""
+
+def save_cached_hash(h):
+    with open(CACHE_FILE, "w") as f:
+        json.dump({"hash": h}, f)
+
+def regen_envs():
+    print("Cambios detectados en modules/simulated_app — Regenerando entornos...")
+    subprocess.run(GENERATE_CMD, check=True)
+    print("Entornos regenerados correctamente.\n")
+
+def main():
+    current_hash = hash_directory(MODULE_DIR)
+    cached_hash = load_cached_hash()
+
+    if current_hash != cached_hash:
+        regen_envs()
+        save_cached_hash(current_hash)
+    else:
+        print("No hay cambios en modules/simulated_app. Nada que regenerar.")
+
+if __name__ == "__main__":
+    main()
+```
+
+Ejemplo de un `.modules_hash_cache.json` generado:
+
+```json
+{"hash": "2e19da53ac981840d516984afaec67631c89265618afa7e01479e7c0c9357b44"}
+```
+
+Hook de pre-commit para validar JSONs con jq
+
+```yaml
+repos:
+  - repo: local
+    hooks:
+      - id: check-json
+        name: "Verificar sintaxis JSON con jq"
+        entry: bash -c 'find . -type f -name "*.json" -exec jq --exit-status . {} \;'
+        language: system
+        types: [json]
+```
+
+Ejemplo de uso:
+
+```
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2$ pre-commit install
+pre-commit installed at .git/hooks/pre-commit
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2$ git add modules/ environments/
+(venv) jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2$ git commit -m "agregar modules y enviroments"
+[WARNING] Unstaged files detected.
+[INFO] Stashing unstaged files to /home/jquispe/.cache/pre-commit/patch1762129000-30167.
+Verificar sintaxis JSON con jq...........................................Passed
+[INFO] Restored changes from /home/jquispe/.cache/pre-commit/patch1762129000-30167.
+[main c9882e0] agregar modules y enviroments
+ 18 files changed, 578 insertions(+)
+ create mode 100644 environments/app1/main.tf.json
+ create mode 100644 environments/app1/network.tf.json
+ create mode 100644 environments/app_legacy/main.tf.json
+ create mode 100644 environments/app_legacy/network.tf.json
+ create mode 100644 environments/env1/main.tf.json
+ create mode 100644 environments/env1/network.tf.json
+ create mode 100644 environments/env2/main.tf.json
+ create mode 100644 environments/env2/network.tf.json
+ create mode 100644 environments/env3/main.tf.json
+ create mode 100644 environments/env3/network.tf.json
+ create mode 100644 environments/staging1/main.tf.json
+ create mode 100644 environments/staging1/network.tf.json
+ create mode 100644 environments/staging2/main.tf.json
+ create mode 100644 environments/staging2/network.tf.json
+ create mode 100644 environments/staging3/main.tf.json
+ create mode 100644 environments/staging3/network.tf.json
+ create mode 100644 modules/simulated_app/main.tf.json
+ create mode 100644 modules/simulated_app/network.tf.json
+```

@@ -1,0 +1,8 @@
+repos:
+  - repo: local
+    hooks:
+      - id: check-json
+        name: "Verificar sintaxis JSON con jq"
+        entry: bash -c 'find . -type f -name "*.json" -exec jq --exit-status . {} \;'
+        language: system
+        types: [json]
