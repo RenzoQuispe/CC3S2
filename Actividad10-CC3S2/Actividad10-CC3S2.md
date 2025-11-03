@@ -4,7 +4,7 @@
 
 ### De `requests`  a DI + pruebas sin red, con políticas DevSecOps
 
-#### Punto de partida (estado actual)
+### Punto de partida (estado actual)
 
 Tu clase `IMDb` vive en `models/imdb.py` y expone tres métodos que llaman directamente a `requests.get`: `search_titles`, `movie_reviews` y `movie_ratings`. Cada uno construye una URL HTTPS a `imdb-api.com` y retorna `json()` si el `status_code` es 200; en otro caso, `{}`. 
 
@@ -17,7 +17,7 @@ Tus pruebas (`tests/test_imdb.py`) ya **parchean** la llamada de red usando `@pa
 > * Para "ratings": `.../Ratings/<apikey>/<imdb_id>`
 > * Fixtures incluyen, por ejemplo, `movie_ratings` con campos como `rottenTomatoes` y `filmAffinity`.  
 
-#### Paso 1 - Refactor mínimo a **Inyección de dependencias (DI)** sin romper pruebas
+### Paso 1 - Refactor mínimo a **Inyección de dependencias (DI)** sin romper pruebas
 
 Desacopla la capa HTTP para poder:
 
@@ -56,8 +56,7 @@ class IMDb:
 
 > Con esto, tu suite actual debería seguir pasando tal cual, porque la ruta del patch no cambia. (Tu base hace exactamente esas construcciones de URL y compara contra ellas.)  
 
-#### Paso 2 - Giro **DevSecOps**: allowlist de host + timeout por **ENV** (12-Factor III)
-
+### Paso 2 - Giro **DevSecOps**: allowlist de host + timeout por **ENV** (12-Factor III)
 
 Añade "gates" de seguridad operables por configuración:
 
@@ -131,7 +130,7 @@ def test_politica_rechaza_host_no_permitido():
 **Opcional: robustez de inputs**
 Si el título puede incluir espacios o caracteres especiales, puedes normalizar con `urllib.parse.quote(title, safe="")` **antes** de formarlo en la URL (ojo: tus pruebas comparan **URL literal**; si cambias el encoding tendrás que actualizar los asserts para coincidir con la nueva URL codificada). 
 
-#### Paso 3 - Pruebas 100% **sin red** usando DI (además del patch)
+### Paso 3 - Pruebas 100% **sin red** usando DI (además del patch)
 
 Aunque tus pruebas ya mockean `requests.get`, con DI puedes **inyectar** un cliente HTTP falso (Mock) y asercionar **interacciones** sin depender de la ruta del patch:
 
@@ -158,7 +157,7 @@ def test_search_titles_con_cliente_inyectado(imdb_data):
 > Esto hace que tu suite sea **más explícita**: las pruebas no dependen de `requests` en absoluto y validan contrato de URL + kwargs. El contenido de `search_title` sale de tu JSON de fixtures, que ya incluye `results`, `expression`, etc. 
 
 
-#### Paso 4 - **Cobertura** con **gate** (DevSecOps)
+### Paso 4 - **Cobertura** con **gate** (DevSecOps)
 
 Para que la pipeline falle cuando la cobertura caiga por debajo del umbral, añade `--cov-fail-under=85` en tu configuración `pytest` o en el target de Make:
 
@@ -178,7 +177,7 @@ run: gates
 
 > Así integras calidad (medición) y control automatizado a nivel de CI/CD (en línea con 12-Factor V: separar compilar -> lanzar -> ejecutar, y con cultura de **gates** operativos). Tus pruebas ya cubren rutas felices y fallidas (por ejemplo, `INVALID_API`), lo que ayuda a subir cobertura.  
 
-#### Paso 5 - Checklist de migración (rápida)
+### Paso 5 - Checklist de migración (rápida)
 
 1. Implementa DI (sin tocar tests): constructor con `http_client`; `self.http.get`. 
 2. Añade `ALLOWED_HOSTS`, `TIMEOUT` y `_enforce_policies` y llama con `timeout=TIMEOUT`.
@@ -187,7 +186,7 @@ run: gates
 5. Activa cobertura con gate ≥ 85% y encadénalo a tus targets de `Make`.
 6. (Opcional) Crea variantes de pruebas con **cliente inyectado** para independencia total de `requests`.
 
-#### Paso 6 - Pitfalls habituales (y soluciones)
+### Paso 6 - Pitfalls habituales (y soluciones)
 
 * **Asserts rotos** tras introducir `timeout`:
   Actualiza a `assert_called_once_with(<URL>, timeout=TIMEOUT)`. (Es el cambio más común.) 
@@ -201,13 +200,13 @@ run: gates
 * **Cobertura insuficiente** al activar el gate:
   Añade pruebas negativas (allowlist, no-HTTPS, 404/400) y de borde (payload vacío) para subir cobertura. Tus fixtures ya traen casos útiles (`INVALID_API`, campos de `movie_ratings`). 
 
-#### Paso 7 - Relación explícita con tus archivos
+### Paso 7 - Relación explícita con tus archivos
 
 * **Implementación actual** de `IMDb` (tres métodos, `requests.get`, retorno `{}` si no es 200) -> base para DI. 
 * **Pruebas existentes** (patch sobre `models.imdb.requests.get`, asserts de URL exacta, carga de fixtures, verificación de `INVALID_API`) -> te indican qué contratos no debes romper y qué asserts debes extender con `timeout`. 
 * **Fixtures** (`imdb_responses.json`) -> describen la forma esperada de respuestas (clave para asserts de igualdad de diccionarios y para cubrir rutas de negocio). 
 
-#### Comandos guía
+### Comandos guía
 
 ```bash
 # Suite base (antes y después del Paso 1)
@@ -589,46 +588,45 @@ make lint
 * Exporta `htmlcov_*` por actividad -> `evidencias/coverage/`.
 * README en `evidencias/` con contrato + rutas de reportes + muestras de logs **redaccionados**.
 
-### **Ejercicios**
+## **Ejercicios**
 
-#### 1) Unificación de nombres y rutas
+### 1) Unificación de nombres y rutas
 
 **Contexto:** La base mezcla `IMDb` e `ImdbService` en `models/imdb.py` y subcarpetas de `Actividades/mocking_objetos`.
 
 **Ejercicio:** Refactoriza a una sola clase pública (`ImdbService`) y ajusta los imports relativos para que `tests/test_imdb.py` y `Actividades/mocking_objetos/test_imdb_di.py` encuentren la misma implementación. Evita `..mocking_objetos` en rutas si mueves archivos.
 
-#### 2) Asserts tras añadir `timeout`
+### 2) Asserts tras añadir `timeout`
 
 **Contexto:** Tras aplicar `timeout=TIMEOUT` en `self.http.get(...)`, los tests con `assert_called_once_with("<URL>")` fallan por kwargs faltantes.
 
 **Ejercicio:** Actualiza **todos** los asserts que verifican URLs para incluir `timeout=TIMEOUT`. Repite en rutas felices y negativas. Asegura que `TIMEOUT` viene del mismo módulo importado.
 
-#### 3) Encoding del título vs contrato de pruebas
+### 3) Encoding del título vs contrato de pruebas
 
 **Contexto:** Si aplicas `urllib.parse.quote(title, safe="")`, el contrato de la URL cambia.
 
 **Ejercicio:** Crea una variante de test con título que contenga espacios y símbolos (`"Star Wars: Episode IV"`). Decide si congelas comportamiento sin encoding o actualizas los asserts a la URL codificada. Documenta la decisión en `tests/README.md`.
 
-
-#### 4) Backoff con jitter reproducible
+### 4) Backoff con jitter reproducible
 
 **Contexto:** El decorador de backoff introduce aleatoriedad y puede volver frágil el CI.
 
 **Ejercicio:** En `test_backoff.py`, fija la semilla (`random.seed(1337)`) y comprueba con `monkeypatch` que el backoff **no** excede el cap. Mide el número de reintentos invocando una función que falla las dos primeras veces.
 
-#### 5) Contrato de errores HTTP
+### 5) Contrato de errores HTTP
 
 **Contexto:** `RealHttpClient` hoy puede elevar 5xx de dos formas (manual + `raise_for_status`).
 
 **Ejercicio:** Elige un único mecanismo. Si te quedas con `raise_for_status()`, mapea `requests.HTTPError` a una excepción de dominio (`RuntimeError` o custom) y añade tests que prueben 404 y 500 con mensajes claros.
 
-#### 6) Redacción de secretos sin falsos positivos
+### 6) Redacción de secretos sin falsos positivos
 
 **Contexto:** El filtro de logs podría redaccionar cadenas inocuas.
 
 **Ejercicio:** Añade un test que loguee una línea con `Authorization: Bearer` **sin** token y otra con un querystring `?apikey=demo`. Verifica que solo se redacciona el caso con token real y que no se rompe la legibilidad del log. Incluye una muestra de log en `evidencias/logs/`.
 
-#### 7) Cobertura de bordes de payload
+### 7) Cobertura de bordes de payload
 
 **Contexto:** Para sostener el gate de cobertura, necesitas cubrir casos raros.
 
@@ -639,73 +637,68 @@ make lint
 * respuesta 200 con `errorMessage` no vacío (por ejemplo, `INVALID_API`).
   Verifica que el servicio retorna `{}` o lanza excepción según tu contrato.
 
-#### 8) Política HTTPS-only y subdominios
+### 8) Política HTTPS-only y subdominios
 
 **Contexto:** Allowlist restringe `imdb-api.com`, pero ¿y `api.imdb-api.com`?
 
 **Ejercicio:** Define si permites subdominios. Si **sí**, ajusta `_https_and_allowed` para aceptar `*.imdb-api.com`. Si **no**, agrega un test que garantice el rechazo. Añade también un test que rechaza `http://` con mensaje explicativo.
 
-
-#### 9) Hook de trazado ligero en HttpClient
+### 9) Hook de trazado ligero en HttpClient
 
 **Contexto:** Quieres métricas sin acoplar a red.
 
 **Ejercicio:** Extiende el `Protocol` para aceptar un `tracer: Callable[[str, float, float, int|None], None] | None`. Implementa en `FakeHttpClient` y `RealHttpClient`. En tests, inyecta un tracer que acumule llamadas y verifica que captura `url`, duración y `status`.
 
-#### 10) Validación de esquema mínima
+### 10) Validación de esquema mínima
 
 **Contexto:** `malformed_payload` existe en fixtures.
 
 **Ejercicio:** Implementa un validador ligero para `ratings` (campos: `imDbId: str`, `imDb: str`, etc.). Si el esquema no coincide, retorna `{}` o lanza `ValueError`. Prueba ambas rutas y mide cobertura de ramas.
 
-#### 11) Make y evidencias con hash de commit
+### 11) Make y evidencias con hash de commit
 
 **Contexto:** Evidencias deben ser trazables a un commit.
 
 **Ejercicio:** Modifica `make coverage_individual` para exportar a `evidencias/coverage/htmlcov_coverage_pruebas_<gitshort>/`. 
 Usa `git rev-parse --short HEAD`. 
 
-#### 12) Simulación de PRs cortos
+### 12) Simulación de PRs cortos
 
 **Contexto:** Mejor integrar en incrementos.
 
 **Ejercicio:** Simula tres PRs locales (ramas `feature/di`, `feature/policies`, `feature/resilience`), ejecuta `make gates` en cada merge a `develop` y  conserva bitácoras por PR en `evidencias/bitacoras/PRx.md` (incluye logs redaccionados y salida de cobertura).
 
-#### 13) Latencia y presupuesto de tiempo
+### 13) Latencia y presupuesto de tiempo
 
 **Contexto:** `FakeHttpClient` puede introducir `delay_ms`.
 
 **Ejercicio:** Crea un test que establezca `HTTP_TIMEOUT=0.05` y `delay_ms=80`. Verifica que se lanza `TimeoutError` y que el tracer registra una duración ≥ timeout. Restablece ENV al final del test.
 
-#### 14) Idempotencia de `make run`
+### 14) Idempotencia de `make run`
 
 **Contexto:** `run` no idempotente puede contaminar diagnósticos.
 
 **Ejercicio:** Implementa un lockfile `.run.lock` con `trap` de limpieza. Prueba que dos `make run` concurrentes no sobrescriben `out/` y que el segundo termina con código de salida distinto de 0 con mensaje claro.
 
-
-#### 15) Variación de `TIMEOUT` por entorno
+### 15) Variación de `TIMEOUT` por entorno
 
 **Contexto:** Política operable por ENV (12-Factor III).
 
 **Ejercicio:** Escribe un test parametrizado que setee `HTTP_TIMEOUT` a `0.1`, `1.0`, `3.5` y verifique que `self.http.get(..., timeout=TIMEOUT)` refleja el valor en cada ejecución (usa `capsys` o un tracer para inspección).
 
-#### 16) Allowlist dinámica
+### 16) Allowlist dinámica
 
 **Contexto:** A veces necesitas permitir un host temporal en laboratorio.
 
 **Ejercicio:** Añade `HTTP_ALLOWLIST=imdb-api.com,api.themoviedb.org` y ajusta la política para leerla. Tests: lista vacía (usa default), lista con host inválido y con espacios. Verifica normalización.
 
-
-#### 17) "Pruebas sin red" como contrato
+### 17) "Pruebas sin red" como contrato
 
 **Contexto:** El propósito es que **nada** toque la red.
 
 **Ejercicio:** Crea un test de integración que falla si `requests.get` es llamado (parchea y asegura `assert_not_called()`), usando únicamente `FakeHttpClient`. Incluye este test en la ruta de `gates`.
 
-
-
-#### 18) Evidencias de trazas y cobertura
+### 18) Evidencias de trazas y cobertura
 
 **Contexto:** Auditoría académica y reproducibilidad.
 
@@ -716,52 +709,43 @@ Usa `git rev-parse --short HEAD`.
 * Muestra de logs redaccionados y **no** redaccionados (para comparar),
 * Mini bitácora con tiempos de cada fase (`dns/tls/http` si aplicaste el tracer por etapas).
 
-
-
-#### 19) Revisión de mensajes de error
+### 19) Revisión de mensajes de error
 
 **Contexto:** Mensajes confusos dificultan depuración.
 
 **Ejercicio:** Asegura que las excepciones levantadas por políticas incluyan la **URL** y la **causa** (por ejemplo, "HTTPS requerido"). Agrega tests que validen substrings clave del mensaje.
 
-
-#### 20) Política de subprocesos (opcional)
+### 20) Política de subprocesos (opcional)
 
 **Contexto:** Algunos alumnos usarán llamadas concurrentes.
 
 **Ejercicio:** Ejecuta dos consultas IMDb en paralelo con `ThreadPoolExecutor` y `FakeHttpClient(delay_ms=20)`. Verifica que el tracer registra dos entradas y que la política de timeout se aplica por llamada, no global.
 
-
-
-#### 21) Modo "solo validación" (dry-run)
+### 21) Modo "solo validación" (dry-run)
 
 **Contexto:** Queremos validar políticas sin ejecutar la llamada real.
 
 **Ejercicio:** Añade un flag de entorno `HTTP_DRY_RUN=1` que hace que `RealHttpClient.get_json` valide políticas y retorne un stub mínimo (`{"dryRun": true}`) sin tocar red. Testea que `requests.get` **no** se invoca y que las políticas siguen aplicando.
 
-
-
-#### 22) Contrato estable para `errorMessage`
+### 22) Contrato estable para `errorMessage`
 
 **Contexto:** La API puede retornar `200` con `errorMessage`.
 
 **Ejercicio:** Define que **cualquier** `errorMessage` no vacío resulte en `{}` (o excepción). Agrega tests con fixture que contiene `errorMessage: "Invalid API Key"` y verifica la rama.
 
-
-#### 23) Métrica por endpoint
+### 23) Métrica por endpoint
 
 **Contexto:** Observabilidad mínima.
 
 **Ejercicio:** Con el tracer, construye un CSV en `out/metrics.csv` con columnas `endpoint,status,duration_ms`. Prueba que al menos tres llamadas (search, ratings, malformed) producen filas con status adecuado y duración > 0.
 
-
-#### 24) Documentación mínima de contrato
+### 24) Documentación mínima de contrato
 
 **Contexto:** Evaluador necesita saber qué esperar.
 
 **Ejercicio:** En `docs/contratos.md` (texto corto), enumera: formatos de URL, política de allowlist/HTTPS/timeout, comportamiento ante `errorMessage`, dry-run y trazador. Añade un test que verifique que el archivo existe y no está vacío (sanity check de entrega).
 
-### Entregable
+## Entregable
 
 En tu repositorio personal, sube la carpeta **`Actividad10-CC3S2/`** con **los 24 ejercicios implementados y probados**. Incluye código, pruebas y evidencias reproducibles.
 

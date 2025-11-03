@@ -11,6 +11,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from unittest.mock import Mock, patch
 
 from models import IMDb
+from models.imdb import TIMEOUT, _enforce_policies
 from requests import Response
 
 # Fixture para cargar los datos de IMDb desde un archivo JSON
@@ -49,7 +50,8 @@ class TestIMDbDatabase:
 
         assert resultado == self.imdb_data["search_title"]
         mock_get.assert_called_once_with(
-            "https://imdb-api.com/API/SearchTitle/fake_api_key/Bambi"
+            "https://imdb-api.com/API/SearchTitle/fake_api_key/Bambi",
+            timeout=TIMEOUT
         )
 
     @patch("models.imdb.requests.get")
@@ -66,7 +68,8 @@ class TestIMDbDatabase:
 
         assert resultado == {}
         mock_get.assert_called_once_with(
-            "https://imdb-api.com/API/SearchTitle/fake_api_key/TituloInexistente"
+            "https://imdb-api.com/API/SearchTitle/fake_api_key/TituloInexistente",
+            timeout=TIMEOUT
         )
 
     @patch("models.imdb.requests.get")
@@ -83,7 +86,8 @@ class TestIMDbDatabase:
 
         assert resultado == self.imdb_data["movie_reviews"]
         mock_get.assert_called_once_with(
-            "https://imdb-api.com/API/Reviews/fake_api_key/tt1375666"
+            "https://imdb-api.com/API/Reviews/fake_api_key/tt1375666",
+            timeout=TIMEOUT
         )
 
     @patch("models.imdb.requests.get")
@@ -100,7 +104,8 @@ class TestIMDbDatabase:
 
         assert resultado == self.imdb_data["movie_ratings"]
         mock_get.assert_called_once_with(
-            "https://imdb-api.com/API/Ratings/fake_api_key/tt1375666"
+            "https://imdb-api.com/API/Ratings/fake_api_key/tt1375666",
+            timeout=TIMEOUT
         )
 
     @patch("models.imdb.requests.get")
@@ -119,6 +124,10 @@ class TestIMDbDatabase:
 
         assert resultados is not None
         assert resultados["errorMessage"] == "Invalid API Key"
+        mock_get.assert_called_once_with(
+            "https://imdb-api.com/API/SearchTitle/bad-key/Bambi",
+            timeout=TIMEOUT
+        )
 
     @patch("models.imdb.requests.get")
     def test_movie_ratings_good(self, mock_get):
@@ -138,3 +147,25 @@ class TestIMDbDatabase:
         assert resultados["title"] == "Bambi"
         assert resultados["filmAffinity"] == 3
         assert resultados["rottenTomatoes"] == 5
+        mock_get.assert_called_once_with(
+            "https://imdb-api.com/API/Ratings/fake_api_key/tt1375666",
+            timeout=TIMEOUT
+        )
+
+class TestSecurityPolicies:
+    """Casos de prueba para políticas de seguridad DevSecOps"""
+
+    def test_politica_rechaza_host_no_permitido(self):
+        """Verifica que hosts no permitidos sean rechazados"""
+        with pytest.raises(ValueError, match="Host no permitido"):
+            _enforce_policies("https://malicioso.evil/x")
+
+    def test_politica_rechaza_http(self):
+        """Verifica que HTTP (sin TLS) sea rechazado"""
+        with pytest.raises(ValueError, match="Se requiere HTTPS"):
+            _enforce_policies("http://imdb-api.com/API/SearchTitle/key/title")
+
+    def test_politica_acepta_host_permitido(self):
+        """Verifica que hosts permitidos pasen la validación"""
+        # No debe lanzar excepción
+        _enforce_policies("https://imdb-api.com/API/SearchTitle/key/title")
