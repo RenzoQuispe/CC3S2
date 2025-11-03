@@ -7,6 +7,7 @@ import logging
 import os
 import urllib.parse
 from typing import Any, Dict
+
 import requests
 
 logger = logging.getLogger(__name__)
@@ -14,6 +15,7 @@ logger = logging.getLogger(__name__)
 # constantes de seguridad y configuración
 ALLOWED_HOSTS = {"imdb-api.com"}
 TIMEOUT = float(os.getenv("HTTP_TIMEOUT", "2.0"))
+
 
 def _enforce_policies(url: str):
     # Valida políticas de seguridad para URLs salientes
@@ -23,12 +25,15 @@ def _enforce_policies(url: str):
     if host not in ALLOWED_HOSTS:
         raise ValueError(f"Host no permitido: {host}")
 
+
 class IMDb:
     """Acceso a la base de datos de películas de Internet Movie Database"""
 
     def __init__(self, apikey: str, http_client=None):
         self.apikey = apikey
-        self.http = http_client or requests # DI con default. Cliente HTTP opcional (para DI). Si no se provee, usa requests.
+        self.http = (
+            http_client or requests
+        )  # DI con default. Cliente HTTP opcional (para DI). Si no se provee, usa requests.
 
     def search_titles(self, title: str) -> Dict[str, Any]:
         """Busca una película por título"""

@@ -18,4 +18,5 @@ pylint==3.2.7
 ruff
 black
 autoflake
+flake8
 

@@ -1,11 +1,10 @@
 # Variables de entorno
 
 # Actividad por defecto (se puede sobreescribir: make test ACTIVITY=coverage_pruebas)
-ACTIVITY ?= aserciones_pruebas
+ACTIVITY ?= mocking_objetos
 
 # Lista de actividades disponibles
-ACTIVITIES = aserciones_pruebas coverage_pruebas factories_fakes mocking_objetos \
-             practica_tdd pruebas_fixtures pruebas_pytest
+ACTIVITIES = mocking_objetos
 
 # Flags comunes para pytest (puedes ampliarlas)
 PYTEST_FLAGS ?= -q
@@ -30,17 +29,22 @@ help:
 	@echo "  test_all             Ejecuta pytest en todas las actividades"
 	@echo "  coverage             Ejecuta pytest con cobertura unificada (todas las actividades)"
 	@echo "  coverage_individual  Ejecuta la cobertura para cada actividad por separado"
+	@echo "  coverage_activity    Ejecuta cobertura con gate para la actividad específica (usa setup.cfg)"
+	@echo "  gates                Ejecuta lint + cobertura con gate (DevSecOps)"
+	@echo "  gates_activity       Ejecuta gates para una actividad específica"
 	@echo "  clean                Elimina archivos temporales, caches, etc."
 	@echo
 	@echo "Opciones:"
-	@echo "  ACTIVITY=<nombre>    Actividad especifica (por defecto: aserciones_pruebas)"
+	@echo "  ACTIVITY=<nombre>    Actividad especifica (por defecto: mocking_objetos)"
 	@echo "  PYTEST_FLAGS='-q -k expr'  Banderas extra para pytest"
 	@echo
 	@echo "Ejemplos:"
 	@echo "  make install"
 	@echo "  make lint"
 	@echo "  make test"
-	@echo "  make test ACTIVITY=pruebas_pytest"
+	@echo "  make test ACTIVITY=mocking_objetos"
+	@echo "  make coverage_activity ACTIVITY=mocking_objetos"
+	@echo "  make gates_activity ACTIVITY=mocking_objetos"
 	@echo "  make coverage"
 	@echo "  make coverage_individual"
 	@echo
@@ -63,13 +67,14 @@ install:
 .PHONY: lint
 lint:
 	@echo "==> Formateando con Ruff..."
-	ruff format .
+	ruff format . --exclude '(^|/)(bin|lib|lib64|include|share)(/|$$)|pyvenv\.cfg'
 	@echo "==> Ordenando imports (Ruff rule I)..."
-	ruff check . --select I --fix
+	ruff check . --select I --fix --exclude '(^|/)(bin|lib|lib64|include|share)(/|$$)|pyvenv\.cfg'
 	@echo "==> Autofix de reglas con Ruff (whitespace, etc.)..."
-	ruff check . --fix
+	ruff check . --fix --exclude '(^|/)(bin|lib|lib64|include|share)(/|$$)|pyvenv\.cfg'
 	@echo "==> Lint con flake8 (relajado: ignora $(LINT_IGNORE); ancho $(LINT_MAX_LINE))..."
 	flake8 . \
+	    --exclude=venv,__pycache__,.pytest_cache,bin,lib,lib64,include,share \
 	    --max-line-length=$(LINT_MAX_LINE) \
 	    --extend-ignore=$(LINT_IGNORE) \
 	    --per-file-ignores="$(LINT_PER_FILE)"
@@ -117,6 +122,36 @@ coverage_individual:
 	     coverage report -m && \
 	     coverage html -d htmlcov_$$activity ); \
 	done
+
+# Coverage con Gate DevSecOps (específico para una actividad)
+
+.PHONY: coverage_activity
+coverage_activity:
+	@echo "==> Ejecutando cobertura con GATE (≥85%) para: $(ACTIVITY)"
+	@cd Actividades/$(ACTIVITY) && \
+	PYTHONWARNINGS="$(PY_WARNINGS)" \
+	pytest --cov=models --cov=tests \
+	       --cov-report=term-missing \
+	       --cov-report=html \
+	       --cov-fail-under=85 \
+	       -v $(PYTEST_FLAGS)
+	@echo "Gate de cobertura APROBADO (≥85%)"
+
+# Gates DevSecOps (lint + cobertura con threshold)
+
+.PHONY: gates gates_activity
+gates: lint coverage
+	@echo "==> Todos los gates APROBADOS"
+
+gates_activity: lint coverage_activity
+	@echo "==> Todos los gates APROBADOS para $(ACTIVITY)"
+
+# Target para ejecutar después de pasar gates (ejemplo)
+
+.PHONY: run
+run: gates_activity
+	@echo "==> Iniciando aplicación (gates pasados)..."
+	@cd Actividades/$(ACTIVITY) && python -m models.imdb || echo "No hay main definido"
 
 # Limpiar
 
