@@ -1,4 +1,4 @@
-## Actividad: : DI, fixtures y cobertura con gates
+# Actividad: : DI, fixtures y cobertura con gates
 
 ## Parte 1
 
