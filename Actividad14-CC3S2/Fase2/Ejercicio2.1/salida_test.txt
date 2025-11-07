@@ -1,0 +1,4 @@
+jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad14-CC3S2/Fase2/LaboratorioModificado$ python3 -m tests.test_singleton_reset
+Test reset() pasado exitosamente
+  - settings limpiado: {}
+  - created_at preservado: 2025-11-07T20:50:15.477926+00:00
