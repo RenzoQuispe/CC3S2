@@ -1,0 +1,5 @@
+jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad14-CC3S2/Fase2/LaboratorioModificado$ python3 -m tests.test_timestamped_factory
+/home/jquispe/Escritorio/cursos/CC3S2/Actividad14-CC3S2/Fase2/LaboratorioModificado/tests/test_timestamped_factory.py:21: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  today = datetime.utcnow().strftime('%Y%m%d')
+Test pasado
+  - Timestamp: 20251107
