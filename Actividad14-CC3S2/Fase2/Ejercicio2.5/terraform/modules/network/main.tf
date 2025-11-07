@@ -1,0 +1,1 @@
+resource "null_resource" "net_example" { triggers = { tipo = "red" } }
