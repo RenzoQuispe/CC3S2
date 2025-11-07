@@ -1,0 +1,495 @@
+jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad14-CC3S2/Fase2/LaboratorioModificado/terraform$ terraform init
+Initializing the backend...
+Initializing provider plugins...
+- Finding latest version of hashicorp/null...
+- Finding latest version of hashicorp/local...
+- Installing hashicorp/null v3.2.4...
+- Installed hashicorp/null v3.2.4 (signed by HashiCorp)
+- Installing hashicorp/local v2.5.3...
+- Installed hashicorp/local v2.5.3 (signed by HashiCorp)
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+
+jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad14-CC3S2/Fase2/LaboratorioModificado/terraform$ terraform plan
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with
+the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # local_file.welcome_txt will be created
+  + resource "local_file" "welcome_txt" {
+      + content              = "Bienvenido"
+      + content_base64sha256 = (known after apply)
+      + content_base64sha512 = (known after apply)
+      + content_md5          = (known after apply)
+      + content_sha1         = (known after apply)
+      + content_sha256       = (known after apply)
+      + content_sha512       = (known after apply)
+      + directory_permission = "0777"
+      + file_permission      = "0777"
+      + filename             = "./bienvenida.txt"
+      + id                   = (known after apply)
+    }
+
+  # null_resource.app_0 will be created
+  + resource "null_resource" "app_0" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "cb338ad7-763e-4865-91f5-3021f485dad5"
+          + "timestamp"    = "2025-11-07T22:13:19.662260"
+          + "welcome"      = "¡Hola!"
+        }
+    }
+
+  # null_resource.finalizador will be created
+  + resource "null_resource" "finalizador" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "7e16fb12-e910-4ef7-b64d-e4c7934ab545"
+          + "nota"         = "Recurso compuesto generado dinámicamente en tiempo de ejecución"
+          + "timestamp"    = "2025-11-07T22:13:19.662222"
+        }
+    }
+
+  # null_resource.placeholder_0 will be created
+  + resource "null_resource" "placeholder_0" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "0"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_1 will be created
+  + resource "null_resource" "placeholder_1" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "1"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_10 will be created
+  + resource "null_resource" "placeholder_10" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "10"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_11 will be created
+  + resource "null_resource" "placeholder_11" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "11"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_12 will be created
+  + resource "null_resource" "placeholder_12" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "12"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_13 will be created
+  + resource "null_resource" "placeholder_13" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "13"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_14 will be created
+  + resource "null_resource" "placeholder_14" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "14"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_2 will be created
+  + resource "null_resource" "placeholder_2" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "2"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_3 will be created
+  + resource "null_resource" "placeholder_3" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "3"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_4 will be created
+  + resource "null_resource" "placeholder_4" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "4"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_5 will be created
+  + resource "null_resource" "placeholder_5" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "5"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_6 will be created
+  + resource "null_resource" "placeholder_6" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "6"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_7 will be created
+  + resource "null_resource" "placeholder_7" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "7"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_8 will be created
+  + resource "null_resource" "placeholder_8" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "8"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_9 will be created
+  + resource "null_resource" "placeholder_9" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "9"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.timestamped_recurso will be created
+  + resource "null_resource" "timestamped_recurso" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "34ccf40a-a1ab-487d-88b9-2f81009b26c8"
+          + "timestamp"    = "20251107-221319"
+        }
+    }
+
+Plan: 19 to add, 0 to change, 0 to destroy.
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if
+you run "terraform apply" now.
+jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad14-CC3S2/Fase2/LaboratorioModificado/terraform$ terraform apply
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with
+the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # local_file.welcome_txt will be created
+  + resource "local_file" "welcome_txt" {
+      + content              = "Bienvenido"
+      + content_base64sha256 = (known after apply)
+      + content_base64sha512 = (known after apply)
+      + content_md5          = (known after apply)
+      + content_sha1         = (known after apply)
+      + content_sha256       = (known after apply)
+      + content_sha512       = (known after apply)
+      + directory_permission = "0777"
+      + file_permission      = "0777"
+      + filename             = "./bienvenida.txt"
+      + id                   = (known after apply)
+    }
+
+  # null_resource.app_0 will be created
+  + resource "null_resource" "app_0" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "cb338ad7-763e-4865-91f5-3021f485dad5"
+          + "timestamp"    = "2025-11-07T22:13:19.662260"
+          + "welcome"      = "¡Hola!"
+        }
+    }
+
+  # null_resource.finalizador will be created
+  + resource "null_resource" "finalizador" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "7e16fb12-e910-4ef7-b64d-e4c7934ab545"
+          + "nota"         = "Recurso compuesto generado dinámicamente en tiempo de ejecución"
+          + "timestamp"    = "2025-11-07T22:13:19.662222"
+        }
+    }
+
+  # null_resource.placeholder_0 will be created
+  + resource "null_resource" "placeholder_0" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "0"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_1 will be created
+  + resource "null_resource" "placeholder_1" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "1"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_10 will be created
+  + resource "null_resource" "placeholder_10" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "10"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_11 will be created
+  + resource "null_resource" "placeholder_11" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "11"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_12 will be created
+  + resource "null_resource" "placeholder_12" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "12"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_13 will be created
+  + resource "null_resource" "placeholder_13" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "13"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_14 will be created
+  + resource "null_resource" "placeholder_14" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "14"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_2 will be created
+  + resource "null_resource" "placeholder_2" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "2"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_3 will be created
+  + resource "null_resource" "placeholder_3" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "3"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_4 will be created
+  + resource "null_resource" "placeholder_4" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "4"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_5 will be created
+  + resource "null_resource" "placeholder_5" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "5"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_6 will be created
+  + resource "null_resource" "placeholder_6" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "6"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_7 will be created
+  + resource "null_resource" "placeholder_7" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "7"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_8 will be created
+  + resource "null_resource" "placeholder_8" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "8"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.placeholder_9 will be created
+  + resource "null_resource" "placeholder_9" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "8c97031e-01e8-4267-b8d6-e89544c1b9ee"
+          + "index"        = "9"
+          + "timestamp"    = "2025-11-07T22:13:19.661598"
+        }
+    }
+
+  # null_resource.timestamped_recurso will be created
+  + resource "null_resource" "timestamped_recurso" {
+      + id       = (known after apply)
+      + triggers = {
+          + "factory_uuid" = "34ccf40a-a1ab-487d-88b9-2f81009b26c8"
+          + "timestamp"    = "20251107-221319"
+        }
+    }
+
+Plan: 19 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+null_resource.placeholder_10: Creating...
+null_resource.placeholder_3: Creating...
+null_resource.placeholder_5: Creating...
+null_resource.placeholder_2: Creating...
+null_resource.finalizador: Creating...
+null_resource.placeholder_7: Creating...
+null_resource.placeholder_13: Creating...
+null_resource.placeholder_12: Creating...
+null_resource.placeholder_11: Creating...
+null_resource.timestamped_recurso: Creating...
+null_resource.placeholder_7: Creation complete after 0s [id=3429142642498978828]
+null_resource.placeholder_5: Creation complete after 0s [id=2329526222113516697]
+null_resource.placeholder_4: Creating...
+null_resource.timestamped_recurso: Creation complete after 0s [id=3363770666898179244]
+null_resource.placeholder_4: Creation complete after 0s [id=6699194052244939018]
+null_resource.finalizador: Creation complete after 0s [id=715727789223350943]
+null_resource.placeholder_6: Creating...
+null_resource.placeholder_3: Creation complete after 0s [id=8912026207806675230]
+null_resource.placeholder_2: Creation complete after 0s [id=1181940442204771664]
+null_resource.placeholder_10: Creation complete after 0s [id=2602333277073801486]
+null_resource.placeholder_11: Creation complete after 0s [id=6078503562025227418]
+null_resource.placeholder_12: Creation complete after 0s [id=4307371151273240256]
+null_resource.placeholder_0: Creating...
+null_resource.placeholder_14: Creating...
+null_resource.placeholder_13: Creation complete after 0s [id=1117078016963783215]
+null_resource.placeholder_8: Creating...
+null_resource.app_0: Creating...
+null_resource.placeholder_9: Creating...
+null_resource.app_0: Creation complete after 0s [id=696605289928241935]
+null_resource.placeholder_6: Creation complete after 0s [id=173102152976058934]
+null_resource.placeholder_1: Creating...
+null_resource.placeholder_14: Creation complete after 0s [id=2316721396175740943]
+null_resource.placeholder_9: Creation complete after 0s [id=5120692136270338618]
+null_resource.placeholder_8: Creation complete after 0s [id=690865838690016074]
+null_resource.placeholder_0: Creation complete after 0s [id=3263244747397825505]
+null_resource.placeholder_1: Creation complete after 0s [id=8565366570695277200]
+local_file.welcome_txt: Creating...
+local_file.welcome_txt: Creation complete after 0s [id=f51b98d412e1b580125610b614731dfa39f79046]
+
+Apply complete! Resources: 19 added, 0 changed, 0 destroyed.
+
+jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad14-CC3S2/Fase2/LaboratorioModificado/terraform$ ls -al
+total 48
+drwxrwxr-x 3 jquispe jquispe  4096 nov  7 17:15 .
+drwxrwxr-x 6 jquispe jquispe  4096 nov  7 17:13 ..
+-rwxrwxr-x 1 jquispe jquispe    10 nov  7 17:15 bienvenida.txt
+-rw-rw-r-- 1 jquispe jquispe  9273 nov  7 17:13 main.tf.json
+drwxr-xr-x 3 jquispe jquispe  4096 nov  7 17:15 .terraform
+-rw-r--r-- 1 jquispe jquispe  2198 nov  7 17:15 .terraform.lock.hcl
+-rw-rw-r-- 1 jquispe jquispe 12523 nov  7 17:15 terraform.tfstate
+
+jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad14-CC3S2/Fase2/LaboratorioModificado/terraform$ cat bienvenida.txt 
+Bienvenido

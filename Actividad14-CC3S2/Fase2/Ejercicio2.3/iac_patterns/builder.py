@@ -95,12 +95,12 @@ class InfrastructureBuilder:
         from .prototype import ResourcePrototype
         from .factory import NullResourceFactory
 
-        # prototipo base
+        # Prototipo base
         base_proto = ResourcePrototype(
             NullResourceFactory.create("app_0")
         )
 
-        # mutator avanzado: añade un trigger y un bloque local_file
+        # Mutator avanzado: añade un trigger y un bloque local_file
         def add_welcome_file(block: dict):
             null_res = block["resource"][0]["null_resource"][0]["app_0"][0]
             # Añadir trigger personalizado
@@ -116,10 +116,10 @@ class InfrastructureBuilder:
                 }]
             })
 
-        # clonar el prototipo aplicando el mutator
+        # Clonar el prototipo aplicando el mutator
         clone = base_proto.clone(add_welcome_file).data
 
-        # agregar al módulo compuesto
+        # Agregar al módulo compuesto
         self._module.add(clone)
 
         return self
