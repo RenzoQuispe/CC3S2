@@ -222,6 +222,15 @@ pytest --cov=models --cov=tests --cov-report=term-missing --cov-fail-under=85
 
 Con esto, conviertes un cliente acoplado a red en un **componente inyectable y testeable**, añades **controles de seguridad/operación** gobernados por entorno (12-Factor III) y elevas la **calidad** con un **gate de cobertura** que refuerza la disciplina DevSecOps - todo **sin romper** el contrato que ya exigen tus pruebas actuales y tus fixtures.   
 
+```sh
+# Ejecutar solo los gates (desde la raíz)
+make gates_activity ACTIVITY=mocking_objetos
+
+# Ver cobertura detallada
+make coverage_activity ACTIVITY=mocking_objetos
+```
+
+
 ## Parte 2
 
 ### Stubs y fixtures

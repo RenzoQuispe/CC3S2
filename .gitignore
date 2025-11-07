@@ -1,0 +1,52 @@
+*venv
+*certs
+*bdd
+*.pytest_cache
+*__pycache__
+*.pyc
+*.vscode
+*.coverage
+
+# --- Archivos y carpetas de Terraform ---
+# Archivos de estado (contienen datos sensibles)
+*.tfstate
+*.tfstate.*
+terraform.tfstate
+terraform.tfstate.backup
+
+# Archivos de plan (binarios generados por terraform plan -out)
+*.tfplan
+
+# Carpeta de caché del proveedor y plugins
+.terraform/
+.terraform.lock.hcl
+
+# Archivos temporales de ejecución
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Archivos de logs o salidas de provisioners
+*.log
+
+# --- Archivos generados por el laboratorio ---
+
+# --- Archivos del sistema o IDE ---
+# Python / venv
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+.env/
+
+# Archivos del sistema y editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+*.config
