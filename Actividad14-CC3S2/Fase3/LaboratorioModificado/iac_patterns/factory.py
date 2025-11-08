@@ -43,3 +43,41 @@ class NullResourceFactory:
                 }]
             }]
         }
+    
+class TimestampedNullResourceFactory(NullResourceFactory):
+    """
+    Variante de NullResourceFactory que permite personalizar el formato del timestamp.
+    Ejemplo de formato: '%Y%m%d' -> '20251107'
+    """
+
+    @staticmethod
+    def create(name: str, fmt: str, triggers: Dict[str, Any] | None = None) -> Dict[str, Any]:
+        """
+        Crea un recurso `null_resource` con timestamp formateado según `fmt`.
+
+        Args:
+            name: nombre del recurso.
+            fmt: formato de fecha/hora para `strftime`, por ejemplo '%Y%m%d-%H%M%S'.
+            triggers: diccionario opcional de triggers adicionales.
+
+        Returns:
+            Diccionario Terraform JSON del recurso.
+        """
+        triggers = triggers or {}
+
+        # UUID único
+        triggers.setdefault("factory_uuid", str(uuid.uuid4()))
+
+        # Timestamp con formato personalizado
+        formatted_ts = datetime.utcnow().strftime(fmt)
+        triggers.setdefault("timestamp", formatted_ts)
+
+        return {
+            "resource": [{
+                "null_resource": [{
+                    name: [{
+                        "triggers": triggers
+                    }]
+                }]
+            }]
+        }

@@ -65,3 +65,10 @@ class ConfigSingleton(metaclass=SingletonMeta):
             Valor asociado o valor por defecto.
         """
         return self.settings.get(key, default)
+
+    def reset(self) -> None:
+        """
+        Limpia el diccionario settings pero mantiene created_at.
+        Útil para reiniciar la configuración sin perder el timestamp de creación.
+        """
+        self.settings = {}

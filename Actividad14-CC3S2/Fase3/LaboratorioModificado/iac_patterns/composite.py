@@ -34,9 +34,18 @@ class CompositeModule:
         Returns:
             Un diccionario con todos los recursos combinados bajo la clave "resource".
         """
-        aggregated: Dict[str, Any] = {"resource": []}
+        aggregated: Dict[str, Any] = {"resource": [], "module": {}}
+
         for child in self._children:
-            # Combina ordenadamente todos los bloques 'resource' de los hijos
-            # diccionario {"resource":[...]}
-            aggregated["resource"].extend(child.get("resource", []))
+            # Combinar recursos si existen
+            if "resource" in child:
+                aggregated["resource"].extend(child.get("resource", []))
+
+            # Combinar submódulos si existen
+            if "module" in child:
+                aggregated["module"].update(child["module"])
+
+        # Elimina claves vacías si no se usaron
+        if not aggregated["module"]:
+            del aggregated["module"]
         return aggregated
