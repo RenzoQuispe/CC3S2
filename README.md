@@ -13,3 +13,4 @@
 - [Actividad 11: Gestión ágil de proyectos con GitHub Projects, configuración de Kanban Board y creación de historias de usuario](./Actividad11-CC3S2/Actividad11-CC3S2.md)
 - [Actividad 12: Gestión ágil de sprints con GitHub, planificación, ejecución y cierre de Sprints](./Actividad12-CC3S2/Actividad12-CC3S2.md)
 - [Actividad 13: Escribiendo infraestructura como código en un entorno local con Terraform](./Actividad13-CC3S2/)
+- [Actividad 14: Patrones para módulos de infraestructura](./Actividad14-CC3S2/)
