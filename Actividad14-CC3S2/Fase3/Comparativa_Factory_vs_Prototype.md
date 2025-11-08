@@ -1,0 +1,9 @@
+### Comparativa entre Factory y Prototype en IaC
+
+Cuando trabajamos con infraestructura como código, los patrones Factory y Prototype ayudan a crear recursos de forma organizada y reutilizable. Aunque ambos sirven para generar objetos similares, se aplican en momentos diferentes dependiendo de la complejidad y la cantidad de variaciones que necesitemos.
+
+El patrón Factory es muy util cuando queremos una creación simple y estandarizada, significa usar una fábrica que genera recursos básicos con una estructura fija, como una red o un servidor con parámetros comunes. Es directo, fácil de mantener y no requiere mucho procesamiento, cada vez que se necesita un nuevo recurso, la fábrica lo crea desde cero, usando una plantilla predefinida, esto lo hace perfecto para entornos donde todos los recursos siguen el mismo esquema sin muchas diferencias entre ellos.
+
+En cambio, el patrón Prototype se usa cuando necesitamos múltiples versiones o variaciones de un mismo tipo de recurso, en lugar de crear cada uno desde cero, clonamos un modelo base y le aplicamos cambios específicos. Esto es muy útil cuando los objetos son complejos o tienen muchas propiedades que queremos conservar, por ejemplo, en Terraform, podríamos clonar una configuración de servidor y modificar solo el nombre o el tamaño. La desventaja es que este método implica una copia profunda, lo cual puede ser un poco más costoso en memoria y tiempo cuando los objetos son más grandes.
+
+Respecto al mantenimiento, Prototype ayuda a evitar duplicar código, ya que todos los clones vienen del mismo modelo, mientras que Factory puede requerir definir múltiples métodos o clases para cada tipo de recurso nuevo. Asi que Factory es mejor para estructuras simples y repetitivas, mientras que Prototype es más útil cuando queremos flexibilidad y personalización a partir de un modelo base o comun.

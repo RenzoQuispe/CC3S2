@@ -9,6 +9,7 @@ import json
 from .factory import NullResourceFactory
 from .composite import CompositeModule
 from .prototype import ResourcePrototype
+from .adapter import MockBucketAdapter
 
 class InfrastructureBuilder:
     """Builder fluido que combina los patrones Factory, Prototype y Composite para crear módulos Terraform."""
@@ -66,6 +67,27 @@ class InfrastructureBuilder:
             self: permite encadenar llamadas.
         """
         self._module.add(NullResourceFactory.create(name, triggers))
+        return self
+
+    def add_adapted_bucket(self, name: str, triggers: Dict[str, Any]) -> "InfrastructureBuilder":
+        """
+        Crea un null_resource y lo adapta a mock_cloud_bucket usando el patrón Adapter.
+        
+        Args:
+            name: nombre del bucket.
+            triggers: triggers que se convertirán en atributos del bucket.
+        Returns:
+            self: permite encadenar llamadas.
+        """
+        # crear null_resource base
+        null_resource = NullResourceFactory.create(name, triggers)
+        
+        # adaptar a bucket usando el Adapter
+        adapter = MockBucketAdapter(null_resource)
+        bucket_resource = adapter.to_bucket()
+        
+        # agregar el recurso adaptado
+        self._module.add(bucket_resource)
         return self
 
     #  Método final (exportación) 
