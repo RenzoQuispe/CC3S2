@@ -1,0 +1,112 @@
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.15kB done
+#1 DONE 0.0s
+
+#2 [airflow-webserver internal] load build definition from Dockerfile
+#2 DONE 0.0s
+
+#2 [airflow-webserver internal] load build definition from Dockerfile
+#2 transferring dockerfile: 606B 0.0s done
+#2 DONE 0.0s
+
+#3 [etl-app internal] load build definition from Dockerfile
+#3 transferring dockerfile: 1.06kB done
+#3 DONE 0.0s
+
+#4 [etl-app internal] load metadata for docker.io/library/python:3.12-slim
+#4 DONE 0.8s
+
+#5 [airflow-webserver internal] load metadata for docker.io/apache/airflow:2.9.1-python3.11
+#5 DONE 0.9s
+
+#6 [etl-app internal] load .dockerignore
+#6 transferring context: 2B done
+#6 DONE 0.0s
+
+#7 [etl-app builder 1/4] FROM docker.io/library/python:3.12-slim@sha256:d86b4c74b936c438cd4cc3a9f7256b9a7c27ad68c7caf8c205e18d9845af0164
+#7 DONE 0.0s
+
+#8 [etl-app internal] load build context
+#8 transferring context: 159B done
+#8 DONE 0.0s
+
+#9 [etl-app builder 4/4] RUN apt-get update  && apt-get install -y --no-install-recommends build-essential gcc  && pip install --upgrade pip  && python -m venv /venv  && . /venv/bin/activate  && pip install -r requirements.txt  && apt-get purge -y build-essential gcc  && apt-get autoremove -y  && rm -rf /var/lib/apt/lists/*
+#9 CACHED
+
+#10 [etl-app runtime 5/7] COPY pipeline.py ./pipeline.py
+#10 CACHED
+
+#11 [etl-app runtime 2/7] RUN useradd --create-home --uid 10001 etluser
+#11 CACHED
+
+#12 [etl-app runtime 4/7] COPY --from=builder /venv /venv
+#12 CACHED
+
+#13 [etl-app builder 3/4] COPY requirements.txt .
+#13 CACHED
+
+#14 [etl-app runtime 3/7] WORKDIR /app
+#14 CACHED
+
+#15 [etl-app runtime 6/7] COPY healthcheck.py ./healthcheck.py
+#15 CACHED
+
+#16 [etl-app builder 2/4] WORKDIR /build
+#16 CACHED
+
+#17 [etl-app runtime 7/7] COPY data ./data
+#17 CACHED
+
+#18 [etl-app] exporting to image
+#18 exporting layers done
+#18 writing image sha256:886911320717c7993081c0efa30f4868bba35fd4b78c36cb01cfd74a4889c634 done
+#18 naming to docker.io/library/etl-app:1.0.0 0.0s done
+#18 DONE 0.0s
+
+#19 [airflow-webserver internal] load .dockerignore
+#19 transferring context: 2B done
+#19 DONE 0.0s
+
+#20 [airflow-webserver 1/4] FROM docker.io/apache/airflow:2.9.1-python3.11@sha256:1553c44823e2787dc1e78d50c39c147792b381adb45d2044d383051d35c8b5c0
+#20 DONE 0.0s
+
+#21 [airflow-webserver internal] load build context
+#21 transferring context: 1.79kB done
+#21 DONE 0.0s
+
+#20 [airflow-webserver 1/4] FROM docker.io/apache/airflow:2.9.1-python3.11@sha256:1553c44823e2787dc1e78d50c39c147792b381adb45d2044d383051d35c8b5c0
+#20 CACHED
+
+#22 [etl-app] resolving provenance for metadata file
+#22 DONE 0.0s
+
+#23 [airflow-webserver 2/4] COPY airflow/dags /opt/airflow/dags
+#23 DONE 0.1s
+
+#24 [airflow-webserver 3/4] COPY app          /opt/airflow/app
+#24 DONE 0.1s
+
+#25 [airflow-webserver 4/4] RUN pip install --no-cache-dir     --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.9.1/constraints-3.11.txt"     pandas psycopg2-binary
+#25 6.035 Requirement already satisfied: pandas in /home/airflow/.local/lib/python3.11/site-packages (2.1.4)
+#25 6.037 Requirement already satisfied: psycopg2-binary in /home/airflow/.local/lib/python3.11/site-packages (2.9.9)
+#25 6.217 Requirement already satisfied: numpy<2,>=1.23.2 in /home/airflow/.local/lib/python3.11/site-packages (from pandas) (1.26.4)
+#25 6.223 Requirement already satisfied: python-dateutil>=2.8.2 in /home/airflow/.local/lib/python3.11/site-packages (from pandas) (2.9.0.post0)
+#25 6.230 Requirement already satisfied: pytz>=2020.1 in /home/airflow/.local/lib/python3.11/site-packages (from pandas) (2024.1)
+#25 6.237 Requirement already satisfied: tzdata>=2022.1 in /home/airflow/.local/lib/python3.11/site-packages (from pandas) (2024.1)
+#25 6.270 Requirement already satisfied: six>=1.5 in /home/airflow/.local/lib/python3.11/site-packages (from python-dateutil>=2.8.2->pandas) (1.16.0)
+#25 11.96 
+#25 11.96 [notice] A new release of pip is available: 24.0 -> 25.3
+#25 11.96 [notice] To update, run: pip install --upgrade pip
+#25 DONE 12.2s
+
+#26 [airflow-webserver] exporting to image
+#26 exporting layers
+#26 exporting layers 0.3s done
+#26 writing image sha256:898888e489001d6f611d4bfc900646c0b052bdfae894e76cd418747594dc929d done
+#26 naming to docker.io/library/airflow-secure:1.0.0 0.0s done
+#26 DONE 0.3s
+
+#27 [airflow-webserver] resolving provenance for metadata file
+#27 DONE 0.0s
+ etl-app:1.0.0  Built
+ airflow-secure:1.0.0  Built

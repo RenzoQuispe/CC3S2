@@ -9,19 +9,19 @@ Esta actividad sirve para operar y **endurecer** un stack con Docker/Compose (Ai
 
 ### 1.1 Levantamiento y verificación
 
-Comienza construyendo las imágenes, levantando los servicios en segundo plano y verificando su estado. Captura toda la salida en archivos dentro de `evidencia/` para que se pueda reproducir y auditar.
+Comienza construyendo las imágenes, levantando los servicios en segundo plano y verificando su estado. Captura toda la salida en archivos dentro de `evidencias/` para que se pueda reproducir y auditar.
 
 ```bash
 # Build (captura la salida completa)
-docker compose build 2>&1 | tee Actividad18-CC3S2/evidencia/00_build.txt
+docker compose build 2>&1 | tee ../evidencias/00_build.txt
 
 # Up en segundo plano (captura la salida completa)
-docker compose up -d 2>&1 | tee Actividad18-CC3S2/evidencia/01_up.txt
+docker compose up -d 2>&1 | tee ../evidencias/01_up.txt
 
 # Estado resumido y tabla con nombres/imagen/estado/puertos
-docker compose ps           | tee Actividad18-CC3S2/evidencia/02_ps.txt
+docker compose ps           | tee ../evidencias/02_ps.txt
 docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}' \
-  | tee -a Actividad18-CC3S2/evidencia/02_ps.txt
+  | tee -a ../evidencias/02_ps.txt
 ```
 
 Si tus servicios tienen healthcheck, espera unos segundos y vuelve a consultar el estado para confirmar que cambian a `healthy`. Cuando necesites un chequeo más preciso, inspecciona cada contenedor:
@@ -32,11 +32,15 @@ for c in $(docker compose ps -q); do
   health=$(docker inspect $c | grep -A2 '"Health":' -n || true)
   printf "\n %s \n" "$name"
   echo "$health"
-done | tee -a Actividad18-CC3S2/evidencia/02_ps.txt
+done | tee -a ../evidencias/02_ps.txt
 ```
 
 **Criterio de aceptación:** todos los servicios se mantienen `healthy` (si tienen healthcheck) o `Up` sin reinicios en bucle.
 **Evidencia:** `00_build.txt`, `01_up.txt`, `02_ps.txt`.
+
+Para Eliminar Imagenes y Volúmenes ejecutamos `docker compose down --rmi all -v`.
+
+Para limpiar recursos que no se esten usando, ejecutamos `docker system prune -a`.
 
 ### 1.2 Topología y superficie expuesta
 
@@ -45,15 +49,15 @@ Descubre el nombre real de la red por defecto del proyecto y documenta su inspec
 
 ```bash
 # Detecta la red _default del proyecto
-NET=$(docker network ls | awk '/_default/{print $2; exit}')
-echo "NET=$NET" | tee Actividad18-CC3S2/evidencia/05_net_inspect.txt
+NET=$(docker network ls | awk '/laboratorio/{print $2; exit}')
+echo "NET=$NET" | tee ../evidencias/05_net_inspect.txt
 
 # Inspección completa de la red
-docker network inspect "$NET" >> Actividad18-CC3S2/evidencia/05_net_inspect.txt
+docker network inspect "$NET" >> ../evidencias/05_net_inspect.txt
 
 # Tabla rápida de puertos publicados por servicio
 docker ps --format '{{.Names}}\t{{.Ports}}' \
-  | tee -a Actividad18-CC3S2/evidencia/05_net_inspect.txt
+  | tee -a ../evidencias/05_net_inspect.txt
 
 # Prueba de DNS interno y reachability dentro de la red del proyecto
 docker run --rm -it --network "$NET" alpine sh -lc '
@@ -61,13 +65,58 @@ docker run --rm -it --network "$NET" alpine sh -lc '
   echo "[DNS] airflow-webserver:"; getent hosts airflow-webserver || true
   echo "[DNS] postgres:"; getent hosts postgres || true
   echo "[HTTP] webserver /health:"; curl -s -o /dev/null -w "%{http_code}\n" http://airflow-webserver:8080/health || true
-' | tee -a Actividad18-CC3S2/evidencia/05_net_inspect.txt
+' | tee -a ../evidencias/05_net_inspect.txt
+```
+
+Si no hay respuesta en la peticion curl, a veces es necsario:
+
+```sh
+mkdir -p airflow/dags airflow/logs airflow/plugins
+sudo chmod -R 777 airflow/logs    # Dar permisos de lectura, escritura y ejecucion al contenedor
+docker compose down
+docker compose down -v    
+docker compose up        # Esperar el timepo suficiente para que airflow-scheduler y airflow-webserver funcionen correctamente
+```
+
+Ejemplo de prueba:
+
+```
+jquispe@pc1-quispe:~$ curl http://localhost:8080/health
+{"dag_processor": {"latest_dag_processor_heartbeat": null, "status": null}, "metadatabase": {"status": "healthy"}, "scheduler": {"latest_scheduler_heartbeat": "2025-11-16T20:40:11.851929+00:00", "status": "healthy"}, "triggerer": {"latest_triggerer_heartbeat": null, "status": null}}
+```
+
+y en los logs de donde ejecutamos `docker compose up` tenemos por ejemplo:
+
+```
+airflow-webserver-1  | 192.168.32.1 - - [16/Nov/2025:20:40:20 +0000] "GET /health HTTP/1.1" 200 283 "-" "curl/8.14.1"
+```
+
+Tenemos la carpeta airflow con el siguiente contenido(ejemplo):
+
+```
+jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad18-CC3S2/Laboratorio$ tree -L 5 airflow/
+airflow/
+├── dags
+│   ├── etl_dag.py
+│   └── __pycache__
+│       └── etl_dag.cpython-311.pyc
+├── Dockerfile
+└── logs
+    ├── dag_processor_manager
+    │   └── dag_processor_manager.log
+    └── scheduler
+        ├── 2025-10-31
+        │   └── etl_dag.py.log
+        ├── 2025-11-16
+        │   └── etl_dag.py.log
+        └── latest -> 2025-11-16
+
+9 directories, 6 files
 ```
 
 Redacta un resumen breve (200-300 palabras) en `04_topologia.md` que incluya: redes presentes, servicios y relaciones (quién habla con quién), puertos publicados y la justificación de por qué **algunos servicios no deberían exponer puertos** (por ejemplo, Postgres y `etl-app` solo requieren comunicación interna). Explica también el uso del **DNS interno por nombre de servicio** y, si aún no existe, propone mover el proyecto a una **user-defined bridge** exclusiva para aislar tráfico y reducir exposición.
 
 **Evidencia:** `04_topologia.md`, `05_net_inspect.txt`.
-
 
 ### 1.3 Observabilidad mínima
 
@@ -82,27 +131,26 @@ Ejemplos útiles de líneas a marcar:
 * `Loaded DAG: etl_pipeline` o `DagBag size: N` (DAGs cargados)
 * `Scheduler heartbeat` / `Processor heartbeat` (latido periódico del scheduler)
 
-
 ```bash
 # Webserver (últimos 200, con sanitización básica)
 docker compose logs --tail=200 airflow-webserver \
   | sed -E 's/(password|token|secret)=\S+/REDACTED/g' \
-  | tee Actividad18-CC3S2/evidencia/03_logs_airflow.txt
+  | tee ../evidencias/03_logs_airflow.txt
 
 # Scheduler
 docker compose logs --tail=200 airflow-scheduler \
   | sed -E 's/(password|token|secret)=\S+/REDACTED/g' \
-  | tee -a Actividad18-CC3S2/evidencia/03_logs_airflow.txt
+  | tee -a ../evidencias/03_logs_airflow.txt
 
 # Worker (si existe; ajusta el nombre del servicio según tu stack)
 docker compose logs --tail=200 airflow-worker 2>/dev/null \
   | sed -E 's/(password|token|secret)=\S+/REDACTED/g' \
-  | tee -a Actividad18-CC3S2/evidencia/03_logs_airflow.txt
+  | tee -a ../evidencias/03_logs_airflow.txt
 
 # Comprobación explícita del /health del webserver (añádelo al archivo de logs)
 docker run --rm --network "$NET" byrnedo/alpine-curl \
   curl -s -o /dev/null -w "webserver /health: %{http_code}\n" http://airflow-webserver:8080/health \
-  | tee -a Actividad18-CC3S2/evidencia/03_logs_airflow.txt
+  | tee -a ../evidencias/03_logs_airflow.txt
 ```
 
 Para facilitar la revisión, añade al final del archivo tres líneas "marcadas" que resuman los indicadores clave que encontraste:
@@ -112,13 +160,12 @@ Para facilitar la revisión, añade al final del archivo tres líneas "marcadas"
   echo "[MARCA] DAG cargado: etl_pipeline"
   echo "[MARCA] webserver /health: 200"
   echo "[MARCA] Scheduler heartbeat detectado"
-} >> Actividad18-CC3S2/evidencia/03_logs_airflow.txt
+} >> ../evidencias/03_logs_airflow.txt
 ```
 
 **Evidencia:** `03_logs_airflow.txt` (sanitizado, con marcas claras al final).
 
-
-#### Errores comunes
+### Errores comunes
 
 * Usar imágenes con `:latest` y perder reproducibilidad, etiqueta con versión o `GIT_SHA` y documenta el tag en el `README.md`.
 * Asumir que la red se llama `proyecto_default`, detecta el nombre real con `docker network ls | grep _default`.

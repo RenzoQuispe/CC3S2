@@ -1,0 +1,229 @@
+airflow-webserver-1  | [[34m2025-11-16T20:22:22.059+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can delete on Pools to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:22.084+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: menu access on Pools[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:22.104+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Pools to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:22.197+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: can read on XComs[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:22.209+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on XComs to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:22.225+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: can delete on XComs[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:22.240+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can delete on XComs to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:22.256+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: menu access on XComs[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:22.280+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on XComs to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:22.364+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: menu access on DAG Dependencies[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:22.378+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on DAG Dependencies to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:22.462+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: menu access on DAGs[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:22.481+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on DAGs to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:22.519+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: menu access on Cluster Activity[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:22.538+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Cluster Activity to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:22.628+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: menu access on Datasets[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:22.642+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Datasets to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:22.741+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: menu access on Documentation[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:22.758+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Documentation to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:22.846+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: menu access on Docs[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:22.867+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Docs to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:25.967+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: can delete on DAGs[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:25.986+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: can read on DAGs[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.012+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: can edit on DAGs[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.054+0000[0m] {[34moverride.py:[0m1427} INFO[0m - Inserted Role: Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.085+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on DAGs to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.109+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: can read on DAG Dependencies[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.117+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on DAG Dependencies to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.141+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: can read on DAG Code[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.150+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on DAG Code to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.164+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on DAG Runs to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.190+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: can read on Datasets[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.202+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Datasets to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.222+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: can read on Cluster Activity[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.231+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Cluster Activity to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.240+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Pools to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.264+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: can read on ImportError[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.273+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on ImportError to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.294+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: can read on DAG Warnings[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.301+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on DAG Warnings to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.312+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Jobs to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.317+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on My Password to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.325+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can edit on My Password to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.332+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on My Profile to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.343+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can edit on My Profile to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.350+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Plugins to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.360+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on SLA Misses to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.370+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Task Instances to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.392+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: can read on Task Logs[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.401+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Task Logs to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.411+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on XComs to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.430+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: can read on Website[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.441+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Website to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.448+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Browse to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.459+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on DAGs to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.471+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on DAG Dependencies to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.478+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on DAG Runs to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.490+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Datasets to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.502+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Cluster Activity to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.511+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Documentation to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.520+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Docs to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.528+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Jobs to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.537+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Plugins to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.547+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on SLA Misses to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.556+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Task Instances to role Viewer[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.569+0000[0m] {[34moverride.py:[0m1427} INFO[0m - Inserted Role: User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.587+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on DAGs to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.608+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on DAG Dependencies to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.621+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on DAG Code to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.628+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on DAG Runs to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.645+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Datasets to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.663+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Cluster Activity to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.673+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Pools to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.697+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on ImportError to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.714+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on DAG Warnings to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.721+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Jobs to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.730+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on My Password to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.737+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can edit on My Password to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.746+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on My Profile to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.755+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can edit on My Profile to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.765+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Plugins to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.774+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on SLA Misses to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.785+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Task Instances to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.808+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Task Logs to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.817+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on XComs to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.834+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Website to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.842+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Browse to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.853+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on DAGs to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.867+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on DAG Dependencies to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.876+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on DAG Runs to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.887+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Datasets to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.896+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Cluster Activity to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.904+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Documentation to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.911+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Docs to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.920+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Jobs to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.928+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Plugins to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.936+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on SLA Misses to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.943+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Task Instances to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.950+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can edit on DAGs to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.962+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can delete on DAGs to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.973+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can create on Task Instances to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.982+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can edit on Task Instances to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:26.996+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can delete on Task Instances to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.004+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can create on DAG Runs to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.013+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can edit on DAG Runs to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.024+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can delete on DAG Runs to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.045+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: can create on Datasets[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.054+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can create on Datasets to role User[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.069+0000[0m] {[34moverride.py:[0m1427} INFO[0m - Inserted Role: Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.080+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on DAGs to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.099+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on DAG Dependencies to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.114+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on DAG Code to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.125+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on DAG Runs to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.138+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Datasets to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.156+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Cluster Activity to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.165+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Pools to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.185+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on ImportError to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.199+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on DAG Warnings to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.208+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Jobs to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.213+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on My Password to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.222+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can edit on My Password to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.228+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on My Profile to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.235+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can edit on My Profile to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.245+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Plugins to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.255+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on SLA Misses to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.265+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Task Instances to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.295+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Task Logs to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.304+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on XComs to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.324+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Website to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.330+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Browse to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.340+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on DAGs to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.351+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on DAG Dependencies to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.364+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on DAG Runs to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.374+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Datasets to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.383+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Cluster Activity to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.396+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Documentation to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.408+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Docs to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.417+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Jobs to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.428+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Plugins to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.439+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on SLA Misses to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.450+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Task Instances to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.461+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can edit on DAGs to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.472+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can delete on DAGs to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.483+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can create on Task Instances to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.495+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can edit on Task Instances to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.503+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can delete on Task Instances to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.511+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can create on DAG Runs to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.519+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can edit on DAG Runs to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.528+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can delete on DAG Runs to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.543+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can create on Datasets to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.553+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Configurations to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.567+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Admin to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.586+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Configurations to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.600+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Connections to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.610+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Pools to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.623+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Variables to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.635+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on Providers to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.644+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission menu access on XComs to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.656+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can create on Connections to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.666+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Connections to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.678+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can edit on Connections to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.688+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can delete on Connections to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.698+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can create on Pools to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.707+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can edit on Pools to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.714+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can delete on Pools to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.722+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Providers to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.729+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can create on Variables to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.737+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Variables to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.746+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can edit on Variables to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.754+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can delete on Variables to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.764+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can delete on XComs to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.785+0000[0m] {[34moverride.py:[0m1829} INFO[0m - Created Permission View: can delete on Datasets[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.795+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can delete on Datasets to role Op[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.815+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on DAGs to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.837+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on DAG Dependencies to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.856+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on DAG Code to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.881+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Datasets to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.905+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Cluster Activity to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.923+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on ImportError to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.942+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on DAG Warnings to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.967+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Task Logs to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.991+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can read on Website to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:27.998+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can edit on DAGs to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:28.004+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can delete on DAGs to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:28.022+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can create on Datasets to role Admin[0m
+airflow-webserver-1  | [[34m2025-11-16T20:22:28.047+0000[0m] {[34moverride.py:[0m1880} INFO[0m - Added Permission can delete on Datasets to role Admin[0m
+airflow-webserver-1  | [2025-11-16 20:22:28 +0000] [14] [INFO] Starting gunicorn 22.0.0
+airflow-webserver-1  | [[34m2025-11-16T20:22:51.072+0000[0m] {[34mproviders_manager.py:[0m283} INFO[0m - Optional provider feature disabled when importing 'airflow.providers.google.leveldb.hooks.leveldb.LevelDBHook' from 'apache-airflow-providers-google' package[0m
+airflow-webserver-1  | [2025-11-16 20:23:00 +0000] [14] [INFO] Listening at: http://0.0.0.0:8080 (14)
+airflow-webserver-1  | [2025-11-16 20:23:00 +0000] [14] [INFO] Using worker: sync
+airflow-webserver-1  | [2025-11-16 20:23:00 +0000] [26] [INFO] Booting worker with pid: 26
+airflow-webserver-1  | [2025-11-16 20:23:00 +0000] [27] [INFO] Booting worker with pid: 27
+airflow-webserver-1  | [2025-11-16 20:23:00 +0000] [28] [INFO] Booting worker with pid: 28
+airflow-webserver-1  | [2025-11-16 20:23:00 +0000] [29] [INFO] Booting worker with pid: 29
+airflow-webserver-1  | 192.168.32.1 - - [16/Nov/2025:20:23:26 +0000] "GET /health HTTP/1.1" 200 283 "-" "curl/8.14.1"
+airflow-webserver-1  | 192.168.32.1 - - [16/Nov/2025:20:30:53 +0000] "GET /health HTTP/1.1" 200 283 "-" "curl/8.14.1"
+airflow-webserver-1  | 192.168.32.1 - - [16/Nov/2025:20:40:13 +0000] "GET /health HTTP/1.1" 200 283 "-" "curl/8.14.1"
+airflow-webserver-1  | 192.168.32.1 - - [16/Nov/2025:20:40:20 +0000] "GET /health HTTP/1.1" 200 283 "-" "curl/8.14.1"
+airflow-webserver-1  | 192.168.32.3 - - [16/Nov/2025:20:42:42 +0000] "GET /health HTTP/1.1" 200 283 "-" "curl/8.14.1"
+airflow-webserver-1  | 192.168.32.1 - - [16/Nov/2025:20:42:54 +0000] "GET /health HTTP/1.1" 200 283 "-" "curl/8.14.1"
+airflow-scheduler-1  | 
+airflow-scheduler-1  |   ____________       _____________
+airflow-scheduler-1  |  ____    |__( )_________  __/__  /________      __
+airflow-scheduler-1  | ____  /| |_  /__  ___/_  /_ __  /_  __ \_ | /| / /
+airflow-scheduler-1  | ___  ___ |  / _  /   _  __/ _  / / /_/ /_ |/ |/ /
+airflow-scheduler-1  |  _/_/  |_/_/  /_/    /_/    /_/  \____/____/|__/
+airflow-scheduler-1  | [[34m2025-11-16T20:22:40.753+0000[0m] {[34mtask_context_logger.py:[0m63} INFO[0m - Task context logging is enabled[0m
+airflow-scheduler-1  | [[34m2025-11-16T20:22:40.755+0000[0m] {[34mexecutor_loader.py:[0m235} INFO[0m - Loaded executor: SequentialExecutor[0m
+airflow-scheduler-1  | [[34m2025-11-16T20:22:41.245+0000[0m] {[34mscheduler_job_runner.py:[0m796} INFO[0m - Starting the scheduler[0m
+airflow-scheduler-1  | [[34m2025-11-16T20:22:41.247+0000[0m] {[34mscheduler_job_runner.py:[0m803} INFO[0m - Processing each file at most -1 times[0m
+airflow-scheduler-1  | [[34m2025-11-16T20:22:41.260+0000[0m] {[34mmanager.py:[0m170} INFO[0m - Launched DagFileProcessorManager with pid: 18[0m
+airflow-scheduler-1  | [[34m2025-11-16T20:22:41.343+0000[0m] {[34msettings.py:[0m60} INFO[0m - Configured default timezone UTC[0m
+airflow-scheduler-1  | [2025-11-16 20:22:41 +0000] [17] [INFO] Starting gunicorn 22.0.0
+airflow-scheduler-1  | [2025-11-16 20:22:41 +0000] [17] [INFO] Listening at: http://[::]:8793 (17)
+airflow-scheduler-1  | [2025-11-16 20:22:41 +0000] [17] [INFO] Using worker: sync
+airflow-scheduler-1  | [[34m2025-11-16T20:22:41.351+0000[0m] {[34mscheduler_job_runner.py:[0m1595} INFO[0m - Adopting or resetting orphaned tasks for active dag runs[0m
+airflow-scheduler-1  | [2025-11-16 20:22:41 +0000] [19] [INFO] Booting worker with pid: 19
+airflow-scheduler-1  | [2025-11-16 20:22:41 +0000] [20] [INFO] Booting worker with pid: 20
+airflow-scheduler-1  | [[34m2025-11-16T20:27:41.826+0000[0m] {[34mscheduler_job_runner.py:[0m1595} INFO[0m - Adopting or resetting orphaned tasks for active dag runs[0m
+airflow-scheduler-1  | [[34m2025-11-16T20:32:41.892+0000[0m] {[34mscheduler_job_runner.py:[0m1595} INFO[0m - Adopting or resetting orphaned tasks for active dag runs[0m
+airflow-scheduler-1  | [[34m2025-11-16T20:37:41.973+0000[0m] {[34mscheduler_job_runner.py:[0m1595} INFO[0m - Adopting or resetting orphaned tasks for active dag runs[0m
+airflow-scheduler-1  | [[34m2025-11-16T20:42:42.027+0000[0m] {[34mscheduler_job_runner.py:[0m1595} INFO[0m - Adopting or resetting orphaned tasks for active dag runs[0m
+airflow-scheduler-1  | [[34m2025-11-16T20:47:42.112+0000[0m] {[34mscheduler_job_runner.py:[0m1595} INFO[0m - Adopting or resetting orphaned tasks for active dag runs[0m
+airflow-scheduler-1  | [[34m2025-11-16T20:52:42.204+0000[0m] {[34mscheduler_job_runner.py:[0m1595} INFO[0m - Adopting or resetting orphaned tasks for active dag runs[0m
+webserver /health: 000
+{"dag_processor": {"latest_dag_processor_heartbeat": null, "status": null}, "metadatabase": {"status": "healthy"}, "scheduler": {"latest_scheduler_heartbeat": "2025-11-16T20:56:12.000998+00:00", "status": "healthy"}, "triggerer": {"latest_triggerer_heartbeat": null, "status": null}}webserver /health: 200
+]633;E;echo "[MARCA] DAG cargado: etl_pipeline";5610b7c4-08fe-4282-81a2-d9d9810b182d]633;C[MARCA] DAG cargado: etl_pipeline
+[MARCA] webserver /health: 200
+[MARCA] Scheduler heartbeat detectado

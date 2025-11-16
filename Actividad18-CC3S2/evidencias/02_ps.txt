@@ -1,0 +1,19 @@
+NAME                              IMAGE                  COMMAND                  SERVICE             CREATED              STATUS                        PORTS
+laboratorio-airflow-scheduler-1   airflow-secure:1.0.0   "/usr/bin/dumb-init …"   airflow-scheduler   About a minute ago   Up About a minute             8080/tcp
+laboratorio-airflow-webserver-1   airflow-secure:1.0.0   "/usr/bin/dumb-init …"   airflow-webserver   About a minute ago   Up 8 seconds                  0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp
+laboratorio-postgres-1            postgres:13            "docker-entrypoint.s…"   postgres            About a minute ago   Up About a minute (healthy)   5432/tcp
+NAMES                             IMAGE                  STATUS                        PORTS
+laboratorio-airflow-webserver-1   airflow-secure:1.0.0   Up 14 seconds                 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp
+laboratorio-airflow-scheduler-1   airflow-secure:1.0.0   Up About a minute             8080/tcp
+laboratorio-postgres-1            postgres:13            Up About a minute (healthy)   5432/tcp
+
+ laboratorio-airflow-scheduler-1 
+
+
+ laboratorio-airflow-webserver-1 
+
+
+ laboratorio-postgres-1 
+21:            "Health": {
+22-                "Status": "healthy",
+23-                "FailingStreak": 0,

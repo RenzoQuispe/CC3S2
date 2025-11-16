@@ -1,0 +1,67 @@
+NET=laboratorio_backend
+[
+    {
+        "Name": "laboratorio_backend",
+        "Id": "c167d1a644c8cf4a0339a616e4834920c4ac4a253135f72f02064678a3794f0f",
+        "Created": "2025-11-16T15:09:44.958365482-05:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.30.0.0/16",
+                    "Gateway": "172.30.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "36943a310d51061c831ee44d74ed14f739bbdd7f0bad6aa0c5ac2dd31d8a7260": {
+                "Name": "laboratorio-postgres-1",
+                "EndpointID": "f7a1515e59167a5feab239a48376d34d9ef51e17081ef8135862f8788c7d7897",
+                "MacAddress": "02:42:ac:1e:00:02",
+                "IPv4Address": "172.30.0.2/16",
+                "IPv6Address": ""
+            },
+            "89d2b2be726815214e9f5bd99ddf919c94c7a0c96989a57565c023203ab411ba": {
+                "Name": "laboratorio-airflow-scheduler-1",
+                "EndpointID": "ef171ccba2903bc27c1fe1461735213a90a54b936a14444fd19e65bdf0388faa",
+                "MacAddress": "02:42:ac:1e:00:04",
+                "IPv4Address": "172.30.0.4/16",
+                "IPv6Address": ""
+            },
+            "d45a7b2a521f86e46f8fd6e30d39ce5b3f70a5ca764e1ac994cc22b5db843c3e": {
+                "Name": "laboratorio-airflow-webserver-1",
+                "EndpointID": "6be296df59b504f6d42f9b0e72685e7301cbeac40e5df2dbad7fb711d74b728c",
+                "MacAddress": "02:42:ac:1e:00:03",
+                "IPv4Address": "172.30.0.3/16",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {},
+        "Labels": {
+            "com.docker.compose.config-hash": "dc58b8fd59aa59d11891534bca2e8a88ebeb55cba478e3053fa9ff45d8affa86",
+            "com.docker.compose.network": "backend",
+            "com.docker.compose.project": "laboratorio",
+            "com.docker.compose.version": "2.40.3"
+        }
+    }
+]
+laboratorio-airflow-scheduler-1	8080/tcp
+laboratorio-airflow-webserver-1	0.0.0.0:8080->8080/tcp, :::8080->8080/tcp
+laboratorio-postgres-1	5432/tcp
+[DNS] airflow-webserver:
+192.168.32.4      airflow-webserver  airflow-webserver
+[DNS] postgres:
+192.168.32.2      postgres  postgres
+[HTTP] webserver /health:
+200

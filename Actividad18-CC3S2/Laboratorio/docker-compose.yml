@@ -118,8 +118,8 @@ services:
         condition: service_healthy
     networks:
       - backend
-    entrypoint: ["bash","-lc"]
     command: >
+      bash -c "
       airflow db init &&
       airflow users create
         --username admin
@@ -128,6 +128,7 @@ services:
         --role Admin
         --email admin@example.com
         --password admin || true
+      "
 
 volumes:
   postgres_data:
