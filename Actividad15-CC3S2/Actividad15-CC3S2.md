@@ -1,18 +1,17 @@
-### Actividad: Patrones de dependencias y módulos en IaC con Terraform y Python
+# Actividad: Patrones de dependencias y módulos en IaC con Terraform y Python
 
 La actividad busca de forma integrada, el desarrollo de  los patrones de dependencia más usados en ingeniería de software e IaC, desde flujos unidireccionales hasta inyección de dependencias, así como los patrones facade, adapter y mediator y que sepas cuándo aplicar cada uno para desacoplar, orquestar y evolucionar sistemas.
 
-#### Pre-requisitos
+### Pre-requisitos
 
-* Utiliza el siguiente [Laboratorio 7](https://github.com/kapumota/Curso-CC3S2/tree/main/labs/Laboratorio7) dado y las lecturas 15->17 del curso.
+* Utiliza el [Laboratorio](./Laboratorio/) relacionado.
 * Tener instalados:
 
   * Terraform (>= 1.0)
   * Python 3.8+
   * `make`
 
-
-#### Fase 1: Relaciones unidireccionales
+## Fase 1: Relaciones unidireccionales
 
 1. **Inspección**
 
@@ -30,10 +29,9 @@ La actividad busca de forma integrada, el desarrollo de  los patrones de depende
      cd ..
      make all
      ```
-   * Observa el orden de creación y elimina (`terraform destroy`) para ver el orden de destrucción.
+   * Observa el orden de creación y ejecuta (`terraform destroy`) para ver el orden de destrucción.
 
-
-#### Fase 2: Inyección de dependencias
+## Fase 2: Inyección de dependencias
 
 1. **Inversión de Control y inversión de dependencias**
 
@@ -43,7 +41,7 @@ La actividad busca de forma integrada, el desarrollo de  los patrones de depende
    * Modifica `main.py` para inyectar además parámetros de configuración del servidor (por ejemplo, nombre, etiquetas).
    * Vuelve a ejecutar `make all` y verifica que los nuevos parámetros aparecen en `main.tf.json`.
 
-#### Fase 3: Patrón Facade
+## Fase 3: Patrón Facade
 
 1. **Teoría**
 
@@ -54,7 +52,7 @@ La actividad busca de forma integrada, el desarrollo de  los patrones de depende
    * Refactoriza `main.py` para usar este módulo de facade en lugar de llamadas directas.
 
 
-#### Fase 4: Patrón Adapter
+## Fase 4: Patrón Adapter
 
 1. **Teoría**
 
@@ -64,7 +62,7 @@ La actividad busca de forma integrada, el desarrollo de  los patrones de depende
    * Simula un módulo de "identidad" que en local usa `null_resource`, y crea un adaptador (`adapter.tf.json`) que convierta su output en formato Terraform estándar (por ejemplo, lista de usuarios -> JSON).
 
 
-#### Fase 5: Patrón Mediator
+## Fase 5: Patrón Mediator
 
 1. **Teoría**
 
@@ -73,7 +71,7 @@ La actividad busca de forma integrada, el desarrollo de  los patrones de depende
 
    * Implementa en Python un "mediador" (`mediator.py`) que, antes de generar `main.tf.json`, consulte el estado de `network`, `server` y `firewall` y establezca triggers/dependencias.
 
-#### Fase 6: Elección de patrón
+## Fase 6: Elección de patrón
 
 * **Actividad de discusión** (en pares o tríos):
 
@@ -81,7 +79,7 @@ La actividad busca de forma integrada, el desarrollo de  los patrones de depende
   * Prepara una presentación de 5 min con ejemplos de código.
 
 
-#### Fase 7: Estructura y compartición de módulos
+## Fase 7: Estructura y compartición de módulos
 
 1. **Monorepositorio vs multirepositorio**
 
@@ -92,7 +90,7 @@ La actividad busca de forma integrada, el desarrollo de  los patrones de depende
    * Configura en cada uno un `README.md` y un pipeline de CI (GitHub Actions o similar).
 
 
-#### Fase 8: Versionado y liberación
+## Fase 8: Versionado y liberación
 
 1. **Versionado semántico**
 
@@ -107,7 +105,7 @@ La actividad busca de forma integrada, el desarrollo de  los patrones de depende
          git push --tags
      ```
 
-#### Fase 9: Publicación y compartición
+## Fase 9: Publicación y compartición
 
 1. **Registro local vs Terraform registry**
 
@@ -116,7 +114,7 @@ La actividad busca de forma integrada, el desarrollo de  los patrones de depende
 
    * Publica uno de tus módulos en un registro local y úsalo desde otro proyecto clonándolo mediante `terraform init`.
 
-#### Ejercicios adicionales (opcional)
+## Ejercicios adicionales (opcional)
 
 1. Explica las diferencias clave entre los patrones Facade, Adapter y Mediator en términos de acoplamiento y reutilización.
 2. Describe un escenario real (por ejemplo, despliegue multi-cloud) y justifica qué patrón usarías para gestionar dependencias complejas, señalando ventajas e inconvenientes de cada opción.
@@ -135,12 +133,11 @@ La actividad busca de forma integrada, el desarrollo de  los patrones de depende
 15. Implementa en tu Makefile o en tu sistema de CI un proceso automatizado que, tras cada merge a la rama principal, actualice la versión semántica de uno de los módulos, genere un tag Git y publique el módulo en un registro local.
 16. Monta un registro privado (puede ser un simple servidor HTTP o un artefacto de Git) y publica al menos dos versiones de un módulo. Luego, desde otro proyecto, configura el `source` para consumirlo por versión fija y por rango de versiones, y demuestra la actualización controlada.
 
-
-### Entrega
+## Entrega
 
 Para completar la actividad se debe crear una carpeta principal llamada `Actividad15-CC3S2`. Esta carpeta contendrá todos los entregables organizados de manera clara y estructurada, incluyendo código, documentación, diagramas, informes y evidencias de ejecución. 
 
-#### Ejemplo de estructura general de la carpeta 
+### Ejemplo de estructura general de la carpeta 
 
 ```
 Actividad15-CC3S2/
@@ -188,7 +185,7 @@ Actividad15-CC3S2/
     └── ejemplo_publicacion/   # Scripts o logs de publicación y consumo de módulos.
 ```
 
-#### Detalles de los entregables por fase y sección
+### Detalles de los entregables por fase y sección
 
 1. **Fase 1: Relaciones unidireccionales**
    - `evidencias/graph.png`: Captura del grafo de dependencias.
@@ -241,7 +238,7 @@ Actividad15-CC3S2/
     - Scripts en `codigo/Makefile` y evidencias en `evidencias/`.
     - `documentacion/informe_final.pdf`: Informe de 3-4 páginas integrando todo: análisis de patrones (ventajas/inconvenientes), elecciones (por ejemplo mediator para multi-cloud por coordinación central), comparativa mono/multi (escalabilidad vs. gobernanza), prácticas de versionado/publicación, y resolución de ejercicios.
 
-#### Notas adicionales para completar la actividad
+### Notas adicionales para completar la actividad
 
 - **Ejecución y Pruebas**: Asegúrate de que todo el código sea ejecutable. Por ejemplo, desde la raíz: `make all` debe generar y aplicar configuraciones sin errores.
 - **Formato**: Usa Markdown para tablas y texto, PDF para informes formales, PNG para diagramas (puedes usar herramientas como Draw.io).

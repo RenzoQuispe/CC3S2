@@ -1,0 +1,293 @@
+jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control/network$ terraform init
+Initializing the backend...
+Initializing provider plugins...
+- Finding hashicorp/null versions matching "~> 3.2"...
+- Finding hashicorp/local versions matching "~> 2.5"...
+- Installing hashicorp/null v3.2.4...
+- Installed hashicorp/null v3.2.4 (signed by HashiCorp)
+- Installing hashicorp/local v2.5.3...
+- Installed hashicorp/local v2.5.3 (signed by HashiCorp)
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control/network$ terraform plan
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are
+indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # local_file.network_state will be created
+  + resource "local_file" "network_state" {
+      + content              = jsonencode(
+            {
+              + outputs = {
+                  + cidr = {
+                      + type  = "string"
+                      + value = "10.0.0.0/16"
+                    }
+                  + name = {
+                      + type  = "string"
+                      + value = "hello-world-subnet"
+                    }
+                }
+            }
+        )
+      + content_base64sha256 = (known after apply)
+      + content_base64sha512 = (known after apply)
+      + content_md5          = (known after apply)
+      + content_sha1         = (known after apply)
+      + content_sha256       = (known after apply)
+      + content_sha512       = (known after apply)
+      + directory_permission = "0777"
+      + file_permission      = "0777"
+      + filename             = "network_outputs.json"
+      + id                   = (known after apply)
+    }
+
+  # null_resource.network will be created
+  + resource "null_resource" "network" {
+      + id       = (known after apply)
+      + triggers = {
+          + "render_time" = (known after apply)
+        }
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly
+these actions if you run "terraform apply" now.
+jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control/network$ terraform apply -auto-approve
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are
+indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # local_file.network_state will be created
+  + resource "local_file" "network_state" {
+      + content              = jsonencode(
+            {
+              + outputs = {
+                  + cidr = {
+                      + type  = "string"
+                      + value = "10.0.0.0/16"
+                    }
+                  + name = {
+                      + type  = "string"
+                      + value = "hello-world-subnet"
+                    }
+                }
+            }
+        )
+      + content_base64sha256 = (known after apply)
+      + content_base64sha512 = (known after apply)
+      + content_md5          = (known after apply)
+      + content_sha1         = (known after apply)
+      + content_sha256       = (known after apply)
+      + content_sha512       = (known after apply)
+      + directory_permission = "0777"
+      + file_permission      = "0777"
+      + filename             = "network_outputs.json"
+      + id                   = (known after apply)
+    }
+
+  # null_resource.network will be created
+  + resource "null_resource" "network" {
+      + id       = (known after apply)
+      + triggers = {
+          + "render_time" = (known after apply)
+        }
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
+null_resource.network: Creating...
+null_resource.network: Creation complete after 0s [id=3219218254710502917]
+local_file.network_state: Creating...
+local_file.network_state: Creation complete after 0s [id=d9e6632b7b6fe51a56c55fab21bc32b9df7fc2c0]
+
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control/network$ cd ..
+jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control$ make all
+cd network && TF_DATA_DIR=/home/jquispe/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control/.terraform TF_PLUGIN_CACHE_DIR=/home/jquispe/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control/.terraform/plugin-cache TMP=/home/jquispe/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control/.terraform/tmp TEMP=/home/jquispe/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control/.terraform/tmp terraform init -upgrade -no-color && \
+TF_DATA_DIR=/home/jquispe/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control/.terraform TF_PLUGIN_CACHE_DIR=/home/jquispe/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control/.terraform/plugin-cache TMP=/home/jquispe/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control/.terraform/tmp TEMP=/home/jquispe/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control/.terraform/tmp terraform apply -auto-approve -no-color
+Initializing the backend...
+Initializing provider plugins...
+- Finding hashicorp/local versions matching "~> 2.5"...
+- Finding hashicorp/null versions matching "~> 3.2"...
+- Installing hashicorp/local v2.5.3...
+- Installed hashicorp/local v2.5.3 (signed by HashiCorp)
+- Installing hashicorp/null v3.2.4...
+- Installed hashicorp/null v3.2.4 (signed by HashiCorp)
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+null_resource.network: Refreshing state... [id=3219218254710502917]
+local_file.network_state: Refreshing state... [id=d9e6632b7b6fe51a56c55fab21bc32b9df7fc2c0]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are
+indicated with the following symbols:
+-/+ destroy and then create replacement
+
+Terraform will perform the following actions:
+
+  # null_resource.network must be replaced
+-/+ resource "null_resource" "network" {
+      ~ id       = "3219218254710502917" -> (known after apply)
+      ~ triggers = { # forces replacement
+          ~ "render_time" = "2025-11-16T09:57:26Z" -> (known after apply)
+        }
+    }
+
+Plan: 1 to add, 0 to change, 1 to destroy.
+null_resource.network: Destroying... [id=3219218254710502917]
+null_resource.network: Destruction complete after 0s
+null_resource.network: Creating...
+null_resource.network: Creation complete after 0s [id=6355460395577903401]
+
+Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
+python3 main.py
+main.tf.json generado.
+TF_DATA_DIR=/home/jquispe/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control/.terraform TF_PLUGIN_CACHE_DIR=/home/jquispe/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control/.terraform/plugin-cache TMP=/home/jquispe/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control/.terraform/tmp TEMP=/home/jquispe/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control/.terraform/tmp terraform init -upgrade -no-color && \
+TF_DATA_DIR=/home/jquispe/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control/.terraform TF_PLUGIN_CACHE_DIR=/home/jquispe/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control/.terraform/plugin-cache TMP=/home/jquispe/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control/.terraform/tmp TEMP=/home/jquispe/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control/.terraform/tmp terraform apply -auto-approve -no-color
+Initializing the backend...
+Initializing provider plugins...
+- Finding latest version of hashicorp/null...
+- Installing hashicorp/null v3.2.4...
+- Installed hashicorp/null v3.2.4 (signed by HashiCorp)
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+null_resource.hello-world: Refreshing state... [id=3349634888812724412]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration and found no differences, so
+no changes are needed.
+
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+
+jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control$ terraform destroy
+null_resource.hello-world: Refreshing state... [id=3349634888812724412]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # null_resource.hello-world will be destroyed
+  - resource "null_resource" "hello-world" {
+      - id       = "3349634888812724412" -> null
+      - triggers = {
+          - "server_name" = "hello-world"
+          - "subnet_cidr" = "10.0.0.0/16"
+          - "subnet_name" = "hello-world-subnet"
+          - "zone"        = "local"
+        } -> null
+    }
+
+Plan: 0 to add, 0 to change, 1 to destroy.
+
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+null_resource.hello-world: Destroying... [id=3349634888812724412]
+null_resource.hello-world: Destruction complete after 0s
+
+Destroy complete! Resources: 1 destroyed.
+jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control$ cd network/
+jquispe@pc1-quispe:~/Escritorio/cursos/CC3S2/Actividad15-CC3S2/Laboratorio/Inversion_control/network$ terraform destroy 
+null_resource.network: Refreshing state... [id=6355460395577903401]
+local_file.network_state: Refreshing state... [id=d9e6632b7b6fe51a56c55fab21bc32b9df7fc2c0]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # local_file.network_state will be destroyed
+  - resource "local_file" "network_state" {
+      - content              = jsonencode(
+            {
+              - outputs = {
+                  - cidr = {
+                      - type  = "string"
+                      - value = "10.0.0.0/16"
+                    }
+                  - name = {
+                      - type  = "string"
+                      - value = "hello-world-subnet"
+                    }
+                }
+            }
+        ) -> null
+      - content_base64sha256 = "g0B8fQnXqcdRyuy+NIcPQmEOomlO4TN2Ny1XRmN3SvE=" -> null
+      - content_base64sha512 = "mk4S9bQabXYE8hW2imePpa0xr9xOMEsuylNgeP/+DXERVfAxaq8NWJsaJyJCMeO8oChW6Vx8zD5wjr1Rew5P9g==" -> null
+      - content_md5          = "7c1f84ccd7fbb133403a1a26cfb5ca72" -> null
+      - content_sha1         = "d9e6632b7b6fe51a56c55fab21bc32b9df7fc2c0" -> null
+      - content_sha256       = "83407c7d09d7a9c751caecbe34870f42610ea2694ee13376372d574663774af1" -> null
+      - content_sha512       = "9a4e12f5b41a6d7604f215b68a678fa5ad31afdc4e304b2eca536078fffe0d711155f0316aaf0d589b1a27224231e3bca02856e95c7ccc3e708ebd517b0e4ff6" -> null
+      - directory_permission = "0777" -> null
+      - file_permission      = "0777" -> null
+      - filename             = "network_outputs.json" -> null
+      - id                   = "d9e6632b7b6fe51a56c55fab21bc32b9df7fc2c0" -> null
+    }
+
+  # null_resource.network will be destroyed
+  - resource "null_resource" "network" {
+      - id       = "6355460395577903401" -> null
+      - triggers = {
+          - "render_time" = "2025-11-16T09:58:40Z"
+        } -> null
+    }
+
+Plan: 0 to add, 0 to change, 2 to destroy.
+
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+local_file.network_state: Destroying... [id=d9e6632b7b6fe51a56c55fab21bc32b9df7fc2c0]
+local_file.network_state: Destruction complete after 0s
+null_resource.network: Destroying... [id=6355460395577903401]
+null_resource.network: Destruction complete after 0s
+
+Destroy complete! Resources: 2 destroyed.

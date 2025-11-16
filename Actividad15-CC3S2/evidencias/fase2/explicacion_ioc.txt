@@ -1,0 +1,10 @@
+El principio de Inversión de Control establece que un módulo de alto nivel
+no debe encargarse de crear ni gestionar directamente sus dependencias, en su
+lugar, estas deben ser proporcionadas desde afuera. Esto permite desacoplar componentes, 
+hacerlos más reutilizables y reducir dependencias rígidas entre módulos.
+
+En este laboratorio, IoC se aplica cuando el archivo main.py no crea por sí mismo
+los valores de red, sino que los recibe desde el módulo network a través del
+archivo network_outputs.json. Luego, esos datos son inyectados dinámicamente
+en main.tf.json. El servidor no conoce cómo se genera la red; solo consume los
+valores que le entrega el módulo externo, esa es la esencia de la inversión de control.
