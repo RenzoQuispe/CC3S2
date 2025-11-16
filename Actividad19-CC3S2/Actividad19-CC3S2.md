@@ -1,4 +1,4 @@
-### Actividad: Arquitectura y desarrollo de microservicios con Docker (base) y Kubernetes
+# Actividad: Arquitectura y desarrollo de microservicios con Docker (base) y Kubernetes
 
 La actividad profundiza en conceptos y prácticas de arquitectura de microservicios, asegurando un **flujo base reproducible** con Docker y **SQLite**, y ofreciendo **extensiones opcionales** con Docker Compose y Kubernetes para entornos más complejos.
 
@@ -13,34 +13,34 @@ Tambien se divide en **tres bloques**: conceptualización; empaquetado & verific
 > * **Prohibido** usar la etiqueta `latest` en la entrega base (usa SemVer, por ejemplo, `0.1.0`).
 > * **Bonus opcional**: Docker Compose y Kubernetes (no reemplazan la base).
 
-### Conceptualización de microservicios
+## Conceptualización de microservicios
 
 Los monolitos simplifican el arranque inicial, pero se degradan con el crecimiento (despliegues lentos, acoplamiento fuerte, escalado desigual).
 
-#### ¿Por qué microservicios?
+### ¿Por qué microservicios?
 
 * Explica la evolución: **Monolito -> SOA -> Microservicios**.
 * Presenta **2 casos** (por ejemplo, e-commerce con picos estacionales, SaaS multi-tenant) donde el monolito se vuelve costoso de operar.
 
-#### Definiciones clave
+### Definiciones clave
 
 * **Microservicio**: unidad de despliegue independiente, **una capacidad de negocio** por servicio, contrato definido por **API**.
 * **Aplicación de microservicios**: colección de servicios + **gateway**, **balanceo de carga**, **observabilidad** (métricas, logs, trazas).
 
-#### Críticas al monolito
+### Críticas al monolito
 
 * Dos problemas típicos: **cadencia de despliegue** reducida y **acoplamiento** que impide escalar partes de forma independiente.
 
-#### Popularidad y beneficios
+### Popularidad y beneficios
 
 * Cita por qué empresas grandes los adoptaron (por ejemplo, **aislamiento de fallos**, **escalado granular**, **autonomía de equipos**).
 
-#### Desventajas y retos
+### Desventajas y retos
 
 * Menciona 4 desafíos: **redes/seguridad**, **orquestación**, **consistencia de datos**, **testing distribuido**.
 * Mitigaciones: **OpenAPI/contratos**, **pruebas contractuales**, **trazabilidad (Jaeger)**, **patrones de sagas**.
 
-#### Principios de diseño
+### Principios de diseño
 
 * **DDD**: límites contextuales para delimitar servicios.
 * **DRY** en microservicios: equilibrar librerías comunes vs **duplicación controlada** para reducir acoplamiento.
@@ -48,16 +48,16 @@ Los monolitos simplifican el arranque inicial, pero se degradan con el crecimien
 
 **Entregable (Bloque 1)**: Conclusiones con ejemplos y decisiones de diseño.
 
-### Empaquetado y verificación con Docker (base obligatoria)
+## Empaquetado y verificación con Docker (base obligatoria)
 
 El repositorio de referencia incluye `Dockerfile` y pruebas. Aquí se describen conceptos y pasos; **no se pega código completo**.
 
-#### Dockerfile (multi-stage recomendado)
+### Dockerfile (multi-stage recomendado)
 
 * **Etapa builder**: compilación de dependencias y artefactos.
 * **Etapa runtime**: imagen **slim** (por ejemplo, `python:3.11-slim`), usuario **no-root** (por ejemplo `appuser`), variables de entorno útiles (`PYTHONDONTWRITEBYTECODE=1`, `PYTHONUNBUFFERED=1`), y `ENTRYPOINT` explícito y claro.
 
-#### Imagen, etiquetas y Makefile
+### Imagen, etiquetas y Makefile
 
 * Nombre de imagen **fijo** (ejemplo: `ejemplo-microservice`) y **tag con SemVer** (ejemplo: `0.1.0`). **Evitar `latest`**.
 * Targets mínimos en **Makefile**: `build`, `run`, `stop`, `logs`, `clean` (y opcionalmente `test` si encapsula `pytest`).
@@ -75,13 +75,13 @@ El repositorio de referencia incluye `Dockerfile` y pruebas. Aquí se describen 
 * Limpieza:  
   `docker rm -f ejemplo-ms && docker image prune -f`
 
-#### Base de datos: **SQLite** (obligatoria)
+### Base de datos: **SQLite** (obligatoria)
 
 * El servicio **persiste** datos en un archivo `app.db` **dentro del contenedor** (o en un volumen montado para persistencia local).
 * **No usar Postgres** en la implementación base.  
   *Bonus teórico*: SQLite es ideal para desarrollo y pruebas por su simplicidad (archivo único, sin servidor), pero Postgres ofrece concurrencia robusta, replicación y soporte ACID en entornos distribuidos.
 
-#### Pruebas (`pytest -q`)
+### Pruebas (`pytest -q`)
 
 * Cobertura mínima:  
   - `GET /api/items` -> **200 OK** con listado.  
@@ -94,7 +94,7 @@ El repositorio de referencia incluye `Dockerfile` y pruebas. Aquí se describen 
 * Evidencias en texto plano de: `build`, `run`, `curl`, `logs` y `pytest -q`.
 * Breve explicación de por qué **no** se usa `latest` y cómo **SemVer** garantiza reproducibilidad.
 
-#### ¿Por qué no usar `latest`?
+### ¿Por qué no usar `latest`?
 
 El tag `latest` es ambiguo: no indica versión, cambios ni compatibilidad. Puede romper entornos al actualizarse inesperadamente.  
 **SemVer** (`MAJOR.MINOR.PATCH`) permite:  
@@ -102,9 +102,9 @@ El tag `latest` es ambiguo: no indica versión, cambios ni compatibilidad. Puede
 - **Trazabilidad**: saber qué cambios introdujo cada versión.  
 - **Despliegues seguros**: promover versiones probadas (por ejemplo de `0.1.0` a `0.1.1` sin sorpresas).
 
-### Desarrollo y despliegue (Compose/K8s como **bonus opcional**)
+## Desarrollo y despliegue (Compose/K8s como **bonus opcional**)
 
-#### Docker Compose para desarrollo (bonus)
+### Docker Compose para desarrollo (bonus)
 
 **Teórico**
 
@@ -133,7 +133,7 @@ El tag `latest` es ambiguo: no indica versión, cambios ni compatibilidad. Puede
 * `docker compose logs -f api`: seguimiento en tiempo real de logs del servicio `api` (útil en desarrollo).
 * `docker compose down --volumes`: detiene y elimina contenedores, redes y volúmenes nombrados (limpieza total).
 
-#### Comunicación entre microservicios (bonus)
+### Comunicación entre microservicios (bonus)
 
 **Teórico**
 
@@ -160,7 +160,7 @@ El tag `latest` es ambiguo: no indica versión, cambios ni compatibilidad. Puede
    - Validar que el servicio principal no falla si el stub responde con error 500 (resiliencia).
 
 
-#### Despliegue en Kubernetes local (bonus)
+### Despliegue en Kubernetes local (bonus)
 
 **Teórico**
 
@@ -202,7 +202,7 @@ El tag `latest` es ambiguo: no indica versión, cambios ni compatibilidad. Puede
 4. **Visibilidad**: notificar en Slack/Discord con logs de `kubectl rollout` y enlace a `kubectl describe pod`.
 
 
-#### Entrega
+## Entrega
 
 **Estructura sugerida en tu repositorio personal**
 

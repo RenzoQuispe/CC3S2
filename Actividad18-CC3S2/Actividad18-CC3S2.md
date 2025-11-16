@@ -1,13 +1,13 @@
-### Actividad: Reforzamiento de DevSecOps con contenedores
+# Actividad: Reforzamiento de DevSecOps con contenedores
 
 Esta actividad sirve para operar y **endurecer** un stack con Docker/Compose (Airflow + Postgres + tu `etl-app`), aplicar **12-Factor (Config)**, ejecutar **pruebas en contenedor**, generar **SBOM + escaneo**, y dejar **evidencia verificable**. El foco es reproducibilidad y seguridad.
 
 > Todo el código y comandos aquí mostrados son referenciales y pueden requerir ajustes según tu entorno (SO, versiones de Docker/Compose, imágenes base, rutas y variables). 
 > No subas secretos ni `.env` reales. Usa `tags/digests` propios y valida siempre con tus pruebas y políticas de seguridad.
 
-#### Parte 1 - Operar, observar y documentar
+## Parte 1 - Operar, observar y documentar
 
-#### 1.1 Levantamiento y verificación
+### 1.1 Levantamiento y verificación
 
 Comienza construyendo las imágenes, levantando los servicios en segundo plano y verificando su estado. Captura toda la salida en archivos dentro de `evidencia/` para que se pueda reproducir y auditar.
 
@@ -38,7 +38,7 @@ done | tee -a Actividad18-CC3S2/evidencia/02_ps.txt
 **Criterio de aceptación:** todos los servicios se mantienen `healthy` (si tienen healthcheck) o `Up` sin reinicios en bucle.
 **Evidencia:** `00_build.txt`, `01_up.txt`, `02_ps.txt`.
 
-#### 1.2 Topología y superficie expuesta
+### 1.2 Topología y superficie expuesta
 
 Describe cómo se conectan los servicios, qué redes existen, qué puertos están publicados hacia el host y cómo se resuelven los nombres dentro de la red de Docker. 
 Descubre el nombre real de la red por defecto del proyecto y documenta su inspección junto con una prueba de DNS interno.
@@ -69,7 +69,7 @@ Redacta un resumen breve (200-300 palabras) en `04_topologia.md` que incluya: re
 **Evidencia:** `04_topologia.md`, `05_net_inspect.txt`.
 
 
-#### 1.3 Observabilidad mínima
+### 1.3 Observabilidad mínima
 
 Extrae los logs recientes del **webserver** y del **scheduler** (y del **worker** si existe) y resalta algunas líneas que prueben **vida sana** del sistema. 
 Por **vida sana** entendemos que los componentes clave están operativos y responden como se espera: la **UI** devuelve **HTTP 200** en `/health`, al menos  **un DAG fue cargado** correctamente (aparece en el DagBag) y el **scheduler** emite su **heartbeat** con regularidad. 
@@ -125,9 +125,9 @@ Para facilitar la revisión, añade al final del archivo tres líneas "marcadas"
 * Definir healthchecks que apuntan a endpoints inexistentes o tardan demasiado en responder, valida con `curl` dentro del contenedor y ajusta `interval`/`retries`.
 * Subir logs con secretos, aplica filtros (`sed`, `grep -v`) y revisa el archivo antes del commit.
 
-#### Parte 2 - Endurecimiento del Compose/Dockerfile
+## Parte 2 - Endurecimiento del Compose/Dockerfile
 
-#### 2.1 Healthchecks razonables
+### 2.1 Healthchecks razonables
 
 **Qué hacer (paso a paso)**
 
@@ -212,7 +212,7 @@ done | tee Actividad18-CC3S2/evidencia/10_health_status.txt
 * *Olvidar `$$` en variables dentro de `test`:* en YAML debes escapar `$` -> usa `$$`.
 
 
-#### 2.2 Límites de recursos
+### 2.2 Límites de recursos
 
 > **Importante:** `deploy.resources.limits` **no** aplica en Docker Compose local (es para Swarm). Para Compose local usa `mem_limit`, `cpus` y/o `cpuset`. Mantén **una sola** estrategia (no mezcles).
 
@@ -269,7 +269,7 @@ El `inspect` muestra límites ≠ 0 para cada servicio.
 * *Poner `deploy.*` y esperar efecto en Compose local:* usa `mem_limit`/`cpus`.
 * *Valores sin unidad en memoria:* añade `m`/`g` (por ejemplo, `512m`, `1g`).
 
-#### 2.3 Usuario no-root
+### 2.3 Usuario no-root
 
 **Construcción segura del Dockerfile (base Debian/Alpine):**
 
@@ -341,7 +341,7 @@ services:
 * *Propiedad incorrecta del `WORKDIR`*: usa `--chown` en `COPY` o `chown` explícito.
 
 
-#### 2.4 Config por variables de entorno (12-Factor)
+### 2.4 Config por variables de entorno (12-Factor)
 
 **Limpieza de código y Compose**
 
@@ -412,9 +412,9 @@ Las configuraciones sensibles provienen del entorno (no están hardcodeadas). Ha
 * *Variables definidas en `environment:` y distintas del `.env`:* unifica o documenta precedencias.
 
 
-#### Parte 3 - Pruebas en contenedor + Gate de supply chain
+## Parte 3 - Pruebas en contenedor + Gate de supply chain
 
-#### 3.1 Pruebas
+### 3.1 Pruebas
 
 La idea es que tus pruebas se ejecuten **dentro** de contenedores, con dependencias reales (Postgres, etc.) y que el proceso **falle con exit code ≠ 0** si 
 algo rompe.
@@ -460,7 +460,7 @@ make test 2>&1 | tee Actividad18-CC3S2/evidencia/20_tests.txt
 * Pruebas que leen rutas del host: usa **volúmenes** y `WORKDIR` consistentes.
 
 
-#### 3.2 SBOM + escaneo (tu gate de supply chain)
+### 3.2 SBOM + escaneo (tu gate de supply chain)
 
 Genera **SBOM** de tu **imagen final** y corre un **escaneo** de vulnerabilidades. Si puedes, escanea también la **imagen base** y el **filesystem** del directorio (para dependencias vendorizadas).
 
@@ -588,9 +588,9 @@ Crea `Actividad18-CC3S2/evidencia/23_cve_plan.md` con la siguiente **plantilla m
   - Documentación de digest nuevo y evidencia de remediación.
 ```
 
-#### Parte 4 - DAG funcional + control de ejecución
+## Parte 4 - DAG funcional + control de ejecución
 
-#### 4.1 Resumen del DAG
+### 4.1 Resumen del DAG
 
 Redacta `Actividad18-CC3S2/evidencia/30_dag_resumen.md` incluyendo:
 
@@ -600,7 +600,7 @@ Redacta `Actividad18-CC3S2/evidencia/30_dag_resumen.md` incluyendo:
 
 > Manténlo operativo: no cuentes la historia del ETL, cuenta **cómo lo corro** y **cómo sé que pasó**.
 
-#### 4.2 Disparo y verificación
+### 4.2 Disparo y verificación
 
 **Disparo del DAG (run manual "para hoy"):**
 
@@ -656,7 +656,7 @@ docker run --rm --network "$NET" alpine sh -lc '
 ' 2>&1 | tee -a Actividad18-CC3S2/evidencia/31_dag_run.txt
 ```
 
-#### 4.3 Timeout razonable
+### 4.3 Timeout razonable
 
 **Cambios mínimos en el DAG (ejemplo):**
 
@@ -688,7 +688,7 @@ PythonOperator(
 * Poner timeout irreal: para ETLs locales de ejemplo, **3-10 min** suele ser razonable.
 
 
-#### Estructura de entrega
+## Estructura de entrega
 
 Debes entregar una carpeta llamada Actividad18-CC3S2 dentro de tu repositorio personal, con la siguiente estructura:
 
