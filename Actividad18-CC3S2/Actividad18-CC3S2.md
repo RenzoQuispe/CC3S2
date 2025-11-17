@@ -75,7 +75,8 @@ mkdir -p airflow/dags airflow/logs airflow/plugins
 sudo chmod -R 777 airflow/logs    # Dar permisos de lectura, escritura y ejecucion al contenedor
 docker compose down
 docker compose down -v    
-docker compose up        # Esperar el timepo suficiente para que airflow-scheduler y airflow-webserver funcionen correctamente
+docker compose build
+docker compose up        # Esperar el tiempo suficiente para que airflow-scheduler y airflow-webserver funcionen correctamente
 ```
 
 Ejemplo de prueba:
@@ -230,18 +231,20 @@ services:
 **Verificación (captura de evidencia):**
 
 ```bash
-# Vuelve a crear/levantar para activar healthchecks
-docker compose up -d --build
+docker compose down
+docker compose down -v   
+docker compose build
+docker compose up
 
 # Estado (debe aparecer "healthy" tras el warm-up)
-docker compose ps | tee -a Actividad18-CC3S2/evidencia/02_ps.txt
+docker compose ps | tee -a ../evidencias/02_ps.txt
 
 # Inspect solo del status de health por contenedor
 for c in $(docker compose ps -q); do
   name=$(docker inspect --format '{{.Name}}' $c | sed 's#^/##')
   status=$(docker inspect --format '{{json .State.Health.Status}}' $c 2>/dev/null || echo '"no-healthcheck"')
   echo "$name $status"
-done | tee Actividad18-CC3S2/evidencia/10_health_status.txt
+done | tee ../evidencias/10_health_status.txt
 ```
 
 **Criterio de aceptación**
@@ -257,7 +260,6 @@ done | tee Actividad18-CC3S2/evidencia/10_health_status.txt
 * *Endpoint incorrecto*: compruébalo con `docker compose exec <svc> curl -i http://localhost:8080/health`.
 * *Sin `start_period` y timeouts prematuros*: añade `start_period` y aumenta `retries`.
 * *Olvidar `$$` en variables dentro de `test`:* en YAML debes escapar `$` -> usa `$$`.
-
 
 ### 2.2 Límites de recursos
 
@@ -296,7 +298,7 @@ for s in airflow-webserver postgres etl-app; do
   echo "$s ($id)"
   docker inspect $id \
     --format 'Memory={{.HostConfig.Memory}} Bytes  NanoCpus={{.HostConfig.NanoCpus}}  CpuQuota={{.HostConfig.CpuQuota}}  CpuPeriod={{.HostConfig.CpuPeriod}}'
-done | tee Actividad18-CC3S2/evidencia/11_limits_check.txt
+done | tee ../evidencias/11_limits_check.txt
 ```
 
 > **Interpretación rápida**:
@@ -355,8 +357,10 @@ USER app
 ```bash
 # Usuario efectivo dentro del contenedor
 docker compose exec etl-app sh -lc 'id && whoami' \
-  | tee Actividad18-CC3S2/evidencia/12_user_check.txt
+  | tee ../evidencias/12_user_check.txt
 
+# Si falla el comando anterior podemos usar...
+docker compose run --rm --entrypoint sh etl-app -lc "id && whoami" | tee ../evidencias/12_user_check.txt
 # Intento de escritura en / (debería fallar si usas read-only en runtime)
 # (Añade read_only: true en Compose para reforzar)
 ```
@@ -386,7 +390,6 @@ services:
 
 * *Cambiar a `USER app` antes de copiar deps:* si necesitas instalar paquetes de sistema, hazlo **antes** de bajar privilegios.
 * *Propiedad incorrecta del `WORKDIR`*: usa `--chown` en `COPY` o `chown` explícito.
-
 
 ### 2.4 Config por variables de entorno (12-Factor)
 
@@ -437,12 +440,17 @@ ETL_OUTPUT=/app/data/output.csv
 # 1) Dentro de etl-app, lista variables relevantes (sanitiza en archivo)
 docker compose exec etl-app sh -lc 'printenv | sort | grep -E "^(AIRFLOW__|POSTGRES_|ETL_)"' \
   | sed -E 's/(PASSWORD|SECRET)=.*/\1=REDACTED/g' \
-  | tee Actividad18-CC3S2/evidencia/13_env_audit.txt
+  | tee ../evidencias/13_env_audit.txt
+# o si cuando el servicio no está corriendo o termina inmediatamente...
+docker compose run --rm --entrypoint sh etl-app -lc \
+  'printenv | sort | grep -E "^(AIRFLOW__|POSTGRES_|ETL_)"' \
+  | sed -E "s/(PASSWORD|SECRET)=.*/\1=REDACTED/g" \
+  | tee ../evidencias/13_env_audit.txt
 
 # 2) Asegura que no hay secretos "pegados" en el repositorio
 grep -R --line-number -E '(PASSWORD|SECRET|TOKEN)=' . \
   | grep -v '\.env' \
-  | tee -a Actividad18-CC3S2/evidencia/13_env_audit.txt || true
+  | tee -a ../evidencias/13_env_audit.txt || true
 ```
 
 **Criterio**
@@ -457,7 +465,6 @@ Las configuraciones sensibles provienen del entorno (no están hardcodeadas). Ha
 
 * *Usar `.env` real en Git:* ignóralo en `.gitignore` y entrega **solo** `.env.example`.
 * *Variables definidas en `environment:` y distintas del `.env`:* unifica o documenta precedencias.
-
 
 ## Parte 3 - Pruebas en contenedor + Gate de supply chain
 

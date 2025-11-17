@@ -7,10 +7,10 @@ services:
     image: postgres:13
     restart: unless-stopped
     env_file: .env
-  # environment:
-    # POSTGRES_USER: ${POSTGRES_USER}
-    # POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    # POSTGRES_DB: ${POSTGRES_DB}
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     networks:
       - backend
     volumes:
@@ -21,9 +21,12 @@ services:
       interval: 10s
       timeout: 3s
       retries: 10
-      start_period: 20s  # postgres necesita tiempo para inicializar
-    mem_limit: "512m"
-    cpus: "0.50"
+      start_period: 20s
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: "512M"
 
   etl-app:
     build:
@@ -45,9 +48,12 @@ services:
       interval: 30s
       timeout: 5s
       retries: 3
-      start_period: 10s  # tiempo para que Python inicie
-    mem_limit: "256m"
-    cpus: "0.50"
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: "256M"
 
   airflow-webserver:
     build:
@@ -79,9 +85,12 @@ services:
       interval: 15s
       timeout: 3s
       retries: 10
-      start_period: 30s  # Airflow necesita tiempo para iniciar
-    mem_limit: "1g"
-    cpus: "1.0"
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "512M"
 
   airflow-scheduler:
     image: airflow-secure:1.0.0
@@ -104,14 +113,17 @@ services:
       airflow-init:
         condition: service_completed_successfully
     healthcheck:
-      # verifica que el scheduler esté respondiendo en su puerto interno
-      test: ["CMD-SHELL", "python -c 'import socket; s=socket.socket(); s.connect((\"localhost\", 8793)); s.close()' || exit 1"]
+      # Verifica que el scheduler esté procesando DAGs
+      test: ["CMD-SHELL", "airflow jobs check --job-type SchedulerJob --hostname \"$${HOSTNAME}\" || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
-      start_period: 60s
-    mem_limit: "1g"
-    cpus: "1.0"
+      start_period: 40s  # Scheduler necesita más tiempo
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: "512M"
 
   airflow-init:
     image: airflow-secure:1.0.0
@@ -126,8 +138,16 @@ services:
     networks:
       - backend
     command: >
-      bash -c "airflow db init && 
-      airflow users create --username admin --firstname Admin --lastname User --role Admin --email admin@example.com --password admin || true"
+      bash -c "
+      airflow db init &&
+      airflow users create
+        --username admin
+        --firstname Admin
+        --lastname User
+        --role Admin
+        --email admin@example.com
+        --password admin || true
+      "
     restart: "no"  # solo debe ejecutarse una vez
 
 volumes:

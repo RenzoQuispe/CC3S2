@@ -1,0 +1,3 @@
+laboratorio-airflow-scheduler-1 "healthy"
+laboratorio-airflow-webserver-1 "healthy"
+laboratorio-postgres-1 "healthy"
